@@ -14,14 +14,14 @@ for folder in "${folders[@]}";do
     if [ "${answer}" = 'y' ]; then
       echo "->Remove $HOME/.config/${folder}"
       rm -rf "$HOME/.config/${folder}"
-      ln -sf "$HOME/dotfiles/${folder}" "$HOME/.config"
-      echo "->Link Success"
     elif [ "${answer}" = 'n' ]; then
-      echo "->choose n, stop installing, check the folder you want to install "
-      exit 9
+      echo "->choose n, not install \"$HOME/.config/${folder}\", bless you work fine. "
+      continue
     fi
   fi
 
+	ln -sf "$HOME/dotfiles/${folder}" "$HOME/.config"
+	echo "->Link ${folder} Success"
 done
 
 for file in "${files[@]}";do
@@ -31,13 +31,18 @@ for file in "${files[@]}";do
       read -r -p "$HOME/.${file} exist, whether remove? y/n " answer
     done
     if [ "${answer}" = 'y' ]; then
-      echo "->Link with Remove $HOME/.${file}"
-      ln -sf "$HOME/dotfiles/rcfiles/${file}" "$HOME/.${file}"
+      echo "->Remove $HOME/.${file}"
     elif [ "${answer}" = 'n' ]; then
-      echo "->choose n, stop installing, check the rc file you want to install "
-      exit 9
+      echo "->choose n, not install \"$HOME/.${file}\", bless you work fine"
+      continue
     fi
   fi
+  os=""
+  until [ -f "$HOME/dotfiles/rcfiles/${file}_${os}" ]; do
+    read -r -p "Choose your device sys for ${file}: mac,linux... " os
+  done
+    ln -sf "$HOME/dotfiles/rcfiles/${file}_${os}" "$HOME/.${file}"
+    echo "->Link ${file}_${os} Success"
 done
 
 

@@ -1,3 +1,5 @@
+# ohmyzsh, powerlevel10k
+# >>>>>>>>>>>>>>>{{{
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -89,11 +91,11 @@ source $ZSH/oh-my-zsh.sh
 export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='nvim'
+else
+  export EDITOR='nvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
@@ -112,15 +114,16 @@ export LANG=en_US.UTF-8
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
+# <<<<<<<<<<<<<<<}}}
 
 # haku alias
-alias zrc="nvim ~/.zshrc"# {{{
+# >>>>>>>>>>>>>>>{{{
+alias zrc="nvim ~/.zshrc"
+alias sou="source ~/.zshrc"
 alias nlua="nvim ~/.config/nvim/lua/haku/core/options.lua"
 # mac
 alias wlua="nvim ~/.config/wezterm/wezterm.lua"
 alias vi="nvim"
-alias sou="source ~/.zshrc"
 alias ls="eza --icons=always"
 alias vu="vi ~/haku_git/haku_tools_linux/useful_linux_commands.md"
 alias vc="vi ~/haku_git/wezterm-nvim_setup/zsh_setup.md"
@@ -130,7 +133,8 @@ alias cd="z"
 alias hlisten="echo '(head -n 1 && grep LISTEN) <<< sudo lsof -i -P -n ';(head -n 1 && grep LISTEN) <<< \`sudo lsof -i -P -n\`"
 # life
 # alias myLove="wslview https://meeting.tencent.com/p/9796730765?pwd=500012"**
-# alias japaneseCourse="wslview https://kyoto-u-edu.zoom.us/j/91423186918?pwd=alhtRnhlcUljVi84Z0hncjRZREtjZz09"**}}}
+# alias japaneseCourse="wslview https://kyoto-u-edu.zoom.us/j/91423186918?pwd=alhtRnhlcUljVi84Z0hncjRZREtjZz09"**
+# <<<<<<<<<<<<<<<}}}
 
 # haku functions
 # >>>>>>>>>>>>>>>>{{{
@@ -144,10 +148,10 @@ cd $1
 # find . -type f -exec ls -lt {} + | head -$1
 # }
 lsh(){
-  ls -ld **/*(D.om[1,$1])
+  ls -ld -s="modified" **/*(D.om[1,$1])
 }
 # set start and end function to calc time
-start() {
+haku_start() {
     start_time=$(date +%s)
 }
 haku_end() {
@@ -156,7 +160,7 @@ haku_end() {
     printf "elapsed time is : %d h %d min %d s\n" $hours_calc $mins_calc $seconds_calc
 
 }
-# mac
+# arch linux
 paste-from-clipboard() {
   RBUFFER=${RBUFFER:0:1}`(xsel -b -o)`${RBUFFER:1}
 }
@@ -164,6 +168,7 @@ zle -N paste-from-clipboard
 # Start in command mode (this is the key part)
 # zle-line-init() { zle -K vicmd; }
 # <<<<<<<<<<<<<<<<# }}}
+
 # haku others
 # >>>>>>>>>>>>>>>>{{{
 # use vim in cmd# 
@@ -181,12 +186,12 @@ bindkey '^F' forward-char
 # method 1
 # alias fzf-init="source /home/linuxbrew/.linuxbrew/Cellar/fzf/0.62.0/shell/completion.zsh;source /home/linuxbrew/.linuxbrew/Cellar/fzf/0.62.0/shell/key-bindings.zsh"
 # method 2
-eval "`fzf --zsh`"
+eval "$(fzf --zsh)"
 ### ---- Zoxide (better cd) ----
-eval "`zoxide init zsh`"
+eval "$(zoxide init zsh)"
 
 # set autosuggest highlight
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=208'
+#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=208'
 # chocolate
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#d2691e'
 
