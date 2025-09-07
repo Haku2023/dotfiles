@@ -1,0 +1,198 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+
+# Path to your Oh My Zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time Oh My Zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in $ZSH/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+
+# Uncomment the following line to change how often to auto-update (in days).
+# zstyle ':omz:update' frequency 13
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS="true"
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='nvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch $(uname -m)"
+
+# Set personal aliases, overriding those provided by Oh My Zsh libs,
+# plugins, and themes. Aliases can be placed here, though Oh My Zsh
+# users are encouraged to define aliases within a top-level file in
+# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
+# - $ZSH_CUSTOM/aliases.zsh
+# - $ZSH_CUSTOM/macos.zsh
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
+# haku alias
+alias zrc="nvim ~/.zshrc"# {{{
+alias nlua="nvim ~/.config/nvim/lua/haku/core/options.lua"
+# mac
+alias wlua="nvim ~/.config/wezterm/wezterm.lua"
+alias vi="nvim"
+alias sou="source ~/.zshrc"
+alias ls="eza --icons=always"
+alias vu="vi ~/haku_git/haku_tools_linux/useful_linux_commands.md"
+alias vc="vi ~/haku_git/wezterm-nvim_setup/zsh_setup.md"
+alias hwlua="vi ~/haku_git/wezterm-nvim_setup/wezterm.lua"
+alias cd="z"
+# check which port is on listening
+alias hlisten="echo '(head -n 1 && grep LISTEN) <<< sudo lsof -i -P -n ';(head -n 1 && grep LISTEN) <<< \`sudo lsof -i -P -n\`"
+# life
+# alias myLove="wslview https://meeting.tencent.com/p/9796730765?pwd=500012"**
+# alias japaneseCourse="wslview https://kyoto-u-edu.zoom.us/j/91423186918?pwd=alhtRnhlcUljVi84Z0hncjRZREtjZz09"**}}}
+
+# haku functions
+# >>>>>>>>>>>>>>>>{{{
+# mkdir,cd it
+mcd() {
+mkdir $1
+cd $1
+}
+# find the latest files in current directory
+# lso(){
+# find . -type f -exec ls -lt {} + | head -$1
+# }
+lsh(){
+  ls -ld **/*(D.om[1,$1])
+}
+# set start and end function to calc time
+start() {
+    start_time=$(date +%s)
+}
+haku_end() {
+    end_time=$(date +%s)
+    mid_time=$(($end_time - $start_time));hours_calc=$((mid_time/3600));mins_calc=$((mid_time%3600/60));seconds_calc=$((mid_time%60))
+    printf "elapsed time is : %d h %d min %d s\n" $hours_calc $mins_calc $seconds_calc
+
+}
+# mac
+paste-from-clipboard() {
+  RBUFFER=${RBUFFER:0:1}`(xsel -b -o)`${RBUFFER:1}
+}
+zle -N paste-from-clipboard
+# Start in command mode (this is the key part)
+# zle-line-init() { zle -K vicmd; }
+# <<<<<<<<<<<<<<<<# }}}
+# haku others
+# >>>>>>>>>>>>>>>>{{{
+# use vim in cmd# 
+bindkey -v
+bindkey -M vicmd 'p' paste-from-clipboard
+# bindkey -M viins 'kk' vi-cmd-mode
+# bindkey -M viins 'jj' vi-cmd-mode
+bindkey '^B' backward-char
+bindkey '^F' forward-char
+
+# Start in command mode
+# zle -N zle-line-init
+
+# init fzf by source, file places should refer to the fzf
+# method 1
+# alias fzf-init="source /home/linuxbrew/.linuxbrew/Cellar/fzf/0.62.0/shell/completion.zsh;source /home/linuxbrew/.linuxbrew/Cellar/fzf/0.62.0/shell/key-bindings.zsh"
+# method 2
+eval "`fzf --zsh`"
+### ---- Zoxide (better cd) ----
+eval "`zoxide init zsh`"
+
+# set autosuggest highlight
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=208'
+# chocolate
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#d2691e'
+
+# add path to windows for explorer
+export PATH=$PATH:/mnt/c/Windows
+export EDITOR=nvim
+# export multi selection with tab
+export FZF_DEFAULT_OPTS='-m'
+# <<<<<<<<<<<<<<<<# }}}
