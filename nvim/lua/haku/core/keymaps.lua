@@ -9,6 +9,11 @@ keymap.set({ "n", "x" }, "qe", ":wqa<CR>", { desc = "Save all and quit" })
 keymap.set("x", "s", "<ESC>", { desc = "Exit visual mode with s" })
 keymap.set("i", "<C-f>", "<Right>", { desc = "forward in insertmode" })
 keymap.set("i", "<C-b>", "<Left>", { desc = "backward in insertmode" })
+keymap.set({ "n", "i" }, "<C-t>", ":set wrap<CR>", { desc = "wrap the lines" })
+
+-- Lazy and Mason
+keymap.set("n", "<leader>ll", ":Lazy<CR>", { desc = "open lazy" })
+keymap.set("n", "<leader>lm", ":Mason<CR>", { desc = "open mason" })
 
 keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 
