@@ -188,8 +188,11 @@ prepend-sudo() {
     BUFFER="sudo $(fc -ln -1)" 
     zle end-of-line
   else
-    zle beginning-of-line
-    zle -U "sudo "
+    BUFFER="sudo ${BUFFER}" 
+    zle end-of-line
+    # zle beginning-of-line
+    # zle -U " sudo "
+    # zle end-of-line
   fi
 }
 
@@ -251,7 +254,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#d2691e'
 # add path to windows for explorer
 export PATH=$PATH:/mnt/c/Windows
 export EDITOR=nvim
-export BROWSER=firefox
+# export BROWSER=firefox
 # export multi selection with tab
 export FZF_DEFAULT_OPTS='-m'
 # <<<<<<<<<<<<<<<<# }}}

@@ -176,8 +176,8 @@ prepend-sudo() {
     BUFFER="sudo $(fc -ln -1)" 
     zle end-of-line
   else
-    zle beginning-of-line
-    zle -U "sudo "
+    BUFFER="sudo ${BUFFER}" 
+    zle end-of-line
   fi
 }
 
