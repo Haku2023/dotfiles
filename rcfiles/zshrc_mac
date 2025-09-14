@@ -79,7 +79,10 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-autocomplete fast-syntax-highlighting web-search)
+#plugins=(git zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-vi-mode web-search)
+plugins=(git zsh-vi-mode zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting  web-search history dirhistory )
+# ctrl space for accept
+bindkey '^ ' autosuggest-accept
 
 source $ZSH/oh-my-zsh.sh
 
@@ -134,7 +137,7 @@ unset __conda_setup
 # haku alias
 # >>>>>>>>>>>>>>>{{{
 alias zrc="nvim ~/.zshrc"
-alias sou="source ~/.zshrc"
+alias sou="exec zsh"
 alias nlua="nvim ~/.config/nvim/lua/haku/core/options.lua"
 # mac
 alias wlua="nvim ~/.config/wezterm/wezterm.lua"
@@ -179,6 +182,37 @@ haku_end() {
 paste-from-clipboard() {
   RBUFFER=${RBUFFER:0:1}$(pbpaste)${RBUFFER:1}
 }
+# Prepend 'sudo' to the current command line with Ctrl+S
+prepend-sudo() {
+  if [[ -z "$BUFFER" ]];then
+    BUFFER="sudo $(fc -ln -1)" 
+    zle end-of-line
+  else
+    zle beginning-of-line
+    zle -U "sudo "
+  fi
+}
+
+# Make a widget that sends the escape sequence for Alt+Left Arrow
+alt_left() {
+  # \e is ESC. This simulates pressing Alt+Left
+  zle -U $'\e[1;3D'
+}
+# Make a widget that sends the escape sequence for Alt+Left Arrow
+alt_right() {
+  # \e is ESC. This simulates pressing Alt+Left
+  zle -U $'\e[1;3C'
+}
+# Make a widget that sends the escape sequence for Alt+Left Arrow
+alt_up() {
+  # \e is ESC. This simulates pressing Alt+Left
+  zle -U $'\e[1;3A'
+}
+zle -N paste-from-clipboard
+zle -N prepend-sudo
+zle -N alt_left
+zle -N alt_right
+zle -N alt_up
 zle -N paste-from-clipboard
 # Start in command mode (this is the key part)
 # zle-line-init() { zle -K vicmd; }
@@ -187,12 +221,16 @@ zle -N paste-from-clipboard
 # haku others
 # >>>>>>>>>>>>>>>>{{{
 # use vim in cmd# 
-bindkey -v
-bindkey -M vicmd 'p' paste-from-clipboard
+#bindkey -v
 # bindkey -M viins 'kk' vi-cmd-mode
 # bindkey -M viins 'jj' vi-cmd-mode
-bindkey '^B' backward-char
-bindkey '^F' forward-char
+#bindkey '^B' backward-char
+#bindkey '^F' forward-char
+bindkey -M vicmd 'p' paste-from-clipboard
+bindkey -M vicmd '^s' prepend-sudo
+bindkey -M vicmd '^J' alt_left
+bindkey -M vicmd '^k' alt_right
+bindkey -M vicmd '^H' alt_up
 
 # Start in command mode
 # zle -N zle-line-init
@@ -213,6 +251,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#d2691e'
 # add path to windows for explorer
 export PATH=$PATH:/mnt/c/Windows
 export EDITOR=nvim
+export BROWSER=firefox
 # export multi selection with tab
 export FZF_DEFAULT_OPTS='-m'
 # <<<<<<<<<<<<<<<<# }}}
