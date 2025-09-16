@@ -147,6 +147,7 @@ alias vu="vi ~/Documents/Projects/haku_git/haku_tools_linux/useful_linux_command
 alias vc="vi ~/haku_git/wezterm-nvim_setup/zsh_setup.md"
 alias hwlua="vi ~/haku_git/wezterm-nvim_setup/wezterm.lua"
 alias cd="z"
+alias haku25="cd /Users/bai.haodong/Documents/Doctor_Life/G-学会/13.\ 自然災害学会第44回/5.Keynote/graphs"
 # check which port is on listening
 alias hlisten="echo '(head -n 1 && grep LISTEN) <<< sudo lsof -i -P -n ';(head -n 1 && grep LISTEN) <<< \`sudo lsof -i -P -n\`"
 # life
