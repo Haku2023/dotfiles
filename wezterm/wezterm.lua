@@ -10,7 +10,9 @@ end
 config.default_workspace = "apple"
 -- set for wsl if windows, using <C-S-l> check info{{{
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
-	config.default_prog = { "wsl.exe", "~", "-e", "zsh" }
+	-- config.default_prog = { "wsl.exe", "~", "-e", "zsh" }
+	-- wezterm.log_info("OS: Windows, Prog: wsl")
+	config.default_prog = { "C:\\Program Files\\PowerShell\\7\\pwsh.exe" }
 	wezterm.log_info("OS: Windows, Prog: wsl")
 	config.font_size = 17
 elseif wezterm.target_triple == "aarch64-apple-darwin" then

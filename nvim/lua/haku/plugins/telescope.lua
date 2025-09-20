@@ -3,7 +3,18 @@ return {
   branch = "0.1.x",
   dependencies = {
     "nvim-lua/plenary.nvim",
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    -- { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    {
+      "nvim-telescope/telescope-fzf-native.nvim",
+
+      build = function()
+        if vim.loop.os_uname().sysname == "Windows_NT" then
+          return "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build"
+        else
+          return "make"
+        end
+      end,
+    },
     "nvim-tree/nvim-web-devicons",
     "folke/todo-comments.nvim",
   },
@@ -24,6 +35,10 @@ return {
 
     telescope.setup({
       defaults = {
+        preview = {
+          filesize_limit = 2.0,
+          timeout = 150,
+        },
         path_display = { "smart" },
         mappings = {
           i = {

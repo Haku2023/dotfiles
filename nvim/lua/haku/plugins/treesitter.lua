@@ -6,6 +6,9 @@ return {
     "nvim-treesitter/nvim-treesitter-textobjects",
   },
   config = function()
+    if vim.loop.os_uname().sysname == "Windows_NT" then
+      require("nvim-treesitter.install").compilers = { "zig" }
+    end
     -- import nvim-treesitter plugin
     local treesitter = require("nvim-treesitter.configs")
 

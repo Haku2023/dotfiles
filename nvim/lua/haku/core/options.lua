@@ -1,4 +1,5 @@
-vim.cmd("let g:netrw_liststyle = 3")
+-- comment at 25-9-20, if after 10-1 delete
+-- vim.cmd("let g:netrw_liststyle = 3")
 
 local opt = vim.opt
 
@@ -69,7 +70,7 @@ opt.undodir = vim.fn.expand("~/.config/nvim-undo")
 opt.undolevels = 10000
 opt.undoreload = 10000
 
-vim.lsp.set_log_level("debug")
+-- vim.lsp.set_log_level("debug")
 
 --[[ opt.pumblend = 0
 opt.winblend = 0 ]]
