@@ -80,6 +80,11 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(git zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-vi-mode web-search)
+
+# Start from insertmode for zsh-vi-mode
+function zvm_config() {
+  ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+}
 plugins=(git zsh-vi-mode zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting  web-search history dirhistory )
 # ctrl space for accept
 bindkey '^ ' autosuggest-accept
@@ -212,6 +217,20 @@ alt_up() {
   # \e is ESC. This simulates pressing Alt+Left
   zle -U $'\e[1;3A'
 }
+# Force insert mode at each new prompt
+# zle-line-init() {
+#   zle -K viins   # switch to vi insert keymap
+# }
+# zle-line-finish() { zle -K viins }
+
+# Always enter insert mode after Ctrl-C
+_ins_after_break() {
+  zle send-break        # do what Ctrl-C normally does
+  zle -K viins          # then force vi-insert keymap for the new line
+}
+zle -N _ins_after_break
+zle -N zle-line-init
+zle -N zle-line-finish
 zle -N paste-from-clipboard
 zle -N prepend-sudo
 zle -N alt_left
@@ -230,6 +249,8 @@ zle -N paste-from-clipboard
 # bindkey -M viins 'jj' vi-cmd-mode
 #bindkey '^B' backward-char
 #bindkey '^F' forward-char
+#bindkey -M vicmd '^C' _ins_after_break
+#bindkey -M viins '^C' _ins_after_break   # optional: same behavior if you hit ^C in insert
 bindkey -M vicmd 'p' paste-from-clipboard
 bindkey -M vicmd '^s' prepend-sudo
 bindkey -M vicmd '^J' alt_left
