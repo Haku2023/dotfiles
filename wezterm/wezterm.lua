@@ -10,10 +10,11 @@ end
 config.default_workspace = "apple"
 -- set for wsl if windows, using <C-S-l> check info{{{
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
-	-- config.default_prog = { "wsl.exe", "~", "-e", "zsh" }
-	-- wezterm.log_info("OS: Windows, Prog: wsl")
-	config.default_prog = { "C:\\Program Files\\PowerShell\\7\\pwsh.exe" }
+	config.default_prog = { "wsl.exe", "~", "-e", "zsh" }
 	wezterm.log_info("OS: Windows, Prog: wsl")
+	-- config.default_prog = { "C:\\Program Files\\PowerShell\\7\\pwsh.exe" }
+	-- config.default_prog = { "C:\\cygwin64\\bin\\zsh.exe", "-l" }
+	-- wezterm.log_info("OS: Windows, Prog: cygwin")
 	config.font_size = 17
 elseif wezterm.target_triple == "aarch64-apple-darwin" then
 	wezterm.log_info("OS: Mac")
@@ -295,6 +296,16 @@ config.keys = { -- {{{
 	{ key = ",", mods = "ALT", action = act.SwitchWorkspaceRelative(-1) },
 	{ key = ".", mods = "ALT", action = act.SwitchWorkspaceRelative(1) },
 	{ key = "/", mods = "ALT", action = act.EmitEvent("select-workspace") },
+	{ key = "n", mods = "ALT|SHIFT", action = act.EmitEvent("create-workspace") },
+	-- new tab as powershell
+	-- Ctrl+Shift+P will open a new tab running PowerShell
+	{
+		key = "P",
+		mods = "ALT|SHIFT",
+		action = act.SpawnCommandInNewTab({
+			args = { "C:\\Program Files\\PowerShell\\7\\pwsh.exe" }, -- or "pwsh.exe" for PowerShell 7
+		}),
+	},
 	{ key = "n", mods = "ALT|SHIFT", action = act.EmitEvent("create-workspace") },
 
 	-- notification
