@@ -201,6 +201,16 @@ prepend-sudo() {
     # zle end-of-line
   fi
 }
+# v to insert v
+v2iv() {
+  if [[ -z "$BUFFER" ]];then
+    BUFFER="v" 
+    zle end-of-line
+    zvm_enter_insert_mode
+  else
+    zvm_enter_visual_mode
+  fi
+}
 
 # Make a widget that sends the escape sequence for Alt+Left Arrow
 alt_left() {
@@ -237,6 +247,7 @@ zle -N alt_left
 zle -N alt_right
 zle -N alt_up
 zle -N paste-from-clipboard
+zle -N v2iv
 # Start in command mode (this is the key part)
 # zle-line-init() { zle -K vicmd; }
 # <<<<<<<<<<<<<<<<# }}}
@@ -251,11 +262,11 @@ zle -N paste-from-clipboard
 #bindkey '^F' forward-char
 #bindkey -M vicmd '^C' _ins_after_break
 #bindkey -M viins '^C' _ins_after_break   # optional: same behavior if you hit ^C in insert
-bindkey -M vicmd 'p' paste-from-clipboard
-bindkey -M vicmd '^s' prepend-sudo
-bindkey -M vicmd '^J' alt_left
-bindkey -M vicmd '^k' alt_right
-bindkey -M vicmd '^H' alt_up
+function zvm_after_lazy_keybindings() {
+  bindkey -M vicmd '^S' prepend-sudo
+  bindkey -M vicmd 'v' v2iv
+  bindkey -M vicmd 'p' paste-from-clipboard
+}
 
 # Start in command mode
 # zle -N zle-line-init
