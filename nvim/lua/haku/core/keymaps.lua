@@ -11,7 +11,8 @@ keymap.set("x", "s", "<ESC>", { desc = "Exit visual mode with s" })
 keymap.set("i", "<C-f>", "<Right>", { desc = "forward in insertmode" })
 keymap.set("i", "<C-b>", "<Left>", { desc = "backward in insertmode" })
 keymap.set("i", "hh", "<C-w>", { desc = "delete words in insertmode" })
-keymap.set({ "n", "i" }, "<C-t>", ":set wrap<CR>", { desc = "wrap the lines" })
+keymap.set({ "n" }, "<C-t>", ":set wrap<CR>", { desc = "wrap the lines" })
+keymap.set({ "i" }, "<C-t>", "<ESC>:set wrap<CR>", { desc = "wrap the lines" })
 
 -- show full path
 keymap.set("n", "<C-g>", ":echo expand('%:p')<CR>", { desc = "show full path" })

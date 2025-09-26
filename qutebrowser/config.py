@@ -141,6 +141,17 @@ config.set(
 )
 
 # Haku <<<
+
+c.content.javascript.log_message.excludes = {
+    "userscript:_qute_stylesheet": [
+        "*Refused to apply inline style because it violates the following \
+        Content Security Policy directive: *"
+    ],
+    "userscript:_qute_js": ["*TrustedHTML*"],
+}
+c.fonts.default_size = "20pt"
+c.scrolling.smooth = True
+c.search.incremental = False
 # config.bind("<Ctrl-h>", "fake-key <Backspace>")
 config.bind("<Ctrl-h>", "fake-key <backspace>", mode="insert")
 config.bind("K", "tab-next")
@@ -154,7 +165,32 @@ config.bind("J", "tab-prev")
 # <alt-a>: Select All
 # Simulates pressing Ctrl+A (common for select all in many apps)
 # Note: In some systems or apps, this might be Ctrl+Shift+End or Home+Shift+End.
+# normal keys
+
+config.bind(
+    "z",
+    "config-cycle tabs.show always never;; config-cycle statusbar.show always never",
+)
+config.bind("d", "cmd-run-with-count 20 scroll down")
+config.bind("u", "cmd-run-with-count 20 scroll up")
+# config.bind("d", "scroll-page 0 0.5")
+# config.bind("u", "scroll-page 0 -0.5")
+config.bind("x", "tab-close")
+config.bind("X", "tab-only -p")
+config.bind("w", "mode-enter passthrough", mode="normal")
+
+# meta keys : command / windows
+# config.bind("<Meta-tab>", "tab-select 1/1")
+config.bind("<Meta-1>", "tab-select 0/1")
+config.bind("<Meta-2>", "tab-select 1/1")
+config.bind("<Meta-shift-1>", "tab-give 0")
+config.bind("<Meta-shift-2>", "tab-give 1")
+config.bind("<shift-u>", "undo")
+
 # alt keys
+config.bind("<alt-0>", "tab-move")
+config.bind("<alt-shift-j>", "tab-move -")
+config.bind("<alt-shift-k>", "tab-move +")
 config.bind("<alt-a>", "fake-key <ctrl-a>", mode="insert")
 config.bind("<alt-h>", "fake-key <ctrl-backspace>", mode="insert")
 config.bind("<alt-b>", "fake-key <ctrl-left>", mode="insert")
@@ -163,14 +199,17 @@ config.bind("<alt-d>", "fake-key <ctrl-delete>", mode="insert")
 config.bind("<alt-p>", "tab-pin")
 config.bind("<alt-s>", "config-source")
 config.bind("<alt-e>", "tab-focus last")
-# <ctrl-b>: Backward a character
-# Simulates pressing Left Arrow
-config.bind("<ctrl-b>", "fake-key <left>", mode="insert")
+config.bind("<alt-j>", "click-element position 1000,300")
+config.bind(
+    "<alt-d>", 'yank selection;; spawn --detach bash -c "open dict://$(pbpaste)"'
+)
 config.bind("<ctrl-f>", "fake-key <right>", mode="insert")
 config.bind("<ctrl-n>", "fake-key <down>", mode="insert")
 config.bind("<ctrl-p>", "fake-key <up>", mode="insert")
 config.bind("<ctrl-j>", "completion-item-focus next", mode="command")
 config.bind("<ctrl-k>", "completion-item-focus prev", mode="command")
+# config.bind("<ctrl-t>", "toggle")
+config.bind("<ctrl-t>", "cmd-set-text -s :tab-take")
 
 # --- Existing bindings you might want to keep or review ---
 # (from our previous conversation)
@@ -188,10 +227,11 @@ config.bind("<ctrl-d>", "fake-key <delete>", mode="insert")
 # Paste (C-y)
 config.bind("<ctrl-y>", "paste", mode="insert")
 
-config.unbind("d")
 
-config.bind("x", "tab-close")
-config.bind("X", "tab-only -p")
+config.bind("<ctrl-k>", "mode-enter set_mark")
+# config.bind("<ctrl-l>", "cmd-set-text -s :jump-mark ")
+config.bind("<alt-b>", "cmd-set-text -s :bookmark-load")
+config.bind("<alt-shift-b>", "cmd-set-text -s :bookmark-load -t")
 
 
 # Haku >>>

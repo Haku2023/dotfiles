@@ -257,6 +257,8 @@ config.keys = { -- {{{
 	-- { key = "L", mods = "CTRL|SHIFT", action = "DisableDefaultAssignment" }, -- disables the debug overlay
 	{ key = "d", mods = "CTRL", action = "DisableDefaultAssignment" }, -- disables the debug overlay
 	{ key = "u", mods = "CTRL", action = "DisableDefaultAssignment" }, -- disables the debug overlay
+	-- { key = "w", mods = "CTRL", action = "DisableDefaultAssignment" }, -- disables the debug overlay
+	-- { key = "q", mods = "CTRL|SHIFT", action = "DisableDefaultAssignment" }, -- disables the debug overlay
 	-- Alt(Opt)+Shift+F toggle full screen
 	{ key = "f", mods = "SHIFT|META", action = wezterm.action.ToggleFullScreen },
 	-- Ctrl+Shift+t Create a new tab
@@ -306,13 +308,58 @@ config.keys = { -- {{{
 			args = { "C:\\Program Files\\PowerShell\\7\\pwsh.exe" }, -- or "pwsh.exe" for PowerShell 7
 		}),
 	},
-	{ key = "n", mods = "ALT|SHIFT", action = act.EmitEvent("create-workspace") },
+	-- Ctrl+Shift+P will open a new tab running PowerShell
+	{
+		key = "o",
+		mods = "ALT",
+		action = act.SpawnCommandInNewTab({
+			args = { "/usr/local/bin/gotop" },
+		}),
+	},
+	-- specific for open qutebrowser and switch to 73
+	{
+		key = "q",
+		mods = "CTRL|SHIFT",
 
+		action = wezterm.action_callback(function(_, _)
+			-- AppleScript: tell App B to activate (focus/launch)
+			wezterm.background_child_process({
+				"osascript",
+				"-e",
+				'tell application "qutebrowser" to activate',
+			})
+		end),
+	},
+	{
+		key = "w",
+		mods = "CTRL",
+
+		action = wezterm.action_callback(function(_, _)
+			-- AppleScript: tell App B to activate (focus/launch)
+			wezterm.background_child_process({
+				"osascript",
+				"-e",
+				'tell application "System Events"',
+				"-e",
+				'tell process "Microsoft Remote Desktop"',
+				"-e",
+				"set frontmost to true",
+				"-e",
+				'click menu item "10.244.7.73" of menu 1 of menu bar item "Window" of menu bar 1',
+				"-e",
+				"end tell",
+				"-e",
+				"end tell",
+			})
+
+			-- ... rest of your config ...
+		end),
+	},
 	-- notification
 	{
 		key = "9",
 		mods = "ALT",
-		action = wezterm.action_callback(function(window, pane)
+		action = wezterm.action_callback(function(window, _)
 			window:toast_notification("wezterm", "configuration reloaded!", nil, 1000)
 			-- wezterm.log_info("hello")
 		end),
