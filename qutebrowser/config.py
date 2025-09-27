@@ -202,12 +202,12 @@ config.bind("<alt-d>", "fake-key <ctrl-delete>", mode="insert")
 config.bind("<alt-p>", "tab-pin")
 config.bind("<alt-s>", "config-source")
 config.bind("<alt-e>", "tab-focus last")
-config.bind("<alt-j>", "click-element position 1000,300")
+config.bind("<alt-j>", "click-element position 1300,300")
 ## function for look
 config.bind(
     "<alt-d>", 'yank selection;; spawn --detach bash -c "open dict://$(pbpaste)"'
 )
-config.bind("tt", "spawn --userscript ./scripts/translate_ch_jp_message-info.sh")
+config.bind("tt", "spawn --userscript ./translate_ch_jp_message-info.sh", mode="caret")
 config.bind("q", "clear-messages")
 config.bind("Q", "macro-record")
 # config.bind(

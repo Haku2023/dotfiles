@@ -263,6 +263,7 @@ export EDITOR=nvim
 export BROWSER=firefox
 # export multi selection with tab
 export FZF_DEFAULT_OPTS='-m'
+export XDG_DATA_HOME="~/.config"
 # <<<<<<<<<<<<<<<<# }}}
 
 # >>> conda initialize >>>

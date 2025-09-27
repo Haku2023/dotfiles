@@ -6,7 +6,7 @@ WORD="${QUTE_SELECTED_TEXT:-$QUTE_WORD}"
 
 if [ -n "$WORD" ]; then
     # Define the dictionaries you want to use
-    CHINESE_DICT="牛津英汉双解美化版"
+    CHINESE_DICT="朗道英汉字典5.0"
     JAPANESE_EN_JA_DICT="jmdict-en-ja"
 
     # Construct the sdcv command to use specific dictionaries
