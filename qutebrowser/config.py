@@ -156,6 +156,7 @@ else:
     c.tabs.position = "bottom"
 c.scrolling.smooth = True
 c.search.incremental = False
+c.messages.timeout = 0
 
 # avoid error notice in caret/visual mode
 c.content.javascript.log_message.excludes = {
@@ -206,9 +207,12 @@ config.bind("<alt-j>", "click-element position 1000,300")
 config.bind(
     "<alt-d>", 'yank selection;; spawn --detach bash -c "open dict://$(pbpaste)"'
 )
-config.bind(
-    "<alt-d>", 'yank selection;; spawn --detach bash -c "open dict://$(pbpaste)"'
-)
+config.bind("tt", "spawn --userscript ./scripts/translate_ch_jp_message-info.sh")
+config.bind("q", "clear-messages")
+config.bind("Q", "macro-record")
+# config.bind(
+#     "tt", "spawn --userscript ~/.local/share/qutebrowser/userscripts/qute-trans"
+# )
 config.bind("<alt-b>", "cmd-set-text -s :bookmark-load")
 config.bind("<alt-shift-b>", "cmd-set-text -s :bookmark-load -t")
 # ctrl keys
