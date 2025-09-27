@@ -2,7 +2,9 @@
 
 ## Loc
 
-- wezterm and nvim
+_endswith / : folder_
+
+- wezterm/ and nvim/
 
   > **Linux,Macos**
   > ~/.config/wezterm/wezterm.lua
@@ -20,7 +22,18 @@
 
   > /etc/keyd/default.conf
 
+- i3/
+
+  > ~/.config/i3/
+
+- qutebrowser/
+
+  > **Linux**
+  > ~/.config/qutebrowser/
+
 - others
   > ~/.config
+
+---
 
 ## install.sh only for wezterm/nvim/zsh now

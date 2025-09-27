@@ -6,9 +6,5 @@
 
 config_version: 2
 settings:
-  fonts.default_size:
-    global: 15pt
-  statusbar.show:
-    global: always
-  tabs.show:
-    global: always
+  content.javascript.clipboard:
+    https://chatgpt.com: access-paste
