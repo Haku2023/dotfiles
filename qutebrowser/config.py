@@ -5,6 +5,7 @@
 """
 config file for qutebrowser
 """
+import sys
 
 #
 # NOTE: config.py is intended for advanced users who are comfortable
@@ -149,7 +150,20 @@ c.content.javascript.log_message.excludes = {
     ],
     "userscript:_qute_js": ["*TrustedHTML*"],
 }
-c.fonts.default_size = "20pt"
+
+config.bind("<alt-t>", f"cmd-set-text -s :{sys.platform}")
+# Way 1: use sys.platform
+if sys.platform == "darwin":  # macOS
+    c.tabs.position = "top"
+    c.fonts.default_size = "20pt"
+elif sys.platform.startswith("linux"):
+    c.tabs.position = "bottom"
+    # c.tabs.width = "2%"
+    c.fonts.default_size = "15pt"
+else:
+    c.tabs.position = "left"
+    c.tabs.position = "bottom"
+
 c.scrolling.smooth = True
 c.search.incremental = False
 # config.bind("<Ctrl-h>", "fake-key <Backspace>")

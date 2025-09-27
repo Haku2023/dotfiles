@@ -19,9 +19,11 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 elseif wezterm.target_triple == "aarch64-apple-darwin" then
 	wezterm.log_info("OS: Mac")
 	config.font_size = 21
+	Gotop = "/usr/local/bin/gotop"
 elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
 	wezterm.log_info("OS: Linux")
 	config.font_size = 17
+	Gotop = "gotop"
 end -- }}}
 -- font setting
 config.font = wezterm.font("MesloLGS NF", { weight = "Medium", stretch = "Normal", style = "Normal" })
@@ -313,7 +315,7 @@ config.keys = { -- {{{
 		key = "o",
 		mods = "ALT",
 		action = act.SpawnCommandInNewTab({
-			args = { "/usr/local/bin/gotop" },
+			args = { Gotop },
 		}),
 	},
 	-- specific for open qutebrowser and switch to 73

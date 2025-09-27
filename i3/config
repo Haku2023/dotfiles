@@ -18,7 +18,7 @@ set $mod Mod4
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:MesloLGS NF DejaVu Sans Mono 0
+font pango:MesloLGS NF DejaVu Sans Mono 30
 
 
 # Ensure the Secret Service is available
@@ -109,7 +109,7 @@ bindsym $mod+f fullscreen toggle
 
 # switch fullscreen
 #bindsym $mod+Tab fullscreen toggle; focus down; fullscreen toggle
-bindsym $mod+Tab exec --no-startup-id ~/.config/i3/scripts/swapworkspace.sh
+#bindsym $mod+Tab exec --no-startup-id ~/.config/i3/scripts/swapworkspace.sh
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -301,7 +301,7 @@ bindsym Mod1+Shift+3 exec --no-startup-id maim -s | xclip -selection clipboard -
 bindsym Mod1+Shift+5 exec --no-startup-id maim -i $(xdotool getactivewindow) ~/Pictures/Screenshots/$(date +%s).png && notify-send "Screenshot taken" "Active window saved."
 
 # add the WallPapaer
-exec --no-startup-id feh --no-fehbg --bg-fill ~/.config/i3/feh/wallpaper
+exec --no-startup-id feh --no-fehbg --bg-fill ~/Assets/Wallpaper/cybercity-fantastic-red.jpg
 
 # floating pop up automatically 
 for_window [window_role="pop-up"] floating enable
@@ -328,7 +328,8 @@ exec_always --no-startup-id xrdb -merge ~/.config/X11/.Xresources
 
 # Start the Simple X Hotkey Daemon (sxhkd), use i3
 # exec_always --no-startup-id sxhkd
-bindsym Mod1+j exec --no-startup-id xdotool mousemove 1300 500 click 1
+# using qutebrowser without alt+j
+# bindsym Mod1+j exec --no-startup-id xdotool mousemove 1300 500 click 1
 
 # Start the keyd application mapper daemon
 exec_always --no-startup-id keyd-application-mapper -d
@@ -363,14 +364,17 @@ exec_always --no-startup-id keyd-application-mapper -d
 # 2. htop Scratchpad
 # ---------------------------------
 # Rule: Same as above, but for the "htop_scratchpad" instance.
-for_window [class="htop-term"] move scratchpad, floating enable, border pixel 0
+for_window [class="gotop-term"] move scratchpad, floating enable, border pixel 0
 
 # Launch htop in wezterm and move it to scratchpad
-exec --no-startup-id wezterm start --class htop-term -- bash -c "htop"
-bindsym $mod+Shift+p [class="htop-term"] scratchpad show
+exec --no-startup-id wezterm start --class gotop-term -- bash -c "gotop"
+bindsym $mod+Shift+p [class="gotop-term"] scratchpad show
 # Keybinding: Toggle the htop scratchpad with $mod+Shift+p
 # This follows the same robust logic but launches WezTerm with 'htop' as the command.
 # bindsym $mod+Shift+p exec --no-startup-id i3-msg -q [instance=\"htop_scratchpad\"] scratchpad show
 # exec wezterm start --class htop_scratchpad htop
 
+# i3 cycle
+exec_always --no-startup-id ~/.config/i3/scripts/i3-cycle-focus.py --history 2
+bindsym Mod1+Tab exec --no-startup-id ~/.config/i3/scripts/i3-cycle-focus.py --switch
 
