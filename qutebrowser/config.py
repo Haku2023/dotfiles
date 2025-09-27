@@ -208,7 +208,13 @@ config.bind(
     "<alt-d>", 'yank selection;; spawn --detach bash -c "open dict://$(pbpaste)"'
 )
 config.bind("tt", "spawn --userscript ./translate_ch_jp_message-info.sh", mode="caret")
-config.bind("q", "clear-messages")
+config.bind("<Escape>", "mode-leave;;clear-messages", mode="caret")
+config.bind(
+    "<Escape>",
+    "clear-messages;;clear-keychain ;; search ;; fullscreen --leave",
+    mode="normal",
+)
+
 config.bind("Q", "macro-record")
 # config.bind(
 #     "tt", "spawn --userscript ~/.local/share/qutebrowser/userscripts/qute-trans"
