@@ -20,15 +20,24 @@ elseif wezterm.target_triple == "aarch64-apple-darwin" then
 	wezterm.log_info("OS: Mac")
 	config.font_size = 21
 	Gotop = "/usr/local/bin/gotop"
-	config.background = {
+	HOME = os.getenv("HOME")
+	Background = {
 		{
 			source = {
-				File = "${HOME}/Pictures/WallPaper/cybercity-chinatown.jpg",
+				File = HOME .. "/Pictures/WallPaper/cybercity-keepforward.jpg",
 			},
-			width = "100%",
-			-- repeat_x = "Mirror",
-			hsb = { brightness = 0.5 },
+			hsb = { brightness = 0.2 },
+			opacity = 1.0,
 			attachment = "Fixed",
+		},
+		{
+			source = {
+				Color = "black",
+				-- Gradient = { preset = "Warm" },
+			},
+			height = "100%",
+			width = "100%",
+			opacity = 0.5,
 		},
 	}
 elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
@@ -39,39 +48,6 @@ end -- }}}
 -- font setting
 config.font = wezterm.font("MesloLGS NF", { weight = "Medium", stretch = "Normal", style = "Normal" })
 -- config.font = wezterm.font("MesloLGS NF")
-config.background = {
-	{
-		source = {
-			File = "/Users/bai.haodong/Pictures/WallPaper/cybercity-keepforward.jpg",
-		},
-		hsb = { brightness = 0.2 },
-		opacity = 1.0,
-		attachment = "Fixed",
-	},
-	{
-		source = {
-			Color = "black",
-			-- Gradient = { preset = "Warm" },
-		},
-		height = "100%",
-		width = "100%",
-		opacity = 0.5,
-	},
-}
-
--- define one or more remote hosts
--- config.ssh_domains = {
--- 	{
--- 		name = "117",
--- 		remote_address = "10.244.7.117",
--- 		username = "baihaodong",
--- 	},
--- }
-
--- test-show
-wezterm.on("show_status", function(window, _)
-	window:set_right_status("This is test for <C-r> show status")
-end)
 
 -- workspace setting
 -- create workspace{{{
@@ -211,7 +187,16 @@ wezterm.on("gui-startup", function(cmd)
 	window:gui_window():toggle_fullscreen()
 end)
 
--- opacity change
+-- opacity change / toggle background image
+wezterm.on("toggle-background-image", function(window, _)
+	local overrides = window:get_config_overrides() or {}
+	if not overrides.background then
+		overrides.background = Background
+	else
+		overrides.background = nil
+	end
+	window:set_config_overrides(overrides)
+end)
 wezterm.on("down-opacity", function(window, _)
 	local overrides = window:get_config_overrides() or {}
 	local tag = overrides.window_background_opacity
@@ -326,6 +311,7 @@ config.keys = { -- {{{
 	-- change opacity
 	{ key = "-", mods = "ALT", action = act.EmitEvent("down-opacity") },
 	{ key = "=", mods = "ALT", action = act.EmitEvent("up-opacity") },
+	{ key = "0", mods = "ALT", action = act.EmitEvent("toggle-background-image") },
 	-- workspace
 	{ key = ",", mods = "ALT", action = act.SwitchWorkspaceRelative(-1) },
 	{ key = ".", mods = "ALT", action = act.SwitchWorkspaceRelative(1) },
@@ -409,5 +395,10 @@ config.keys = { -- {{{
 if string.find(wezterm.target_triple, "linux") or string.find(wezterm.target_triple, "apple") then
 	table.insert(config.keys, { key = "Tab", mods = "ALT", action = act.EmitEvent("swap-workspace") })
 end
+
+-- haku test use <A-r>
+wezterm.on("show_status", function(window, _)
+	window:set_right_status("This is test for <A-r> show status")
+end)
 
 return config
