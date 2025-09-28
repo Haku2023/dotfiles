@@ -14,7 +14,7 @@ _endswith / : folder_
   > ~/.wezterm.lua
   > env:LOCALAPPDATA/nvim
 
-- .zshrc
+- .zshrc / .zshenv
 
   > ~
 
@@ -36,4 +36,4 @@ _endswith / : folder_
 
 ---
 
-## install.sh only for wezterm/nvim/zsh now
+## install.sh for wezterm/nvim/zsh/qutebrowser 25-9-28

@@ -270,8 +270,8 @@ config.keys = { -- {{{
 	-- Shift Size of Pane
 	{ key = "h", mods = "ALT|SHIFT", action = wezterm.action.AdjustPaneSize({ "Left", 1 }) },
 	{ key = "l", mods = "ALT|SHIFT", action = wezterm.action.AdjustPaneSize({ "Right", 1 }) },
-	{ key = "j", mods = "ALT|SHIFT", action = wezterm.action.AdjustPaneSize({ "Up", 1 }) },
-	{ key = "k", mods = "ALT|SHIFT", action = wezterm.action.AdjustPaneSize({ "Down", 1 }) },
+	{ key = "j", mods = "ALT|SHIFT", action = wezterm.action.AdjustPaneSize({ "Down", 1 }) },
+	{ key = "k", mods = "ALT|SHIFT", action = wezterm.action.AdjustPaneSize({ "Up", 1 }) },
 	-- Pane navigation (like Vim: Alt+h/j/k/l)
 	{ key = "h", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Left") },
 	{ key = "l", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Right") },
@@ -378,8 +378,6 @@ config.keys = { -- {{{
 -- if in linux, using tab alt to change workspace
 if string.find(wezterm.target_triple, "linux") or string.find(wezterm.target_triple, "apple") then
 	table.insert(config.keys, { key = "Tab", mods = "ALT", action = act.EmitEvent("swap-workspace") })
-	table.insert(config.keys, { key = "j", mods = "ALT|SHIFT", action = act.SwitchWorkspaceRelative(-1) })
-	table.insert(config.keys, { key = "k", mods = "ALT|SHIFT", action = act.SwitchWorkspaceRelative(1) })
 end
 
 return config

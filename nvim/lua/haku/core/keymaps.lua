@@ -2,8 +2,8 @@ vim.g.mapleader = " "
 
 local keymap = vim.keymap -- for conciseness
 
--- keymap.set("i", "jk", "<ESC>:w<CR>", { desc = "Exit insert mode with jj" })
 -- keymap.set("i", "jj", "<ESC>", { desc = "Exit insert mode with kk" })
+keymap.set("i", "jk", "<ESC>:w<CR>", { desc = "Exit insert mode and save with jk" })
 keymap.set({ "n", "x" }, "wq", ":wq<CR>", { desc = "Save and quit" })
 keymap.set({ "n", "x" }, "qq", ":q!<CR>", { desc = "Save and quit" })
 keymap.set({ "n", "x" }, "wa", ":wqa<CR>", { desc = "Save all and quit" })

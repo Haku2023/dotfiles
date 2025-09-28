@@ -151,6 +151,7 @@ elif sys.platform.startswith("linux"):
     c.tabs.position = "bottom"
     # c.tabs.width = "2%"
     c.fonts.default_size = "15pt"
+    c.fonts.web.size.default = 18
 else:
     c.tabs.position = "left"
     c.tabs.position = "bottom"
