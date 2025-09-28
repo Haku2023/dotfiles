@@ -20,6 +20,17 @@ elseif wezterm.target_triple == "aarch64-apple-darwin" then
 	wezterm.log_info("OS: Mac")
 	config.font_size = 21
 	Gotop = "/usr/local/bin/gotop"
+	config.background = {
+		{
+			source = {
+				File = "${HOME}/Pictures/WallPaper/cybercity-chinatown.jpg",
+			},
+			width = "100%",
+			-- repeat_x = "Mirror",
+			hsb = { brightness = 0.5 },
+			attachment = "Fixed",
+		},
+	}
 elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
 	wezterm.log_info("OS: Linux")
 	config.font_size = 17
@@ -28,6 +39,25 @@ end -- }}}
 -- font setting
 config.font = wezterm.font("MesloLGS NF", { weight = "Medium", stretch = "Normal", style = "Normal" })
 -- config.font = wezterm.font("MesloLGS NF")
+config.background = {
+	{
+		source = {
+			File = "/Users/bai.haodong/Pictures/WallPaper/cybercity-keepforward.jpg",
+		},
+		hsb = { brightness = 0.2 },
+		opacity = 1.0,
+		attachment = "Fixed",
+	},
+	{
+		source = {
+			Color = "black",
+			-- Gradient = { preset = "Warm" },
+		},
+		height = "100%",
+		width = "100%",
+		opacity = 0.5,
+	},
+}
 
 -- define one or more remote hosts
 -- config.ssh_domains = {
@@ -165,7 +195,7 @@ end)
 
 -- window setting
 -- to make windows resized also can exclude the top bar
-config.window_background_opacity = 0.80
+-- config.window_background_opacity = 0.80
 config.window_decorations = "RESIZE" -- {{{
 -- config.window_close_confirmation = "NeverPrompt"
 config.window_padding = {

@@ -28,8 +28,9 @@ for folder in "${folders[@]}";do
 	echo "->Link ${folder} Success"
 done
  
+answer=""
 until [ "${answer}" = 'y' ] || [ "${answer}" = 'n' ]; do
-  read -r -p "=> Next, We will link the zsh, qutebrowser, if you are not read, say n" answer
+  read -r -p "=> Next, We will link the zsh, qutebrowser, if you are not read, say no(n/y) : " answer
 done
 if [  "${answer}" = 'n' ];then
   echo "=> End 2: Only install Wezterm and Nvim"
@@ -41,10 +42,13 @@ ln -sf "$DOTFILES/zsh/zshenv" "$HOME/.zshenv"
 ln -sf "$DOTFILES/zsh/zshrc" "$HOME/.zshrc"
 echo "->Link zshenv,zshrc Success"
 ## qutebrowser
+echo "remove qutebrowser first"
 if [[ "$(uname)" == "Linux" ]]; then
+  rm -rf "$HOME/.config/qutebrowser"
   ln -sf "$DOTFILES/qutebrowser" "$HOME/.config/qutebrowser"
 elif [[ "$(uname)" == "Darwin" ]]; then
-  ln -sf "$DOTFILES/qutebrowser" "$HOME/.qutebrowser/qutebrowser"
+  rm -rf "$HOME/.qutebrowser"
+  ln -sf "$DOTFILES/qutebrowser" "$HOME/.qutebrowser"
 fi
 echo "->Link qutebrowser Success"
 

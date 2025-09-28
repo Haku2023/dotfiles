@@ -176,7 +176,7 @@ if [[ "$(uname)" == "Darwin" ]];then
 paste-from-clipboard() {
   RBUFFER=${RBUFFER:0:1}$(pbpaste)${RBUFFER:1}
 }
-elseif [[  "$(uname)" == "Linux"  ]]
+elif [[  "$(uname)" == "Linux"  ]];then
 paste-from-clipboard() {
   RBUFFER=${RBUFFER:0:1}`(xsel -b -o)`${RBUFFER:1}
 }
