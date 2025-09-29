@@ -11,6 +11,9 @@ return {
     local fg_dark = "#B4D0E9"
     local fg_gutter = "#627E97"
     local border = "#547998"
+    --haku check
+    -- local colors = require("tokyonight.colors").setup()
+    -- print(vim.inspect(colors))
 
     require("tokyonight").setup({
       style = "moon",
@@ -21,7 +24,7 @@ return {
       },
 
       -- transparent telescope including fzf
-      on_highlights = function(hl, _)
+      on_highlights = function(hl, c)
         local prompt = "#CBE0F0"
         hl.TelescopeNormal = {
           -- bg = c.bg_dark,
@@ -53,6 +56,15 @@ return {
           -- fg = c.bg_dark,
           fg = prompt,
         }
+        hl.String = { fg = c.green }
+        hl["@constructor"] = { fg = c.green1 }
+        -- hl.String = { fg = "#FEE2AD" }
+        hl["@variable"] = { fg = c.orange, bold = false }
+        hl["@variable.member"] = { fg = c.teal }
+        hl["@property"] = { fg = c.teal }
+        -- hl["@keyword"] = { italic = false, bold = true, fg = "#FFD369" }
+        hl["@keyword"] = { italic = false, bold = true, fg = c.magenta }
+        hl["Function"] = { bold = false, fg = c.yellow, italic = true }
       end,
       -- transparent colorscheme tokyonight
       on_colors = function(colors)
@@ -71,7 +83,10 @@ return {
         colors.fg_float = fg
         colors.fg_gutter = fg_gutter
         colors.fg_sidebar = fg_dark
-        colors.comment = "#93DA97"
+        -- colors.comment = "#93DA97"
+        colors.comment = "#a4aacb"
+
+        -- colors.comment = colors.comment
       end,
     })
     vim.cmd("colorscheme tokyonight")

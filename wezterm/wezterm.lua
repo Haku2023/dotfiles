@@ -44,6 +44,7 @@ elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
 	wezterm.log_info("OS: Linux")
 	config.font_size = 17
 	Gotop = "gotop"
+	config.window_background_opacity = 0.80
 end -- }}}
 -- font setting
 config.font = wezterm.font("MesloLGS NF", { weight = "Medium", stretch = "Normal", style = "Normal" })
@@ -171,7 +172,6 @@ end)
 
 -- window setting
 -- to make windows resized also can exclude the top bar
--- config.window_background_opacity = 0.80
 config.window_decorations = "RESIZE" -- {{{
 -- config.window_close_confirmation = "NeverPrompt"
 config.window_padding = {
