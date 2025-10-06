@@ -254,6 +254,8 @@ zle -N v2iv
 #bindkey '^F' forward-char
 #bindkey -M vicmd '^C' _ins_after_break
 #bindkey -M viins '^C' _ins_after_break   # optional: same behavior if you hit ^C in insert
+# to use ls -- ^a / rm -- ^a
+set extended_glob
 function zvm_after_lazy_keybindings() {
   bindkey -M vicmd '^S' prepend-sudo
   bindkey -M vicmd 'v' v2iv
