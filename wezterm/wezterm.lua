@@ -401,4 +401,25 @@ wezterm.on("show_status", function(window, _)
 	window:set_right_status("This is test for <A-r> show status")
 end)
 
+-- Define a "launcher" window class for floating prompts
+-- wezterm.on("config-reload", function()
+-- 	wezterm.window.set_window_class("launcher", {
+-- 		-- Dimensions in cells (width x height)
+-- 		width = 80,
+-- 		height = 10,
+--
+-- 		-- Remove window decorations for a minimal look
+-- 		window_decorations = "NONE",
+--
+-- 		-- Position it in the center of the screen
+-- 		position = {
+-- 			x = "50%",
+-- 			y = "45%", -- A little above center looks nice
+-- 		},
+--
+-- 		-- Make it a floating window that stays on top
+-- 		is_floating = true,
+-- 	})
+-- end)
+
 return config

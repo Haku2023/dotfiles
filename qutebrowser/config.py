@@ -147,6 +147,7 @@ config.set(
 if sys.platform == "darwin":  # macOS
     c.tabs.position = "top"
     c.fonts.default_size = "20pt"
+    c.fonts.web.size.default = 18
 elif sys.platform.startswith("linux"):
     c.tabs.position = "bottom"
     # c.tabs.width = "2%"
@@ -209,6 +210,7 @@ config.bind(
     "<alt-d>", 'yank selection;; spawn --detach bash -c "open dict://$(pbpaste)"'
 )
 config.bind("tt", "spawn --userscript ./translate_ch_jp_message-info.sh", mode="caret")
+config.bind("<ctrl-f>", "spawn --userscript qute-pass.py", mode="normal")
 config.bind("<Escape>", "mode-leave;;clear-messages", mode="caret")
 config.bind(
     "<Escape>",
@@ -246,4 +248,10 @@ config.bind("<ctrl-k>", "mode-enter set_mark")
 # Haku Check
 # check platform
 config.bind("<alt-t>", f"cmd-set-text -s :{sys.platform}")
+# config.bind("<alt-t>", "spawn --userscript qute-pass.py")
+config.bind(
+    "ee",
+    "spawn --detach wezterm cli spawn  --new-window -- pass insert websites/{url:host}/",
+)
+# Replace 'kitty -e' with the wezterm equivalent
 # Haku Check
