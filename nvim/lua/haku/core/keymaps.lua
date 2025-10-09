@@ -16,7 +16,7 @@ keymap.set({ "i" }, "<C-t>", "<ESC>:set wrap<CR>", { desc = "wrap the lines" })
 
 --From dycw/dotfiles
 -- global marks
-local prefixes = "m'"
+--[[ local prefixes = "m'"
 local letters = "abcdefghijklmnopqrstuvwxyz"
 for i = 1, #prefixes do
   local prefix = prefixes:sub(i, i)
@@ -25,7 +25,7 @@ for i = 1, #prefixes do
     local upper_letter = string.upper(lower_letter)
     keymap.set({ "n", "v" }, prefix .. lower_letter, prefix .. upper_letter, { desc = "Mark " .. upper_letter })
   end
-end
+end ]]
 -- save
 keymap.set({ "n", "v" }, "<C-s>", "<Cmd>w<CR>", { desc = "save" })
 keymap.set("i", "<C-s>", "<ESC><Cmd>w<CR>a", { desc = "save" })

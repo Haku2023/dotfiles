@@ -256,10 +256,33 @@ zle -N v2iv
 #bindkey -M viins '^C' _ins_after_break   # optional: same behavior if you hit ^C in insert
 # to use ls -- ^a / rm -- ^a
 set extended_glob
+  bindkey -M viins '^S' prepend-sudo
+function zvm_before_lazy_keybindings(){
+}
+
+# function zvm_before_init_commands=()
+zvm_after_init_commands+=(
+  #for dirhistory
+  "bindkey -s '^K' '^[[1;3A'" "bindkey -M vicmd -s '^K' '^[[1;3A'"
+  "bindkey -s '^I' '^[[1;3C'" "bindkey -M vicmd -s '^I' '^[[1;3C'"
+  "bindkey -s '^O' '^[[1;3D'" "bindkey -M vicmd -s '^O' '^[[1;3D'"
+  "bindkey '^H' backward-delete-char"
+)
+function zvm_after_init(){
+  # bindkey -M viins -s '^I' '^[[1;3D'
+  # bindkey -M viins -s '^O' '^[[1;3C'
+  # bindkey  -s '^K' '^[[1;3A'
+  # bindkey -M viins '^V' paste-from-clipboard
+}
 function zvm_after_lazy_keybindings() {
   bindkey -M vicmd '^S' prepend-sudo
   bindkey -M vicmd 'v' v2iv
   bindkey -M vicmd 'p' paste-from-clipboard
+  # bindkey -M vicmd 'p' paste-from-clipboard
+
+  # bindkey -M vicmd -s '^I' '^[[1;3D'
+
+#^[[1;3D^[[1;3A^[[1;3C^[[1;3B^C
 }
 
 # Start in command mode

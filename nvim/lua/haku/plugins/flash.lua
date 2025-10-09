@@ -13,6 +13,8 @@ return {
         enabled = true,
       },
       char = {
+        -- enable/disable the flash in f/t mode
+        enabled = true,
         jump_labels = true,
         config = function(opts)
           -- disable jump labels when not enabled, when using a count,
