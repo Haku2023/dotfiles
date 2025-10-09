@@ -147,7 +147,7 @@ config.set(
 if sys.platform == "darwin":  # macOS
     c.tabs.position = "top"
     c.fonts.default_size = "20pt"
-    c.fonts.web.size.default = 18
+    c.fonts.web.size.default = 20
 elif sys.platform.startswith("linux"):
     c.tabs.position = "bottom"
     # c.tabs.width = "2%"

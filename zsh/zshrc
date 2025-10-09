@@ -109,14 +109,14 @@ source $ZSH/oh-my-zsh.sh
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$(\"${HOME}/Tools/miniconda3/bin/conda\" 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/bai.haodong/Tools/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "${HOME}/Tools/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "${HOME}/Tools/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/Users/bai.haodong/Tools/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/bai.haodong/Tools/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="${HOME}/Tools/miniconda3/bin:$PATH"
+        export PATH="/Users/bai.haodong/Tools/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -273,7 +273,8 @@ eval "$(fzf --zsh)"
 ### ---- Zoxide (better cd) ----
 eval "$(zoxide init zsh)"
 ### set conda
-eval "$(conda shell.zsh activate)"
+# eval "$(conda shell.zsh activate)"
+# conda config --show / conda config --set auto_activate true
 
 # set autosuggest highlight
 #ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=208'
