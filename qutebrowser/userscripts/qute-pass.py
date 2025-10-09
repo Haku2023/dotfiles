@@ -1,4 +1,4 @@
-#!/Users/bai.haodong/Documents/tools/miniconda3/envs/qute-pass/bin/python
+#!/usr/bin/env python3
 
 # SPDX-FileCopyrightText: Chris Braun (cryzed) <cryzed@googlemail.com>
 #

@@ -38,7 +38,8 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # Lock after 5 minutes of inactivity
 exec --no-startup-id xautolock -time 5 -locker 'i3lock'
 # lock screen by haku
-bindsym $mod+Shift+l exec i3lock -c 000000
+# bindsym $mod+Shift+l exec i3lock -c 000000
+bindsym Mod1+control+q exec i3lock -c 000000
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.

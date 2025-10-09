@@ -14,6 +14,34 @@ keymap.set("i", "hh", "<C-w>", { desc = "delete words in insertmode" })
 keymap.set({ "n" }, "<C-t>", ":set wrap<CR>", { desc = "wrap the lines" })
 keymap.set({ "i" }, "<C-t>", "<ESC>:set wrap<CR>", { desc = "wrap the lines" })
 
+--From dycw/dotfiles
+-- global marks
+local prefixes = "m'"
+local letters = "abcdefghijklmnopqrstuvwxyz"
+for i = 1, #prefixes do
+  local prefix = prefixes:sub(i, i)
+  for j = 1, #letters do
+    local lower_letter = letters:sub(j, j)
+    local upper_letter = string.upper(lower_letter)
+    keymap.set({ "n", "v" }, prefix .. lower_letter, prefix .. upper_letter, { desc = "Mark " .. upper_letter })
+  end
+end
+-- save
+keymap.set({ "n", "v" }, "<C-s>", "<Cmd>w<CR>", { desc = "save" })
+keymap.set("i", "<C-s>", "<ESC><Cmd>w<CR>a", { desc = "save" })
+-- no highlight
+keymap.set("n", "<Esc>", "<Cmd>nohlsearch<CR>", { desc = "Clear Highlights" })
+-- no highlight
+keymap.set("n", "<Esc>", "<Cmd>nohlsearch<CR>", { desc = "Clear Highlights" })
+-- paste in insertion
+keymap.set("i", "<C-v>", "<C-o>p", { desc = "Paste in insert mode" })
+-- quickfix
+-- keymap.set("n", "]", "<Cmd>cnext<CR>", "Quickfix next")
+-- keymap.set("n", "[", "<Cmd>cprev<CR>", "Quickfix prev")
+--From dycw/dotfiles
+
+-- marks
+keymap.set("n", "<leader>md", "<Cmd>delmarks a-z A-Z 0-9<CR>", { desc = "Clear All Marks a-z A-Z 0-9" })
 -- show full path
 keymap.set("n", "<C-g>", ":echo expand('%:p')<CR>", { desc = "show full path" })
 -- Lazy and Mason

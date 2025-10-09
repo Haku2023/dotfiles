@@ -57,6 +57,7 @@ return {
     local keymap = vim.keymap -- for conciseness
     local builtin = require("telescope.builtin")
 
+    keymap.set("n", "<leader>mm", builtin.marks, { desc = "Fuzzy find files in cwd" })
     keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Fuzzy find files in cwd" })
     keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "Fuzzy find recent files" })
     keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Find string in cwd" })

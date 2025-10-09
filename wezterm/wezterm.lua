@@ -274,6 +274,8 @@ config.keys = { -- {{{
 	-- { key = "L", mods = "CTRL|SHIFT", action = "DisableDefaultAssignment" }, -- disables the debug overlay
 	{ key = "d", mods = "CTRL", action = "DisableDefaultAssignment" }, -- disables the debug overlay
 	{ key = "u", mods = "CTRL", action = "DisableDefaultAssignment" }, -- disables the debug overlay
+	{ key = "p", mods = "CTRL|SHIFT", action = "DisableDefaultAssignment" }, -- disables
+	{ key = "n", mods = "CTRL|SHIFT", action = "DisableDefaultAssignment" }, -- disables
 	-- { key = "w", mods = "CTRL", action = "DisableDefaultAssignment" }, -- disables the debug overlay
 	-- { key = "q", mods = "CTRL|SHIFT", action = "DisableDefaultAssignment" }, -- disables the debug overlay
 	-- Alt(Opt)+Shift+F toggle full screen
