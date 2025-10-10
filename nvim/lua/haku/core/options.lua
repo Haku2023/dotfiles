@@ -70,6 +70,10 @@ opt.undodir = vim.fn.expand("~/.config/nvim-undo")
 opt.undolevels = 10000
 opt.undoreload = 10000
 
+-- extra config
+vim.o.exrc = true
+vim.o.secure = true
+
 -- vim.lsp.set_log_level("debug")
 
 --[[ opt.pumblend = 0
