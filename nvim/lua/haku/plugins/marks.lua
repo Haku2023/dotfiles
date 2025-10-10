@@ -2,12 +2,14 @@ return {
   "chentoast/marks.nvim",
   event = "VeryLazy",
   opts = {},
+
   config = function()
     require("marks").setup({
       -- whether to map keybinds or not. default true
       default_mappings = true,
       -- which builtin marks to show. default {}
       -- builtin_marks = { ".", "<", ">", "^" },
+      signs = true,
       -- whether movements cycle back to the beginning/end of buffer. default true
       cyclic = true,
       -- whether the shada file is updated after modifying uppercase marks. default false
@@ -38,11 +40,26 @@ return {
         annotate = false,
       },
       mappings = {
-        toggle_bookmark0 = "<leader>mm",
-        next_bookmark0 = "<leader>m.",
-        prev_bookmark0 = "<leader>m,",
-        delete_bookmark0 = "<leader>md",
+        toggle = "<leader>mm",
+        next = "<leader>m.",
+        prev = "<leader>m,",
+        delete_buf = "<leader>md",
       },
     })
+    -- vim.api.nvim_set_hl(0, "MarkSignHL", {})
+    -- vim.api.nvim_set_hl(0, "MarkSignNumHL", { bg = "NONE", fg = "#000000", force = true })
+    local icon = "" --"󰓎"
+    local marks_utils = require("marks.utils")
+    -- Tweak from https://github.com/chentoast/marks.nvim/blob/a69253e4b471a2421f9411bc5bba127eef878dc0/lua/marks/utils.lua#L9
+    marks_utils.add_sign = function(bufnr, text, line, id, group, priority)
+      priority = priority or 10
+      local sign_name = "Marks_" .. text
+      if not marks_utils.sign_cache[sign_name] then
+        marks_utils.sign_cache[sign_name] = true
+        vim.api.nvim_set_hl(0, "MarkSignHL", { bg = "NONE", bold = true, fg = "LightGreen", force = true })
+        vim.fn.sign_define(sign_name, { text = icon, texthl = "MarkSignHL", numhl = "MarkSignHL" })
+      end
+      vim.fn.sign_place(id, group, sign_name, bufnr, { lnum = line, priority = priority })
+    end
   end,
 }
