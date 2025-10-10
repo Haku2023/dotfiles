@@ -28,6 +28,7 @@ return {
         timeout_ms = 3000,
       },
     })
+    conform.formatters.fprettify = { append_args = { "--indent", "2" } }
 
     vim.keymap.set({ "n", "v" }, "<leader>mp", function()
       conform.format({

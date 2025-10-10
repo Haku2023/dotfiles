@@ -48,7 +48,13 @@ return {
         c = { bg = colors.inactive_bg, fg = colors.semilightgray },
       },
     }
-
+    local lint_progress = function()
+      local linters = require("lint").get_running()
+      if #linters == 0 then
+        return "󰦕" .. table.concat(linters, ", ")
+      end
+      return "󱉶 " .. table.concat(linters, ", ")
+    end
     -- configure lualine with modified theme
     lualine.setup({
       options = {
@@ -68,6 +74,7 @@ return {
           { "encoding" },
           { "fileformat" },
           { "filetype" },
+          { lint_progress },
         },
       },
     })
