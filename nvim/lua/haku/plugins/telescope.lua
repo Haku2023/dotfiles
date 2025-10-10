@@ -33,12 +33,27 @@ return {
       end,
     })
 
+    local previewers = require("telescope.previewers")
+    local orig_maker = previewers.buffer_previewer_maker
+
     telescope.setup({
       defaults = {
         preview = {
           filesize_limit = 2.0,
           timeout = 150,
         },
+
+        buffer_previewer_maker = function(filepath, bufnr, opts)
+          orig_maker(filepath, bufnr, opts)
+          if filepath:match("%.[Ff]90$") then
+            vim.schedule(function()
+              vim.bo[bufnr].filetype = "fortran" -- keep ft consistent
+              -- vim.b[bufnr].fortran_fixed_source = 1
+              -- vim.b[bufnr].fortran_free_source = 0
+              -- vim.bo[bufnr].syntax = "fortran" -- attach regex syntax
+            end)
+          end
+        end,
         path_display = { "smart" },
         mappings = {
           i = {
