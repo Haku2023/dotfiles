@@ -30,7 +30,7 @@ return {
         "yaml",
         "html",
         "css",
-        "fortran",
+        -- "fortran",
         "prisma",
         "markdown",
         "markdown_inline",
@@ -67,14 +67,15 @@ return {
       },
     })
 
+    -- disable treesitter fortran to use lsp fortls
     -- fortran omp and fortran directive
-    vim.api.nvim_set_hl(0, "fortranDirective", { fg = "#82d600", bold = true })
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = { "fortran" },
-      callback = function()
-        vim.fn.matchadd("fortranDirective", "^#.*")
-      end,
-    })
+    -- vim.api.nvim_set_hl(0, "fortranDirective", { fg = "#82d600", bold = true })
+    -- vim.api.nvim_create_autocmd("FileType", {
+    --   pattern = { "fortran" },
+    --   callback = function()
+    --     vim.fn.matchadd("fortranDirective", "^#.*")
+    --   end,
+    -- })
 
     vim.api.nvim_set_hl(0, "OmpDirective", { fg = "#ffaa00", bold = true })
     vim.api.nvim_create_autocmd("FileType", {
