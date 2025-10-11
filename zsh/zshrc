@@ -209,6 +209,10 @@ alt_up() {
   # \e is ESC. This simulates pressing Alt+Left
   zle -U $'\e[1;3A'
 }
+open-nvim() {
+  nvim
+  zle reset-prompt
+}
 # Force insert mode at each new prompt
 # zle-line-init() {
 #   zle -K viins   # switch to vi insert keymap
@@ -226,6 +230,7 @@ alt_up() {
 # zle -N alt_left
 # zle -N alt_right
 # zle -N alt_up
+zle -N open-nvim
 zle -N paste-from-clipboard
 zle -N v2iv
 zle -N prepend-sudo
@@ -250,8 +255,9 @@ set extended_glob
  zvm_after_init_commands+=(
 #   #for dirhistory
   "bindkey -s '^K' '^[[1;3A'" "bindkey -M vicmd -s '^K' '^[[1;3A'"
-  "bindkey -s '^J' '^[[1;3C'" "bindkey -M vicmd -s '^J' '^[[1;3C'" 
+  "bindkey -s '^U' '^[[1;3C'" "bindkey -M vicmd -s '^U' '^[[1;3C'" 
   "bindkey -s '^O' '^[[1;3D'" "bindkey -M vicmd -s '^O' '^[[1;3D'"
+  "bindkey '^J' open-nvim" "bindkey -M vicmd '^J' open-nvim"
   "bindkey '^H' backward-delete-char"
   "bindkey '^V' paste-from-clipboard"
   "bindkey '^S' prepend-sudo"
