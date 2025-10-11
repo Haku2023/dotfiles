@@ -106,21 +106,6 @@ source $ZSH/oh-my-zsh.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/bai.haodong/Tools/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/bai.haodong/Tools/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/bai.haodong/Tools/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/bai.haodong/Tools/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 # <<<<<<<<<<<<<<<}}}
 
 # haku alias
@@ -175,10 +160,14 @@ haku_end() {
 if [[ "$(uname)" == "Darwin" ]];then
 paste-from-clipboard() {
   RBUFFER=${RBUFFER:0:1}$(pbpaste)${RBUFFER:1}
+  zle end-of-line
+  zvm_enter_insert_mode
 }
 elif [[  "$(uname)" == "Linux"  ]];then
 paste-from-clipboard() {
   RBUFFER=${RBUFFER:0:1}`(xsel -b -o)`${RBUFFER:1}
+  zle end-of-line
+  zvm_enter_insert_mode
 }
 fi
 # Prepend 'sudo' to the current command line with Ctrl+S
@@ -234,12 +223,12 @@ alt_up() {
 # zle -N _ins_after_break
 # zle -N zle-line-init
 # zle -N zle-line-finish
-zle -N paste-from-clipboard
-zle -N prepend-sudo
 # zle -N alt_left
 # zle -N alt_right
 # zle -N alt_up
+zle -N paste-from-clipboard
 zle -N v2iv
+zle -N prepend-sudo
 # Start in command mode (this is the key part)
 # zle-line-init() { zle -K vicmd; }
 # <<<<<<<<<<<<<<<<# }}}
@@ -256,18 +245,19 @@ zle -N v2iv
 #bindkey -M viins '^C' _ins_after_break   # optional: same behavior if you hit ^C in insert
 # to use ls -- ^a / rm -- ^a
 set extended_glob
-  bindkey -M viins '^S' prepend-sudo
-function zvm_before_lazy_keybindings(){
-}
 
 # function zvm_before_init_commands=()
-zvm_after_init_commands+=(
-  #for dirhistory
+ zvm_after_init_commands+=(
+#   #for dirhistory
   "bindkey -s '^K' '^[[1;3A'" "bindkey -M vicmd -s '^K' '^[[1;3A'"
-  "bindkey -s '^I' '^[[1;3C'" "bindkey -M vicmd -s '^I' '^[[1;3C'"
+  "bindkey -s '^J' '^[[1;3C'" "bindkey -M vicmd -s '^J' '^[[1;3C'" 
   "bindkey -s '^O' '^[[1;3D'" "bindkey -M vicmd -s '^O' '^[[1;3D'"
   "bindkey '^H' backward-delete-char"
-)
+  "bindkey '^V' paste-from-clipboard"
+  "bindkey '^S' prepend-sudo"
+ )
+function zvm_before_lazy_keybindings(){
+}
 function zvm_after_init(){
   # bindkey -M viins -s '^I' '^[[1;3D'
   # bindkey -M viins -s '^O' '^[[1;3C'
@@ -295,7 +285,7 @@ function zvm_after_lazy_keybindings() {
 eval "$(fzf --zsh)"
 ### ---- Zoxide (better cd) ----
 eval "$(zoxide init zsh)"
-### set conda
+### set conda, linux? need
 # eval "$(conda shell.zsh activate)"
 # conda config --show / conda config --set auto_activate true
 
@@ -530,4 +520,20 @@ alias ssh_wsl="echo \"On CMD/PS adm: \n1.Reset Interface: \nnetsh interface port
 # <<<<<<<<<<<<<<<}}}
 
 
+
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$("${HOME}/Tools/miniconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "${HOME}/Tools/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "${HOME}/Tools/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="${HOME}/Tools/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
 
