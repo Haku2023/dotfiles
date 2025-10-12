@@ -18,7 +18,10 @@ return {
     treesitter.setup({ -- enable syntax highlighting
       highlight = {
         enable = true,
+        -- also use the legacy regex highlighter for Fortran
+        additional_vim_regex_highlighting = { "fortran" },
       },
+
       -- enable indentation
       indent = { enable = true, disable = { "fortran" } },
       -- ensure these language parsers are installed
@@ -82,6 +85,13 @@ return {
       pattern = { "fortran" },
       callback = function()
         vim.fn.matchadd("OmpDirective", "^!\\$.*")
+      end,
+    })
+
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "fortran",
+      callback = function()
+        vim.api.nvim_set_hl(0, "@variable.fortran", { link = "NONE" })
       end,
     })
   end,

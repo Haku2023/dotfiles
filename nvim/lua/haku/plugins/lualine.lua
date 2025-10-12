@@ -59,6 +59,7 @@ return {
     lualine.setup({
       options = {
         theme = my_lualine_theme,
+        -- theme = "monokai-pro-octagon",
       },
       sections = {
         lualine_c = {
