@@ -128,5 +128,11 @@ return {
         },
       },
     })
+    -- require("lspconfig").fortls.setup({
+    --   cmd = { "fortls", "--debug_log" },
+    --   root_dir = require("lspconfig.util").root_pattern(".fortls", ".fortlsrc", ".fortls.json", ".git"),
+    --   -- If you keep the config file elsewhere, point fortls to it:
+    --   -- cmd = { "fortls", "--config", "/path/to/my/.fortlsrc" },
+    -- })
   end,
 }

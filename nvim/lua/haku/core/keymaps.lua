@@ -40,8 +40,12 @@ keymap.set("i", "<C-v>", "<C-o>p", { desc = "Paste in insert mode" })
 -- keymap.set("n", "[", "<Cmd>cprev<CR>", "Quickfix prev")
 --From dycw/dotfiles
 
+-- inspect
+keymap.set("n", "<leader>i", "<Cmd>Inspect<CR>", { desc = "Clear All Marks a-z A-Z 0-9" })
 -- marks
 keymap.set("n", "<leader>md", "<Cmd>delmarks a-z A-Z 0-9<CR>", { desc = "Clear All Marks a-z A-Z 0-9" })
+--inspect
+keymap.set("n", "<leader>i", "<Cmd>Inspect<CR>", { desc = "Inspect in Treesitter" })
 -- show full path
 keymap.set("n", "<C-g>", ":echo expand('%:p')<CR>", { desc = "show full path" })
 -- Lazy and Mason
