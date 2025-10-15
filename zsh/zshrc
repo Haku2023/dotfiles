@@ -274,6 +274,7 @@ function zvm_after_lazy_keybindings() {
   bindkey -M vicmd '^S' prepend-sudo
   bindkey -M vicmd 'v' v2iv
   bindkey -M vicmd 'p' paste-from-clipboard
+  bindkey -M viins '^R' mcfly-history-widget
   # bindkey -M vicmd 'p' paste-from-clipboard
 
   # bindkey -M vicmd -s '^I' '^[[1;3D'
@@ -293,6 +294,9 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 eval "$(fzf --zsh)"
 ### ---- Zoxide (better cd) ----
 eval "$(zoxide init zsh)"
+# init mcfly
+eval "$(mcfly init zsh)"
+# export MCFLY_KEY_SCHEME=vim
 ### set conda, linux? need
 # eval "$(conda shell.zsh activate)"
 # conda config --show / conda config --set auto_activate true
