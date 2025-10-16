@@ -286,7 +286,11 @@ function zvm_after_lazy_keybindings() {
 # zle -N zle-line-init
 
 # init homebrew
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+if [[ "$(uname)" == "Darwin" ]];then
+  eval "$(/usr/local/bin/brew shellenv)"
+elif [[  "$(uname)" == "Linux"  ]];then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
 # init fzf by source, file places should refer to the fzf
 # method 1
 # alias fzf-init="source /home/linuxbrew/.linuxbrew/Cellar/fzf/0.62.0/shell/completion.zsh;source /home/linuxbrew/.linuxbrew/Cellar/fzf/0.62.0/shell/key-bindings.zsh"
