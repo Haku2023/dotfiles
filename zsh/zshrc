@@ -287,7 +287,9 @@ function zvm_after_lazy_keybindings() {
 
 # init homebrew
 if [[ "$(uname)" == "Darwin" ]];then
-  eval "$(/usr/local/bin/brew shellenv)"
+  # eval "$(/usr/local/bin/brew shellenv)"
+  # arm 64
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 elif [[  "$(uname)" == "Linux"  ]];then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi

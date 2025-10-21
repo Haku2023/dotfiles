@@ -42,3 +42,5 @@ if [[ "$(uname)" == "Darwin" ]];then
   export ARCHFLAGS="-arch $(uname -m)"
 fi
 #
+# brew update frequency
+export HOMEBREW_AUTO_UPDATE_SECS=86400   # Update at most once per day
