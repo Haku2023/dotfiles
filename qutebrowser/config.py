@@ -159,6 +159,7 @@ else:
 c.scrolling.smooth = True
 c.search.incremental = False
 c.messages.timeout = 0
+c.content.javascript.clipboard = "access-paste"
 
 # avoid error notice in caret/visual mode
 c.content.javascript.log_message.excludes = {
