@@ -159,7 +159,10 @@ else:
 c.scrolling.smooth = True
 c.search.incremental = False
 c.messages.timeout = 0
+# remove copy request
 c.content.javascript.clipboard = "access-paste"
+# allow PDF viewer
+c.content.pdfjs = True
 
 # avoid error notice in caret/visual mode
 c.content.javascript.log_message.excludes = {
