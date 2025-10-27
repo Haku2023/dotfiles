@@ -1,0 +1,357 @@
+{
+  "description": "Freeform Option/Control Remap(by haku):Option 1. z → show/hide sidebar bar; g,l,L → show/hide grid, lock, unlock; 2. -,= → font small bigger;  3. C/V → copy/paste style, c → show color; 4. j,k → move down,up; 5.n → Sticky Note, i → insert choose; 6. 0/shift 0 → actual size/ fit content. Control: 1. 0 →  fit selection",
+  "manipulators": [
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.freeform$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "z",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": ["any"]
+        }
+      },
+      "to": [
+        {
+          "key_code": "s",
+          "modifiers": ["control", "command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.freeform$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "g",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": ["any"]
+        }
+      },
+      "to": [
+        {
+          "key_code": "8",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.freeform$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "l",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "6",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.freeform$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "l",
+        "modifiers": {
+          "mandatory": ["option", "shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "7",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.freeform$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "hyphen",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "hyphen",
+          "modifiers": ["command", "option"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.freeform$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "equal_sign",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "equal_sign",
+          "modifiers": ["command", "option", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.freeform$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "c",
+        "modifiers": {
+          "mandatory": ["option", "shift"],
+          "optional": ["any"]
+        }
+      },
+      "to": [
+        {
+          "key_code": "c",
+          "modifiers": ["option", "command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.freeform$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "c",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "c",
+          "modifiers": ["shift", "command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.freeform$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "v",
+        "modifiers": {
+          "mandatory": ["option", "shift"],
+          "optional": ["any"]
+        }
+      },
+      "to": [
+        {
+          "key_code": "v",
+          "modifiers": ["option", "command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.freeform$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "j",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "down_arrow",
+          "modifiers": ["fn"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.freeform$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "k",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "up_arrow",
+          "modifiers": ["fn"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.freeform$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "n",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "n",
+          "modifiers": ["control", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.freeform$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "i",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "v",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.freeform$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "0",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "0",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.freeform$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "0",
+        "modifiers": {
+          "mandatory": ["option", "shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "0",
+          "modifiers": ["command", "option", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.freeform$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "0",
+        "modifiers": {
+          "mandatory": ["control"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "0",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    }
+  ]
+}

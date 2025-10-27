@@ -1,0 +1,49 @@
+{
+  "description": "Numbers Option/Control Remap(by haku):: Options: ; Control: m/M → merge/unmerge",
+  "manipulators": [
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Numbers$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "m",
+        "modifiers": {
+          "mandatory": ["control"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "m",
+          "modifiers": ["command", "control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Numbers$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "m",
+        "modifiers": {
+          "mandatory": ["control", "shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "m",
+          "modifiers": ["command", "control", "shift"]
+        }
+      ],
+      "type": "basic"
+    }
+  ]
+}

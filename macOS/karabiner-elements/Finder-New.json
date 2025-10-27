@@ -1,0 +1,1867 @@
+{
+  "description": "Finder-New-VimLike Option/Control/Command Remap (by haku):Option j → toggle finder_vim, Option 1. 1,2,3,4,5,6 for sorted; 2.g,i,o → google, icloud, onedrive; Vim: 1.j,k,h,l,g,G → Nav;3. o,i,u,U → child,parent,undo,redo; 3. C-o,C-i → Back,Forward; 3. p,z,t → show/hide preview,side bar,new tab; 4. r,x,n/N → rename,delete,create folder/window; 5. d,D,h,H → go to download,desktop,home,Document; 6. c,v,V → copy,paste,move paste; 7. enter → open.8.C-g → go to folder; 9. 1,2,3,4,5,6,7,tab,q,w,e,a,s,d,y → color tags; Command: tab → cycle through windows; 10. enter,esc,tab -> change from insert to normal",
+  "manipulators": [
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "j",
+        "modifiers": { "mandatory": "option" }
+      },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
+      "to": [
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Insert Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "finder_vim",
+            "value": 1
+          }
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 1
+        }
+      ],
+      "from": {
+        "key_code": "j",
+        "modifiers": { "mandatory": "option" }
+      },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
+      "to": [
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Normal Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "finder_vim",
+            "value": 0
+          }
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "1",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "1",
+          "modifiers": ["control", "option", "command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "2",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": ["any"]
+        }
+      },
+      "to": [
+        {
+          "key_code": "4",
+          "modifiers": ["control", "option", "command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "3",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": ["any"]
+        }
+      },
+      "to": [
+        {
+          "key_code": "5",
+          "modifiers": ["control", "option", "command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "4",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": ["any"]
+        }
+      },
+      "to": [
+        {
+          "key_code": "3",
+          "modifiers": ["control", "option", "command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "5",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": ["any"]
+        }
+      },
+      "to": [
+        {
+          "key_code": "6",
+          "modifiers": ["control", "option", "command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "6",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": ["any"]
+        }
+      },
+      "to": [
+        {
+          "key_code": "2",
+          "modifiers": ["control", "option", "command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "o",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": ["any"]
+        }
+      },
+      "to": [
+        {
+          "key_code": "o",
+          "modifiers": ["command", "option"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "i",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "i",
+          "modifiers": ["command", "option"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "g",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": ["any"]
+        }
+      },
+      "to": [
+        {
+          "key_code": "g",
+          "modifiers": ["command", "option"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "j",
+        "modifiers": { "mandatory": [] }
+      },
+      "to": [
+        {
+          "key_code": "down_arrow",
+          "modifiers": ["any"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "k",
+        "modifiers": { "mandatory": [] }
+      },
+      "to": [{ "key_code": "up_arrow" }],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "h",
+        "modifiers": { "mandatory": [] }
+      },
+      "to": [
+        {
+          "key_code": "left_arrow",
+          "modifiers": ["any"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "l",
+        "modifiers": { "mandatory": [] }
+      },
+      "to": [
+        {
+          "key_code": "right_arrow",
+          "modifiers": ["any"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "j",
+        "modifiers": { "mandatory": ["shift"] }
+      },
+      "to": [
+        {
+          "key_code": "down_arrow",
+          "modifiers": ["shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "k",
+        "modifiers": { "mandatory": ["shift"] }
+      },
+      "to": [
+        {
+          "key_code": "up_arrow",
+          "modifiers": ["shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "h",
+        "modifiers": { "mandatory": ["shift"] }
+      },
+      "to": [
+        {
+          "key_code": "left_arrow",
+          "modifiers": ["shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "l",
+        "modifiers": { "mandatory": ["shift"] }
+      },
+      "to": [
+        {
+          "key_code": "right_arrow",
+          "modifiers": ["shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "g",
+        "modifiers": { "mandatory": ["shift"] }
+      },
+      "to": [
+        {
+          "key_code": "down_arrow",
+          "modifiers": ["option"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "g",
+        "modifiers": { "mandatory": [] }
+      },
+      "to": [
+        {
+          "key_code": "up_arrow",
+          "modifiers": ["option"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "i",
+        "modifiers": { "mandatory": [] }
+      },
+      "to": [
+        {
+          "key_code": "up_arrow",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "o",
+        "modifiers": { "mandatory": [] }
+      },
+      "to": [
+        {
+          "key_code": "down_arrow",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "u",
+        "modifiers": { "mandatory": [] }
+      },
+      "to": [
+        {
+          "key_code": "z",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "u",
+        "modifiers": { "mandatory": ["shift"] }
+      },
+      "to": [
+        {
+          "key_code": "z",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "o",
+        "modifiers": {
+          "mandatory": ["control"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "open_bracket",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "i",
+        "modifiers": {
+          "mandatory": ["control"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "close_bracket",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "p",
+        "modifiers": { "mandatory": [] }
+      },
+      "to": [
+        {
+          "key_code": "p",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "z",
+        "modifiers": { "mandatory": [] }
+      },
+      "to": [
+        {
+          "key_code": "s",
+          "modifiers": ["command", "control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "t",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "t",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "r",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
+      "to": [
+        { "key_code": "return_or_enter" },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Insert Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "finder_vim",
+            "value": 1
+          }
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "x",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "delete_or_backspace",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "n",
+        "modifiers": {
+          "mandatory": ["shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "n",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "n",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
+      "to": [
+        {
+          "key_code": "n",
+          "modifiers": ["command", "shift"]
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Insert Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "finder_vim",
+            "value": 1
+          }
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "d",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "l",
+          "modifiers": ["command", "option"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "d",
+        "modifiers": {
+          "mandatory": ["option", "shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "d",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "h",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "h",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "h",
+        "modifiers": {
+          "mandatory": ["option", "shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "o",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "f",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
+      "to": [
+        {
+          "key_code": "f",
+          "modifiers": ["command"]
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Insert Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "finder_vim",
+            "value": 1
+          }
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "c",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "c",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "v",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "v",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "v",
+        "modifiers": {
+          "mandatory": ["shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "v",
+          "modifiers": ["command", "option"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "return_or_enter",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "o",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "g",
+        "modifiers": {
+          "mandatory": ["control"],
+          "optional": []
+        }
+      },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
+      "to": [
+        {
+          "key_code": "g",
+          "modifiers": ["command", "shift"]
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Insert Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "finder_vim",
+            "value": 1
+          }
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": { "key_code": "1" },
+      "to": [
+        {
+          "key_code": "g",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "key_code": "r",
+            "modifiers": ["shift"]
+          },
+          { "key_code": "e" },
+          { "key_code": "d" },
+          { "key_code": "hyphen" },
+          {
+            "key_code": "h",
+            "modifiers": ["shift"]
+          },
+          { "key_code": "a" },
+          { "key_code": "k" },
+          { "key_code": "u" },
+          {
+            "key_code": "return_or_enter",
+            "repeat": false
+          }
+        ]
+      },
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": { "key_code": "2" },
+      "to": [
+        {
+          "key_code": "g",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "key_code": "o",
+            "modifiers": ["shift"]
+          },
+          { "key_code": "r" },
+          { "key_code": "a" },
+          { "key_code": "n" },
+          { "key_code": "g" },
+          { "key_code": "e" },
+          {
+            "key_code": "return_or_enter",
+            "repeat": false
+          }
+        ]
+      },
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": { "key_code": "3" },
+      "to": [
+        {
+          "key_code": "g",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "key_code": "y",
+            "modifiers": ["shift"]
+          },
+          { "key_code": "e" },
+          { "key_code": "l" },
+          { "key_code": "l" },
+          { "key_code": "o" },
+          { "key_code": "w" },
+          {
+            "key_code": "return_or_enter",
+            "repeat": false
+          }
+        ]
+      },
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": { "key_code": "4" },
+      "to": [
+        {
+          "key_code": "g",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "key_code": "g",
+            "modifiers": ["shift"]
+          },
+          { "key_code": "r" },
+          { "key_code": "e" },
+          { "key_code": "e" },
+          { "key_code": "n" },
+          {
+            "key_code": "return_or_enter",
+            "repeat": false
+          }
+        ]
+      },
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": { "key_code": "5" },
+      "to": [
+        {
+          "key_code": "g",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "key_code": "b",
+            "modifiers": ["shift"]
+          },
+          { "key_code": "l" },
+          { "key_code": "u" },
+          { "key_code": "e" },
+          {
+            "key_code": "return_or_enter",
+            "repeat": false
+          }
+        ]
+      },
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": { "key_code": "6" },
+      "to": [
+        {
+          "key_code": "g",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "key_code": "p",
+            "modifiers": ["shift"]
+          },
+          { "key_code": "u" },
+          { "key_code": "r" },
+          { "key_code": "p" },
+          { "key_code": "l" },
+          { "key_code": "e" },
+          {
+            "key_code": "return_or_enter",
+            "repeat": false
+          }
+        ]
+      },
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": { "key_code": "7" },
+      "to": [
+        {
+          "key_code": "g",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "key_code": "g",
+            "modifiers": ["shift"]
+          },
+          { "key_code": "r" },
+          { "key_code": "a" },
+          { "key_code": "y" },
+          {
+            "key_code": "return_or_enter",
+            "repeat": false
+          }
+        ]
+      },
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "tab",
+        "modifiers": {
+          "mandatory": ["command"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "2",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 1
+        }
+      ],
+      "from": { "key_code": "return_or_enter" },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
+      "to": [
+        { "key_code": "return_or_enter" },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Normal Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "finder_vim",
+            "value": 0
+          }
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": { "key_code": "left_control" },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
+      "to": [
+        {
+          "key_code": "left_control",
+          "lazy": true
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "to_if_alone": [
+        { "key_code": "escape" },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Normal Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "finder_vim",
+            "value": 0
+          }
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 1
+        }
+      ],
+      "from": { "key_code": "tab" },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
+      "to": [
+        { "key_code": "tab" },
+        { "key_code": "tab" },
+        { "key_code": "tab" },
+        { "key_code": "tab" },
+        { "key_code": "tab" },
+        { "key_code": "tab" },
+        { "key_code": "tab" },
+        { "key_code": "tab" },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Normal Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "finder_vim",
+            "value": 0
+          }
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": { "key_code": "q" },
+      "to": [
+        {
+          "key_code": "1",
+          "modifiers": ["control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": { "key_code": "w" },
+      "to": [
+        {
+          "key_code": "2",
+          "modifiers": ["control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": { "key_code": "e" },
+      "to": [
+        {
+          "key_code": "3",
+          "modifiers": ["control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": { "key_code": "a" },
+      "to": [
+        {
+          "key_code": "4",
+          "modifiers": ["control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": { "key_code": "s" },
+      "to": [
+        {
+          "key_code": "5",
+          "modifiers": ["control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": { "key_code": "d" },
+      "to": [
+        {
+          "key_code": "6",
+          "modifiers": ["control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.finder$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "finder_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": { "key_code": "y" },
+      "to": [
+        {
+          "key_code": "7",
+          "modifiers": ["control"]
+        }
+      ],
+      "type": "basic"
+    }
+  ]
+}

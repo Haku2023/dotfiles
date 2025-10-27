@@ -1,0 +1,313 @@
+{
+  "description": "Pages Option/Control Remap(by haku):: Option: 1. x → show/hide tool bar, z → show/hide tab bar; 2. search, s → search, n,shift n → next,pre; 3. C/V → copy/paste style; 4. j,k,l,L → next,pre,bottom,top; 5. i → insert choose; 6. c → show/hide color; Control: 1. s → strikethrough",
+  "manipulators": [
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Pages$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "x",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": ["any"]
+        }
+      },
+      "to": [
+        {
+          "key_code": "t",
+          "modifiers": ["option", "command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Pages$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "z",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": ["any"]
+        }
+      },
+      "to": [
+        {
+          "key_code": "y",
+          "modifiers": ["option", "command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Pages$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "s",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": ["any"]
+        }
+      },
+      "to": [
+        {
+          "key_code": "f",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Pages$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "n",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": ["any"]
+        }
+      },
+      "to": [
+        {
+          "key_code": "g",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Pages$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "n",
+        "modifiers": {
+          "mandatory": ["option", "shift"],
+          "optional": ["any"]
+        }
+      },
+      "to": [
+        {
+          "key_code": "g",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Pages$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "c",
+        "modifiers": {
+          "mandatory": ["option", "shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "c",
+          "modifiers": ["option", "command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Pages$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "v",
+        "modifiers": {
+          "mandatory": ["option", "shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "v",
+          "modifiers": ["option", "command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Pages$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "j",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "down_arrow",
+          "modifiers": ["fn"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Pages$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "k",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "up_arrow",
+          "modifiers": ["fn"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Pages$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "l",
+        "modifiers": {
+          "mandatory": ["option", "shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "left_arrow",
+          "modifiers": ["fn"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Pages$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "l",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "right_arrow",
+          "modifiers": ["fn"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Pages$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "i",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "v",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Pages$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "c",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "c",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Pages$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "s",
+        "modifiers": {
+          "mandatory": ["control"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "s",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    }
+  ]
+}

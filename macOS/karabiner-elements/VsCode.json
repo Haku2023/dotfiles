@@ -1,0 +1,71 @@
+{
+  "description": "VS Code Option Remap(by haku) Using 678:: Options: i → command palette, n → jupyter new notebook, e → toggle sidebar;",
+  "manipulators": [
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.microsoft.VSCode$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "i",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "7",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.microsoft.VSCode$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "n",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "8",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.microsoft.VSCode$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "e",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "6",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    }
+  ]
+}

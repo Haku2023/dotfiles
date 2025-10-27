@@ -1,0 +1,93 @@
+{
+  "description": "Remote Desktop(haku) Command :  tab → command tab; Control : 1. w → connection center 2. m → window fill; 3. , . → go left/right desktop ",
+  "manipulators": [
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.microsoft.rdc.macos$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "tab",
+        "modifiers": {
+          "mandatory": ["command"],
+          "optional": ["any"]
+        }
+      },
+      "to": [
+        {
+          "key_code": "tab",
+          "modifiers": ["option"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.microsoft.rdc.macos$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "w",
+        "modifiers": {
+          "mandatory": ["control", "option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "k",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.microsoft.rdc.macos$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "comma",
+        "modifiers": {
+          "mandatory": ["command"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "left_arrow",
+          "modifiers": ["command", "control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.microsoft.rdc.macos$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "period",
+        "modifiers": {
+          "mandatory": ["command"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "right_arrow",
+          "modifiers": ["command", "control"]
+        }
+      ],
+      "type": "basic"
+    }
+  ]
+}

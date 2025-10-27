@@ -1,0 +1,27 @@
+{
+  "description": "Wezterm : command tab → option tab",
+  "manipulators": [
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.github.wez.wezterm$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "tab",
+        "modifiers": {
+          "mandatory": ["command"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "tab",
+          "modifiers": ["option"]
+        }
+      ],
+      "type": "basic"
+    }
+  ]
+}

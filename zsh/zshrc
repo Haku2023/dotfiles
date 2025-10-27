@@ -249,7 +249,7 @@ zle -N prepend-sudo
 #bindkey -M vicmd '^C' _ins_after_break
 #bindkey -M viins '^C' _ins_after_break   # optional: same behavior if you hit ^C in insert
 # to use ls -- ^a / rm -- ^a
-set extended_glob
+setopt extended_glob
 
 # function zvm_before_init_commands=()
  zvm_after_init_commands+=(

@@ -1,0 +1,93 @@
+{
+  "description": "Karabiner Option Remap(by haku): 1. j,k,h,l → down,up,top,down ",
+  "manipulators": [
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^org.pqrs.Karabiner-Elements.Settings$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "j",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "down_arrow",
+          "modifiers": ["fn"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^org.pqrs.Karabiner-Elements.Settings$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "k",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "up_arrow",
+          "modifiers": ["fn"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^org.pqrs.Karabiner-Elements.Settings$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "l",
+        "modifiers": {
+          "mandatory": ["option", "shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "left_arrow",
+          "modifiers": ["fn"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^org.pqrs.Karabiner-Elements.Settings$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "l",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "right_arrow",
+          "modifiers": ["fn"]
+        }
+      ],
+      "type": "basic"
+    }
+  ]
+}
