@@ -194,6 +194,7 @@ wezterm.on("toggle-background-image", function(window, _)
 		overrides.background = Background
 	else
 		overrides.background = nil
+		-- config.window_background_opacity = 0.80
 	end
 	window:set_config_overrides(overrides)
 end)

@@ -1,0 +1,147 @@
+    // // vim setting
+    // "vim.foldfix": true,
+    // "vim.useSystemClipboard": true,
+    // "vim.leader": "<Space>",
+    // // j j and j k for esc insertmode
+    // "vim.insertModeKeyBindings": [
+    //     {
+    //      "before": ["j", "j"],
+    //      "after": ["<Esc>"]
+    //     },
+    //     {
+    //      "before": ["j", "k"],
+    //      "after": ["<Esc>",":","w","<CR>"]
+    //     }
+    // ],
+    // "vim.normalModeKeyBindingsNonRecursive": [
+    //     {
+    //         "before":["<C-d>"],
+    //         "after":["2","0","j"]
+    //     },
+    //     {
+    //         "before":["<C-u>"],
+    //         "after":["2","0","k"]
+    //     },
+    //     // NAVIGATION
+    //     // switch b/w buffers
+    //     {"before": ["<A-h>"],"commands":[":bprevious"]},
+    //     {"before": ["<A-l>"],"commands":[":bnext"]},
+
+    //     // comment
+    //     { 
+    //         "before":["leader","/"],
+    //         "commands":["editor.action.commentLine"]
+    //     },
+
+    //     // toggle zen mode
+    //     {
+    //         "before":["leader","z"],
+    //         "commands":["workbench.action.toggleZenMode","toggle.window.customTitleBarVisibility.windowed"],
+    //         "when":["toggle.toggleCustomTitleBar"]
+    //     },
+
+    //     // toggle zen mode
+    //     {
+    //         "before":["leader","Z"],
+    //         "commands":["workbench.action.toggleZenMode","toggle.toggleCustomTitleBar"],
+    //         "when":["toggle.window.customTitleBarVisibility.windowed"]
+    //     },
+
+
+    //     // close other editors
+    //     {
+    //         "before":["leader","X"],
+    //         "commands":["workbench.action.closeOtherEditors"]
+    //     },
+
+    //     // close editors
+    //     {
+    //         "before":["leader","x"],
+    //         "commands":["workbench.action.closeActiveEditor"]
+    //     },
+    //     // bookmarks
+    //     {
+    //         "before":["leader","m","m"],
+    //         "commands":["bookmarks.toggle"]
+    //     },
+    //     {
+    //         "before":["leader","m",","],
+    //         "commands":["bookmarks.jumpToPrevious"]
+    //     },
+    //     {
+    //         "before":["leader","m","."],
+    //         "commands":["bookmarks.jumpToNext"]
+    //     },
+    //     {
+    //         "before":["leader","m","c"],
+    //         "commands":["bookmarks.clear"]
+    //     },
+    //     {
+    //         "before":["leader","m","C"],
+    //         "commands":["bookmarks.clearFromAllFiles"]
+    //     },
+    //     {
+    //         "before":["leader","m","l"],
+    //         "commands":["bookmarks.list"]
+    //     },
+    //     {
+    //         "before":["leader","m","L"],
+    //         "commands":["bookmarks.listFromAllFiles"]
+    //     },
+    //     // panes
+    //     {
+    //         "before":["leader","h"],
+    //         "commands":["workbench.action.focusLeftGroup"]
+    //     },
+    //     {
+    //         "before":["leader","j"],
+    //         "commands":["workbench.action.focusBelowGroup"]
+    //     },
+    //     {
+    //         "before":["leader","k"],
+    //         "commands":["workbench.action.focusAboveGroup"]
+    //     },
+    //     {
+    //         "before":["leader","l"],
+    //         "commands":["workbench.action.focusRightGroup"]
+    //     },
+
+    //     {
+    //         "before":["leader","c","s"],
+    //         "commands":["notebook.cell.split"]
+    //     },
+    //     // splits
+    //     {"before":["leader","v"],"commands":[":vsplit"]},
+    //     {"before":["leader","s"],"commands":[":split"]},
+    //     // FILE TREE
+    //     {
+    //         "before": ["leader","e","e"],
+    //         "commands": ["workbench.explorer.fileView.focus"]
+    //     },
+    //     {
+    //         "before": ["leader","e","f"],
+    //         "commands": ["jupyter.openOutlineView"]
+    //     },
+
+    //     // NICE TO HAVE
+    //     {"before":["leader","w"], "commands":["workbench.action.files.save"]},
+    //     {"before":["leader","f"], "commands":["workbench.action.quickOpen"]},
+    //     {"before":["leader","p"], "commands":["editor.action.formatDocument"]},
+    //     {"before":["leader","o"], "commands":["livePreview.start.preview.atFile"]},
+    //     {
+    //         "before":["g","h"], 
+    //         "commands":["editor.action.showDefinitionPreviewHover"]
+    //     },
+    // ],
+    // "vim.visualModeKeyBindings": [
+    //     // Stay in visual mode while indenting
+    //     {"before": ["<"],"commands":["editor.action.outdentLines"]},
+    //     {"before": [">"],"commands":["editor.action.indentLines"]},
+    //     // Move selected lines while staying in visual mode
+    //     {"before":["J"],"commands":["editor.action.moveLinesDownAction"]},
+    //     {"before":["K"],"commands":["editor.action.moveLinesUpAction"]},
+    //     // Toggle comment selection
+    //     {"before":["leader","c"],"commands":["editor.action.commentLine"]}
+        
+    // ],
+    // // vim setting end

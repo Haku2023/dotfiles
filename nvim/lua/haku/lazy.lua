@@ -11,15 +11,30 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({ { import = "haku.plugins" }, { import = "haku.plugins.lsp" } }, {
-  install = {
-    colorscheme = { "nightfily" },
-  },
-  checker = {
-    enabled = true,
-    notify = false,
-  },
-  change_detextion = {
-    notify = false,
-  },
-})
+if vim.g.vscode then
+  require("lazy").setup({ { import = "haku.plugins.vscode" } }, {
+    install = {
+      colorscheme = { "nightfily" },
+    },
+    checker = {
+      enabled = true,
+      notify = false,
+    },
+    change_detextion = {
+      notify = false,
+    },
+  })
+else
+  require("lazy").setup({ { import = "haku.plugins" }, { import = "haku.plugins.lsp" } }, {
+    install = {
+      colorscheme = { "nightfily" },
+    },
+    checker = {
+      enabled = true,
+      notify = false,
+    },
+    change_detextion = {
+      notify = false,
+    },
+  })
+end
