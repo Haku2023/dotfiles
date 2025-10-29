@@ -363,7 +363,7 @@
     {
       "conditions": [
         {
-          "bundle_identifiers": [],
+          "bundle_identifiers": ["^com.apple.finder$", "^com.apple.Preview$"],
           "type": "frontmost_application_unless"
         }
       ],

@@ -1,6 +1,61 @@
 {
-  "description": "Preview Option/Control Remap(by haku)::Option Key: j → toggle keymaps; Vanilla Key: 1. m,n : mark, open marklist; 2. j,k,g,G,u,d → move up,down,top,bottom,up page,down page; 3. o,i → back,forward item; 4. z,Z → hide/open sidebar; 5. x → hide tool bar; 6. d → delete; 7. a,s,q,w,e,r,t → annotation; 8. h → open highlight pane; 9. f → search",
+  "description": "Preview Option/Control Remap(by haku)::Option Key: space/j → toggle keymaps; Vanilla Key: 1. m,n : mark, open marklist; 2. j,k,g,G,u,d → move up,down,top,bottom,up page,down page; 3. o,i → back,forward item; 4. z,Z → hide/open sidebar; 5. x → hide tool bar; 6. d → delete; 7. a,s,q,w,e,r,t → annotation; 8. h → open highlight pane; 9. f → search",
   "manipulators": [
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.Preview$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "preview_keymaps_enabled",
+          "type": "variable_if",
+          "value": 1
+        }
+      ],
+      "from": {
+        "key_code": "spacebar",
+        "modifiers": { "mandatory": "option" }
+      },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
+      "to": [
+        {
+          "key_code": "spacebar",
+          "modifiers": ["command"]
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Insert Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "preview_keymaps_enabled",
+            "value": 0
+          }
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "type": "basic"
+    },
     {
       "conditions": [
         {
@@ -23,8 +78,33 @@
             "name": "preview_keymaps_enabled",
             "value": 1
           }
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Normal Mode!"
+          }
         }
       ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
       "type": "basic"
     },
     {
@@ -49,8 +129,33 @@
             "name": "preview_keymaps_enabled",
             "value": 0
           }
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Insert Mode!"
+          }
         }
       ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
       "type": "basic"
     },
     {
@@ -553,11 +658,17 @@
           "value": 1
         }
       ],
-      "from": { "key_code": "f" },
+      "from": { "key_code": "slash" },
       "to": [
         {
           "key_code": "f",
           "modifiers": ["command"]
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Insert Mode!"
+          }
         },
         {
           "set_variable": {
@@ -566,6 +677,179 @@
           }
         }
       ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.Preview$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "preview_keymaps_enabled",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": { "key_code": "return_or_enter" },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
+      "to": [
+        { "key_code": "return_or_enter" },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Normal Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "preview_keymaps_enabled",
+            "value": 1
+          }
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.Preview$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": { "key_code": "left_control" },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
+      "to": [
+        {
+          "key_code": "left_control",
+          "lazy": true
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "to_if_alone": [
+        { "key_code": "escape" },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Normal Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "preview_keymaps_enabled",
+            "value": 1
+          }
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.Preview$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "preview_keymaps_enabled",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": { "key_code": "tab" },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
+      "to": [
+        { "key_code": "tab" },
+        { "key_code": "tab" },
+        { "key_code": "tab" },
+        { "key_code": "tab" },
+        { "key_code": "tab" },
+        { "key_code": "tab" },
+        { "key_code": "tab" },
+        { "key_code": "tab" },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Normal Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "preview_keymaps_enabled",
+            "value": 1
+          }
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
       "type": "basic"
     }
   ]

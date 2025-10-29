@@ -275,7 +275,8 @@
             "^org.pqrs.Karabiner-Elements.Settings$",
             "^com.apple.iWork.Numbers$",
             "^com.apple.iWork.Keynote$",
-            "^com.apple.finder$"
+            "^com.apple.finder$",
+            "^com.apple.Preview$"
           ],
           "type": "frontmost_application_unless"
         }

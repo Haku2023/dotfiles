@@ -1,0 +1,58 @@
+{
+  "cmake.configureOnOpen": true,
+  "workbench.colorTheme": "Monokai Pro (Filter Octagon)",
+  "workbench.iconTheme": "material-icon-theme",
+  "code-runner.runInTerminal": true,
+  "lldb.suppressUpdateNotifications": true,
+  "git.autofetch": true,
+  "fortran.fortls.path": "/opt/homebrew/bin/fortls",
+  // editor
+  // "editor.fontFamily": "Comic Sans MS, monospace",
+  // "editor.fontFamily": "MesloLGS NF",
+  "editor.fontFamily": "JetBrains Mono NL",
+  "editor.fontLigatures": true,
+  "editor.folding": true,
+  "editor.showFoldingControls": "always",
+  "editor.foldingHighlight": true,
+  "editor.foldingStrategy": "auto",
+  "editor.lineNumbers": "relative",
+  "editor.minimap.enabled": false,
+  "window.zoomLevel": 3,
+  "editor.fontSize": 12,
+  // terminal
+  "terminal.integrated.fontFamily": "MesloLGS NF",
+  // "terminal.integrated.fontFamily": "JetBrains Mono",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.inheritEnv": false,
+  "python.terminal.activateEnvironment": false,
+  "github.copilot.editor.enableAutoCompletions": true,
+  "zenMode.hideLineNumbers": false,
+
+  "cmake.pinnedCommands": [
+    "workbench.action.tasks.configureTaskRunner",
+    "workbench.action.tasks.runTask"
+  ],
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "workbench.editor.editorActionsLocation": "titleBar",
+  "window.customTitleBarVisibility": "windowed",
+  "files.autoSave": "afterDelay",
+  // nvim setting start
+  "vscode-neovim.neovimExecutablePaths.win32": "/home/linuxbrew/.linuxbrew/bin/nvim",
+  "vscode-neovim.neovimExecutablePaths.darwin": "/usr/local/bin/nvim",
+  "vscode-neovim.neovimInitVimPaths.darwin": "/Users/bai.haodong/.config/nvim/init.lua",
+  "vscode-neovim.logOutputToConsole": true,
+  "editor.scrollBeyondLastLine": false,
+  // nvim setting end
+  "python.defaultInterpreterPath": "/Users/bai.haodong/Tools/miniconda3",
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.completeFunctionParens": true,
+  "path-autocomplete.extensionOnImport": true,
+  "path-autocomplete.pathMappings": {
+    "/": "${workspanceFolder}"
+  },
+  "notebook.lineNumbers": "on",
+  "dataWrangler.outputRenderer.enabled": false,
+  "github.copilot.nextEditSuggestions.enabled": true
+}

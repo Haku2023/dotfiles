@@ -37,6 +37,7 @@ keymap({ "n", "v" }, "<leader>pr", "<cmd>lua require('vscode').action('code-runn
 keymap({ "n", "v" }, "<leader>fd", "<cmd>lua require('vscode').action('editor.action.formatDocument')<CR>")
 
 -- haku
+-- fold <<<
 -- navigation
 -- keymap("n", "H", "<nop>")
 -- keymap("n", "L", "<nop>")
@@ -59,6 +60,12 @@ keymap({ "n", "v" }, "<leader>fg", "<cmd>lua require('vscode').action('workbench
 -- indent outdent
 keymap({ "n", "v" }, "<<", "<cmd>lua require('vscode').action('editor.action.outdentLines')<CR>")
 keymap({ "n", "v" }, ">>", "<cmd>lua require('vscode').action('editor.action.indentLines')<CR>")
+-- jupyter
+-- debug
+keymap("n", "<leader>ss", "<cmd>lua require('vscode').action('notebook.cell.split')<CR>")
+-- keymap("n","<leader>k","<cmd>lua require('vscode').action('jupyter.debugstepover')<CR>")
+
+-- fold <<<
 
 -- harpoon keymaps
 -- fold <<<{{{

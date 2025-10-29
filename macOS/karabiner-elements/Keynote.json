@@ -1,5 +1,5 @@
 {
-  "description": "Keynote Option/Control Remap(by haku): Option: 1. enter → Play Slideshow; 2. T/o/p → show/hide Tab Bar/Object Layouts/Presenter Notes; 3. r/e → show/hide rule/object list; 4. ,',c → show/hide build order/arrange tools/color; 5. x,z,Z,v → show/hide tool bar, slide only, navigator,light table; 6. j → click format; 7. -/= → smaller/bigger; 8. i → choose file 9. l,L,d → lock/unlock, duplicate; 10. 0,shift 0 → real size, fit content; 11. n → new slide; 12. k → skip the slide; Control: 1. 0 → fit selection ",
+  "description": "Keynote Option/Control Remap(by haku): Option: 1. enter → Play Slideshow; 2. T/o/p → show/hide Tab Bar/Object Layouts/Presenter Notes; 3. r/e → show/hide rule/object list; 4. ,',c → show/hide build order/arrange tools/color; 5. x,z,Z,v → show/hide tool bar, slide only, navigator,light table; 6. j → click format; 7. -/= → smaller/bigger; 8. i → choose file 9. l,L,d → lock/unlock, duplicate; 10. 0,shift 0 → real size, fit content; 11. n → new slide; 12. k → skip the slide; Control: 1. 0 → fit selection; 2. e -> insert equation ",
   "manipulators": [
     {
       "conditions": [
@@ -547,6 +547,28 @@
         {
           "key_code": "0",
           "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "k",
+        "modifiers": {
+          "mandatory": ["control"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "e",
+          "modifiers": ["command", "option"]
         }
       ],
       "type": "basic"
