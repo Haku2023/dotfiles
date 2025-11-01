@@ -1,0 +1,275 @@
+[
+  // nav for tab
+  {
+    "key": "alt+.",
+    "command": "workbench.action.nextEditor"
+  },
+  {
+    "key": "alt+,",
+    "command": "workbench.action.previousEditor"
+  },
+
+  // split and nav for editor
+  {
+    "key": "alt+v",
+    "command": "workbench.action.splitEditorRight",
+    "when": "editorTextFocus || notebookEditorFocused"
+  },
+  {
+    "key": "alt+s",
+    "command": "workbench.action.splitEditorDown",
+    "when": "editorTextFocus || notebookEditorFocused"
+  },
+  {
+    "key": "alt+h",
+    "command": "workbench.action.focusLeftGroup",
+    "when": "editorTextFocus || notebookEditorFocused"
+  },
+  {
+    "key": "alt+l",
+    "command": "workbench.action.focusRightGroup",
+    "when": "editorTextFocus || notebookEditorFocused"
+  },
+  {
+    "key": "alt+l",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "explorerViewletFocus"
+  },
+  {
+    "key": "alt+k",
+    "command": "workbench.action.focusAboveGroup",
+    "when": "editorTextFocus || notebookEditorFocused"
+  },
+  {
+    "key": "alt+k",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "terminal.active"
+  },
+  {
+    "key": "alt+w",
+    "command": "workbench.action.closeActiveEditor"
+    // "when": "editorTextFocus"
+  },
+  // alt j -> leader j
+  // toggle group
+  {
+    "key": "alt+j",
+    "command": "workbench.action.terminal.toggleTerminal",
+    "when": "terminal.active"
+  },
+  {
+    "key": "alt+t",
+    "command": "workbench.action.toggleDevTools"
+  },
+  {
+    "key": "alt+e",
+    "command": "workbench.action.toggleSidebarVisibility",
+    "when": "explorerViewletFocus"
+  },
+  {
+    "key": "alt+e",
+    "command": "workbench.explorer.fileView.focus",
+    "when": "notebookEditorFocused || editorFocus"
+  },
+  // neovim default setting
+  {
+    "args": "<C-d>",
+    "command": "vscode-neovim.send",
+    "key": "ctrl+d",
+    "when": "editorTextFocus && neovim.init && neovim.mode != insert || neovim.recording"
+  },
+  {
+    "args": "<C-u>",
+    "command": "vscode-neovim.send",
+    "key": "ctrl+u",
+    "when": "editorTextFocus && neovim.init && neovim.mode != insert || neovim.recording"
+  },
+
+  // navigation for terminal
+  {
+    "key": "alt+a",
+    "command": "workbench.action.terminal.focusNext",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "alt+shift+a",
+    "command": "workbench.action.terminal.focusPrevious",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "alt+n",
+    "command": "workbench.action.terminal.new",
+    "when": "terminalFocus"
+  },
+  // explorer
+  {
+    "key": "a",
+    "command": "explorer.newFile",
+    "when": "explorerViewletFocus && !inputFocus"
+  },
+  {
+    "key": "alt+shift+n",
+    "command": "workbench.action.newWindow",
+    "when": "!explorerViewletFocus"
+  },
+  // mac only
+  {
+    "key": "alt+i",
+    "command": "workbench.action.showCommands"
+  },
+  {
+    "key": "alt+n",
+    "command": "jupyter.createnewnotebook",
+    "when": "!terminalFocus"
+  },
+  // other alts
+  {
+    "key": "alt+=",
+    "command": "-increaseSearchEditorContextLines",
+    "when": "inSearchEditor"
+  },
+  {
+    "key": "alt+=",
+    "command": "workbench.action.zoomIn"
+  },
+  {
+    "key": "alt+-",
+    "command": "workbench.action.zoomOut"
+  },
+  {
+    "key": "alt+-",
+    "command": "-decreaseSearchEditorContextLines",
+    "when": "inSearchEditor"
+  },
+  {
+    "key": "alt+r",
+    "command": "workbench.action.reloadWindow"
+  },
+  {
+    "key": "alt+z",
+    "command": "-editor.action.toggleWordWrap"
+  },
+  {
+    "key": "alt+z",
+    "command": "workbench.action.toggleZenMode",
+    "when": "!isAuxiliaryWindowFocusedContext"
+  },
+  // other keybindings
+  {
+    "key": "cmd+k l",
+    "command": "python.debugInTerminal"
+  },
+  {
+    "key": "ctrl+shift+q",
+    "command": "workbench.action.quickOpenNavigateNextInViewPicker",
+    "when": "inQuickOpen && inViewsPicker"
+  },
+  {
+    "key": "ctrl+q",
+    "command": "-workbench.action.quickOpenNavigateNextInViewPicker",
+    "when": "inQuickOpen && inViewsPicker"
+  },
+  {
+    "key": "ctrl+shift+q",
+    "command": "workbench.action.quickOpenView"
+  },
+  {
+    "key": "ctrl+q",
+    "command": "-workbench.action.quickOpenView"
+  },
+  {
+    "key": "shift+cmd+u",
+    "command": "code-runner.run"
+  },
+  {
+    "key": "ctrl+alt+n",
+    "command": "-code-runner.run"
+  },
+  {
+    "key": "ctrl+s",
+    "command": "workbench.action.files.save"
+  },
+  {
+    "key": "ctrl+t",
+    "command": "editor.action.toggleWordWrap"
+  },
+  {
+    "key": "shift+alt+j",
+    "command": "workbench.action.moveEditorLeftInGroup"
+  },
+  {
+    "key": "cmd+k shift+cmd+left",
+    "command": "-workbench.action.moveEditorLeftInGroup"
+  },
+  {
+    "key": "shift+alt+k",
+    "command": "workbench.action.moveEditorRightInGroup"
+  },
+  {
+    "key": "cmd+k shift+cmd+right",
+    "command": "-workbench.action.moveEditorRightInGroup"
+  },
+  {
+    "key": "alt+x",
+    "command": "workbench.action.closeEditorsToTheRight"
+  },
+  {
+    "key": "shift+alt+x",
+    "command": "workbench.action.closeOtherEditors"
+  },
+  {
+    "key": "alt+cmd+t",
+    "command": "-workbench.action.closeOtherEditors"
+  },
+  // jupyter
+  {
+    "key": "u",
+    "command": "undo",
+    "when": "notebookEditorFocused && !inputFocus"
+  },
+  {
+    "key": "ctrl+r",
+    "command": "redo",
+    "when": "notebookEditorFocused && !inputFocus"
+  },
+  {
+    "key": "shift+k",
+    "command": "notebook.cell.joinAbove",
+    "when": "notebookEditorFocused && !inputFocus"
+  },
+  {
+    "key": "shift+j",
+    "command": "notebook.cell.joinBelow",
+    "when": "notebookEditorFocused && !inputFocus"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "jupyter.kernel.selectLocalPythonEnvironment",
+    "when": "notebookEditorFocused"
+  },
+  // {
+  //   "key": "ctrl+s",
+  //   "command": "notebook.cell.split",
+  //   "when":"notebookEditorFocused"
+  // },
+  {
+    "key": "enter",
+    "command": "workbench.action.debug.stepInto",
+    "when": "notebookEditorFocused && inDebugMode"
+  },
+  {
+    "key": "alt+s",
+    "command": "workbench.action.debug.disconnect",
+    "when": "notebookEditorFocused && inDebugMode"
+  },
+  {
+    "key": "alt+y",
+    "command": "jupyter.gotoNextCellInFile"
+    // "when": "editorTextFocus && jupyter.hascodecells && !jupyter.webExtension && !notebookEditorFocused"
+  },
+  {
+    "key": "ctrl+alt+]",
+    "command": "-jupyter.gotoNextCellInFile",
+    "when": "editorTextFocus && jupyter.hascodecells && !jupyter.webExtension && !notebookEditorFocused"
+  }
+]

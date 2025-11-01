@@ -25,7 +25,10 @@ return {
       -- enable indentation
       indent = { enable = true, disable = { "fortran" } },
       -- ensure these language parsers are installed
+      --
       ensure_installed = {
+        "python",
+        "powershell",
         "json",
         "javascript",
         "typescript",
@@ -33,7 +36,7 @@ return {
         "yaml",
         "html",
         "css",
-        -- "fortran",
+        "fortran",
         "prisma",
         "markdown",
         "markdown_inline",
