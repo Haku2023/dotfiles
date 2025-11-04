@@ -1,6 +1,431 @@
 {
-  "description": "Mail Option Remap(by haku): 1. 1,2,3,4,5,0 → KU,google,126,flag,all,sent; 2. z,x → show/hide sidebar, toolbar; 3. t/n → new tab/message; 4. ; 5. r/R → reply, f → forward, s → search, shift space → quick look attach, enter → send; 6. -/= → zomm out/in; 7. '/shift ' → quote increase/decrease; 8. u,i,o → underline/italic/bold; 9. j,k,l/L → down,up,bottom,top",
+  "description": "Mail-New-Vim (by haku): Basic Nav: j,k,u,d,g/G,l → down,up,bottom,top,filter; Flag: 1,2,3,4,5,6 ; <C-l> insert bulleted list 1. z,x,t → show/hide sidebar, toolbar, tab; 2. / → search, p → quick look attach, ; 3. -/= → zomm out/in; ; Option: 1. 1,2,3,4,5,0 → KU,google,126,flag,all,sent;2. n → message; 3. r/R/f → reply/reply all/forward; Mode Change: <A-enter> → send; <A-j> -> toggle mode; <A-space> -> to insert; Control: 1. '/shift ' → quote increase/decrease; 2. u,i,o → underline/italic/bold; ",
   "manipulators": [
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.mail$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "spacebar",
+        "modifiers": { "mandatory": "option" }
+      },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
+      "to": [
+        {
+          "key_code": "spacebar",
+          "modifiers": ["command"]
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Insert Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "mail_mode",
+            "value": 1
+          }
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.mail$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "j",
+        "modifiers": { "mandatory": "option" }
+      },
+      "to": [
+        {
+          "set_variable": {
+            "name": "mail_mode",
+            "value": 1
+          }
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Insert Mode!"
+          }
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.mail$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 1
+        }
+      ],
+      "from": {
+        "key_code": "j",
+        "modifiers": { "mandatory": "option" }
+      },
+      "to": [
+        {
+          "set_variable": {
+            "name": "mail_mode",
+            "value": 0
+          }
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Normal Mode!"
+          }
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.mail$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 1
+        }
+      ],
+      "from": {
+        "key_code": "l",
+        "modifiers": { "mandatory": "control" }
+      },
+      "to": [
+        {
+          "key_code": "l",
+          "modifiers": ["command", "control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.mail$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "1",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "1",
+          "modifiers": ["command", "control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.mail$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "2",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "2",
+          "modifiers": ["command", "control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.mail$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "3",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "3",
+          "modifiers": ["command", "control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.mail$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "4",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "4",
+          "modifiers": ["command", "control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.mail$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "5",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "5",
+          "modifiers": ["command", "control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.mail$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "6",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "8",
+          "modifiers": ["command", "control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.mail$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "7",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "9",
+          "modifiers": ["command", "control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.mail$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "1",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "1",
+          "modifiers": ["command", "control"]
+        }
+      ],
+      "type": "basic"
+    },
+
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.mail$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "1",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "1",
+          "modifiers": ["command", "control"]
+        }
+      ],
+      "type": "basic"
+    },
     {
       "conditions": [
         {
@@ -19,8 +444,39 @@
         {
           "key_code": "1",
           "modifiers": ["command"]
+        },
+        {
+          "set_variable": {
+            "name": "mail_mode",
+            "value": 0
+          }
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Normal Mode!"
+          }
         }
       ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
       "type": "basic"
     },
     {
@@ -28,6 +484,11 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
         }
       ],
       "from": {
@@ -41,8 +502,39 @@
         {
           "key_code": "2",
           "modifiers": ["command"]
+        },
+        {
+          "set_variable": {
+            "name": "mail_mode",
+            "value": 0
+          }
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Normal Mode!"
+          }
         }
       ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
       "type": "basic"
     },
     {
@@ -50,6 +542,11 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
         }
       ],
       "from": {
@@ -63,8 +560,39 @@
         {
           "key_code": "3",
           "modifiers": ["command"]
+        },
+        {
+          "set_variable": {
+            "name": "mail_mode",
+            "value": 0
+          }
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Normal Mode!"
+          }
         }
       ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
       "type": "basic"
     },
     {
@@ -72,6 +600,11 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
         }
       ],
       "from": {
@@ -85,8 +618,39 @@
         {
           "key_code": "4",
           "modifiers": ["command"]
+        },
+        {
+          "set_variable": {
+            "name": "mail_mode",
+            "value": 0
+          }
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Normal Mode!"
+          }
         }
       ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
       "type": "basic"
     },
     {
@@ -94,6 +658,11 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
         }
       ],
       "from": {
@@ -107,8 +676,39 @@
         {
           "key_code": "5",
           "modifiers": ["command"]
+        },
+        {
+          "set_variable": {
+            "name": "mail_mode",
+            "value": 0
+          }
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Normal Mode!"
+          }
         }
       ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
       "type": "basic"
     },
     {
@@ -116,6 +716,11 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
         }
       ],
       "from": {
@@ -129,8 +734,39 @@
         {
           "key_code": "6",
           "modifiers": ["command"]
+        },
+        {
+          "set_variable": {
+            "name": "mail_mode",
+            "value": 0
+          }
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Normal Mode!"
+          }
         }
       ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
       "type": "basic"
     },
     {
@@ -138,12 +774,17 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
         }
       ],
       "from": {
         "key_code": "z",
         "modifiers": {
-          "mandatory": ["option"],
+          "mandatory": [],
           "optional": []
         }
       },
@@ -160,12 +801,17 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
         }
       ],
       "from": {
         "key_code": "x",
         "modifiers": {
-          "mandatory": ["option"],
+          "mandatory": [],
           "optional": []
         }
       },
@@ -182,12 +828,17 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
         }
       ],
       "from": {
         "key_code": "t",
         "modifiers": {
-          "mandatory": ["option"],
+          "mandatory": [],
           "optional": []
         }
       },
@@ -204,6 +855,11 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
         }
       ],
       "from": {
@@ -217,8 +873,39 @@
         {
           "key_code": "n",
           "modifiers": ["command"]
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Insert Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "mail_mode",
+            "value": 1
+          }
         }
       ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
       "type": "basic"
     },
     {
@@ -226,6 +913,11 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
         }
       ],
       "from": {
@@ -239,8 +931,39 @@
         {
           "key_code": "r",
           "modifiers": ["command"]
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Insert Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "mail_mode",
+            "value": 1
+          }
         }
       ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
       "type": "basic"
     },
     {
@@ -257,12 +980,43 @@
           "optional": []
         }
       },
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
       "to": [
         {
           "key_code": "r",
           "modifiers": ["command", "shift"]
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Insert Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "mail_mode",
+            "value": 1
+          }
         }
       ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
       "type": "basic"
     },
     {
@@ -270,6 +1024,11 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
         }
       ],
       "from": {
@@ -283,8 +1042,39 @@
         {
           "key_code": "f",
           "modifiers": ["command", "shift"]
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Insert Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "mail_mode",
+            "value": 1
+          }
         }
       ],
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
       "type": "basic"
     },
     {
@@ -292,12 +1082,17 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
         }
       ],
       "from": {
-        "key_code": "s",
+        "key_code": "slash",
         "modifiers": {
-          "mandatory": ["option"],
+          "mandatory": [],
           "optional": []
         }
       },
@@ -305,8 +1100,39 @@
         {
           "key_code": "f",
           "modifiers": ["command", "option"]
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Insert Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "mail_mode",
+            "value": 1
+          }
         }
       ],
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
       "type": "basic"
     },
     {
@@ -314,12 +1140,17 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
         }
       ],
       "from": {
-        "key_code": "spacebar",
+        "key_code": "p",
         "modifiers": {
-          "mandatory": ["option", "shift"],
+          "mandatory": [],
           "optional": []
         }
       },
@@ -349,21 +1180,39 @@
         {
           "key_code": "d",
           "modifiers": ["command", "shift"]
+        },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Normal Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "mail_mode",
+            "value": 0
+          }
         }
       ],
-      "type": "basic"
+      "type": "basic",
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 }
     },
     {
       "conditions": [
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
         }
       ],
       "from": {
         "key_code": "hyphen",
         "modifiers": {
-          "mandatory": ["option"],
+          "mandatory": [],
           "optional": []
         }
       },
@@ -380,12 +1229,17 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
         }
       ],
       "from": {
         "key_code": "equal_sign",
         "modifiers": {
-          "mandatory": ["option"],
+          "mandatory": [],
           "optional": []
         }
       },
@@ -402,12 +1256,17 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 1
         }
       ],
       "from": {
         "key_code": "quote",
         "modifiers": {
-          "mandatory": ["option"],
+          "mandatory": ["control"],
           "optional": []
         }
       },
@@ -424,12 +1283,17 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 1
         }
       ],
       "from": {
         "key_code": "quote",
         "modifiers": {
-          "mandatory": ["option", "shift"],
+          "mandatory": ["control", "shift"],
           "optional": []
         }
       },
@@ -446,12 +1310,17 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 1
         }
       ],
       "from": {
         "key_code": "u",
         "modifiers": {
-          "mandatory": ["option"],
+          "mandatory": ["control"],
           "optional": []
         }
       },
@@ -468,12 +1337,17 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 1
         }
       ],
       "from": {
         "key_code": "i",
         "modifiers": {
-          "mandatory": ["option"],
+          "mandatory": ["control"],
           "optional": []
         }
       },
@@ -490,12 +1364,17 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 1
         }
       ],
       "from": {
         "key_code": "o",
         "modifiers": {
-          "mandatory": ["option"],
+          "mandatory": ["control"],
           "optional": []
         }
       },
@@ -512,12 +1391,17 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
         }
       ],
       "from": {
-        "key_code": "j",
+        "key_code": "d",
         "modifiers": {
-          "mandatory": ["option"],
+          "mandatory": [],
           "optional": []
         }
       },
@@ -534,12 +1418,17 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
         }
       ],
       "from": {
-        "key_code": "k",
+        "key_code": "u",
         "modifiers": {
-          "mandatory": ["option"],
+          "mandatory": [],
           "optional": []
         }
       },
@@ -556,19 +1445,24 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
         }
       ],
       "from": {
-        "key_code": "l",
+        "key_code": "j",
         "modifiers": {
-          "mandatory": ["option", "shift"],
+          "mandatory": [],
           "optional": []
         }
       },
       "to": [
         {
-          "key_code": "left_arrow",
-          "modifiers": ["fn"]
+          "key_code": "down_arrow",
+          "modifiers": []
         }
       ],
       "type": "basic"
@@ -578,19 +1472,105 @@
         {
           "bundle_identifiers": ["^com.apple.mail$"],
           "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
         }
       ],
       "from": {
-        "key_code": "l",
+        "key_code": "k",
         "modifiers": {
-          "mandatory": ["option"],
+          "mandatory": [],
           "optional": []
         }
       },
       "to": [
         {
-          "key_code": "right_arrow",
-          "modifiers": ["fn"]
+          "key_code": "up_arrow",
+          "modifiers": []
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.mail$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "g",
+        "modifiers": {
+          "mandatory": ["shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "down_arrow",
+          "modifiers": ["command", "option"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.mail$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "g",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "up_arrow",
+          "modifiers": ["command", "option"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.mail$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "l",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "l",
+          "modifiers": ["command"]
         }
       ],
       "type": "basic"

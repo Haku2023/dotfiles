@@ -297,31 +297,6 @@
     {
       "conditions": [
         {
-          "bundle_identifiers": [
-            "^com.microsoft.rdc.macos$",
-            "^com.github.wez.wezterm$"
-          ],
-          "type": "frontmost_application_unless"
-        }
-      ],
-      "from": {
-        "key_code": "w",
-        "modifiers": {
-          "mandatory": ["control"],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "9",
-          "modifiers": ["command", "control", "shift"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
           "bundle_identifiers": [],
           "type": "frontmost_application_unless"
         }
@@ -497,6 +472,34 @@
         {
           "software_function": {
             "open_application": { "file_path": "/Applications/qutebrowser.app" }
+          }
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": [
+            "^com.microsoft.rdc.macos$",
+            "^com.github.wez.wezterm$"
+          ],
+          "type": "frontmost_application_unless"
+        }
+      ],
+      "from": {
+        "key_code": "w",
+        "modifiers": {
+          "mandatory": ["control"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "software_function": {
+            "open_application": {
+              "file_path": "/Applications/Microsoft Remote Desktop.app"
+            }
           }
         }
       ],

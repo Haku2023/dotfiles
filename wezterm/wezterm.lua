@@ -21,6 +21,7 @@ elseif wezterm.target_triple == "aarch64-apple-darwin" then
 	config.font_size = 21
 	Gotop = "/usr/local/bin/gotop"
 	HOME = os.getenv("HOME")
+	config.window_background_opacity = 0.80
 	Background = {
 		{
 			source = {
