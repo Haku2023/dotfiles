@@ -1,5 +1,5 @@
 {
-  "description": "System Controls (by haku). 1. c, v, x, z, h → Copy, Paste, Cut, Undo, delete; 2. n,p,b,f,a,e → Down, Up, Left, Right, Home, End;  4. left_control → (left_control,esc); 5. w → switch to 73; 6. 1,2,3,4,5 → switch desktop; 7. q,Q → show wezter,qutebrowser;",
+  "description": "System Controls (by haku). 1. c, v, x, z, h → Copy, Paste, Cut, Undo, delete; 2. n,p,b,f,a,e → Down, Up, Left, Right, Home, End;  4. left_control → (left_control,esc); 4.2 left_control double pressed -> esc 5. w → switch to 73; 6. 1,2,3,4,5 → switch desktop; 7. q,Q → show wezter,qutebrowser;",
   "manipulators": [
     {
       "conditions": [
@@ -266,6 +266,82 @@
       ],
       "type": "basic"
     },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "type": "expression_if",
+          "expression": "L_control_expiration > system.now.milliseconds"
+        }
+      ],
+      "from": {
+        "key_code": "left_control",
+        "modifiers": { "optional": [] }
+      },
+      "to": [
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Normal Mode!"
+          }
+        },
+        {
+          "set_variable": {
+            "name": "keynote_vim",
+            "value": 0
+          }
+        }
+      ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
+      "to_if_alone": [{ "key_code": "escape" }],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "left_control",
+        "modifiers": { "optional": [] }
+      },
+      "to": [
+        {
+          "set_variable": {
+            "name": "L_control_expiration",
+            "expression": "system.now.milliseconds + 300"
+          }
+        },
+        {
+          "key_code": "left_control",
+          "lazy": true
+        }
+      ],
+      "type": "basic"
+    },
+
     {
       "conditions": [
         {

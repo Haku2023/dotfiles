@@ -1,0 +1,600 @@
+{
+  "description": "Keynote Option/Control Remap(by haku): Option: 1. enter → Play Slideshow; 2. T/o/p → show/hide Tab Bar/Object Layouts/Presenter Notes; 3. r/e → show/hide rule/object list; 4. ,',c → show/hide build order/arrange tools/color; 5. x,X,z,Z,v → show/hide indicator, tool bar, slide only, navigator,light table; 6. t → define as placeholder; 7. -/= → smaller/bigger; 8. i → choose file 9. l,L,d → lock/unlock, duplicate; 10. 0,shift 0 → real size, fit content; 11. n → new slide; 12. k → skip the slide; Control: 1. 0 → fit selection; 2. e -> insert equation ",
+  "enabled": false,
+  "manipulators": [
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "return_or_enter",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "p",
+          "modifiers": ["option", "command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "t",
+        "modifiers": {
+          "mandatory": ["option", "shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "5",
+          "modifiers": ["command", "control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "o",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "e",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "p",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "p",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "e",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "l",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "r",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "r",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "semicolon",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "6",
+          "modifiers": ["command", "control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "quote",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "9",
+          "modifiers": ["command", "control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "c",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "c",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "x",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "i",
+          "modifiers": ["command", "option"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "x",
+        "modifiers": {
+          "mandatory": ["option", "shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "t",
+          "modifiers": ["command", "option"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "z",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "7",
+          "modifiers": ["command", "control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "z",
+        "modifiers": {
+          "mandatory": ["option", "shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "4",
+          "modifiers": ["command", "control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "v",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "3",
+          "modifiers": ["command", "control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "t",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "t",
+          "modifiers": ["command", "option", "control"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "hyphen",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "hyphen",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "equal_sign",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "equal_sign",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "i",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "v",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "l",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "l",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "l",
+        "modifiers": {
+          "mandatory": ["option", "shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "l",
+          "modifiers": ["command", "option"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "d",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "d",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "0",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "0",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "0",
+        "modifiers": {
+          "mandatory": ["option", "shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "0",
+          "modifiers": ["command", "option", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "n",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "n",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "k",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "h",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "0",
+        "modifiers": {
+          "mandatory": ["control"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "0",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "j",
+        "modifiers": {
+          "mandatory": ["control"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "e",
+          "modifiers": ["command", "option"]
+        }
+      ],
+      "type": "basic"
+    }
+  ]
+}

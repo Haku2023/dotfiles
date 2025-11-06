@@ -1618,6 +1618,7 @@
     },
     {
       "conditions": [
+        { "input_sources": [{ "language": "en" }], "type": "input_source_if" },
         {
           "bundle_identifiers": ["^com.apple.finder$"],
           "type": "frontmost_application_if"

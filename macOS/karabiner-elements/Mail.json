@@ -1,5 +1,5 @@
 {
-  "description": "Mail-New-Vim (by haku): Basic Nav: j,k,u,d,g/G,l → down,up,bottom,top,filter; Flag: 1,2,3,4,5,6 ; <C-l> insert bulleted list 1. z,x,t → show/hide sidebar, toolbar, tab; 2. / → search, p → quick look attach, ; 3. -/= → zomm out/in; ; Option: 1. 1,2,3,4,5,0 → KU,google,126,flag,all,sent;2. n → message; 3. r/R/f → reply/reply all/forward; Mode Change: <A-enter> → send; <A-j> -> toggle mode; <A-space> -> to insert; Control: 1. '/shift ' → quote increase/decrease; 2. u,i,o → underline/italic/bold; ",
+  "description": "Mail-New-Vim (by haku): Basic Nav: j,k,u,d,g/G,l → down,up,bottom,top,filter; Flag: 1,2,3,4,5,6 ; <C-l> insert bulleted list 1. z,x,t → show/hide sidebar, toolbar, tab; 2. / → search, spacebar, p,n,s → quick look attach, scroll content down and up, save attachment  ; 3. -/= → zomm out/in; ; Option: 1. 1,2,3,4,5,0 → KU,google,126,flag,all,sent;2. n → message; 3. r/R/f → reply/reply all/forward; Mode Change: <A-enter> → send; <A-j> -> toggle mode; <A-space> -> to insert; Control: 1. '/shift ' → quote increase/decrease; 2. u,i,o → underline/italic/bold; ",
   "manipulators": [
     {
       "conditions": [
@@ -1148,7 +1148,7 @@
         }
       ],
       "from": {
-        "key_code": "p",
+        "key_code": "spacebar",
         "modifiers": {
           "mandatory": [],
           "optional": []
@@ -1158,6 +1158,87 @@
         {
           "key_code": "y",
           "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.mail$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "p",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "spacebar",
+          "modifiers": ["shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.mail$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "n",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "spacebar",
+          "modifiers": []
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.mail$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "mail_mode",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "s",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "s",
+          "modifiers": ["control"]
         }
       ],
       "type": "basic"

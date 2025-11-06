@@ -1,5 +1,6 @@
 {
-  "description": "Keynote-New-v2 Vim + Mouse(by haku): 0. <A-Space>,<A-j>,space,<S-space>,J,K,u,U;-> Basic Toggle,Nav; 1. <A-enter> -> Play Slideshow, undo,redo; 2. T/1/n -> show/hide tab bar/Object Layouts/Presenter Notes; 3. <A-r>/q -> show/hide rule/object list; 4. b,<A-v>,<A-c>,<A-d> -> show/hide build order/arrange tools/color/Duplicate; 5. <A-z>,<A-x>,<A-Z> / x,z,<S-z> -> show/hide indicator, tool bar, slide only, navigator,light table / delete, undo,redo; 6.y -> place holder; 7. -/= -> smaller/bigger; 8. <C-r>,<C-e> -> choose file, equation; 9. <A-l>,<C-L>,D -> lock/unlock,duplicate; 10. 0, H, h -> real size, fit content, fit selection; 11. N,<A-n> -> new slide, new keynote;  12. g,G,tab,<C-tab>,<A-k> -> goto Slide,show slide number, Show previous/next inspector tab, skip slider ; 13. w,e,r -> toggle inspector,format animate,document; 14. c,v -> copy,paste style; 15. t/<C-t> -> table/text; 16. a/s/<C-a>/<C-s>/d/f/<C-d>/<C-f> -> left/center/fontleft/fontcenter/top/middle/horizontal/vertical; 17. 2,3,4,5,6 -> insert rectangle, rounded rectangle, oval, line, arrow line;  final: esc, ctrl+enter / space-> change the mode / enter + toggle",
+  "description": "Keynote-New Option/Control Remap(by haku): 0. <A-Space>,<A-j>,j,k,h,l,J,K,H,L,u,U;-> Basic Toggle,Nav; 1. <A-enter> -> Play Slideshow, undo,redo; 2. T/<A-o>/n -> show/hide tab bar/Object Layouts/Presenter Notes; 3. <A-r>/q -> show/hide rule/object list; 4. b,<A-c> -> show/hide build order/color; 5. x,X,z,Z,<A-z> -> show/hide indicator, tool bar, slide only, navigator,light table; 6.<A-p> -> place holder; 7. -/= -> smaller/bigger; 8. <A-i>,<C-e> -> choose file, equation; 9. <A-l>,<C-L>,D -> lock/unlock,duplicate; 10. 0, <S-0>, <C-0> -> real size, fit content, fit selection; 11. N,<A-n> -> new slide, new keynote;  12. g,G,s,d,<A-k> -> goto Slide,show slide number, Show previous/next inspector tab, skip slider ; 13. w,e,r -> toggle inspector,format animate,document;  final: esc, ctrl+enter-> change the mode",
+  "enabled": false,
   "manipulators": [
     {
       "conditions": [
@@ -170,9 +171,9 @@
         }
       ],
       "from": {
-        "key_code": "spacebar",
+        "key_code": "k",
         "modifiers": {
-          "mandatory": ["shift"],
+          "mandatory": [],
           "optional": []
         }
       },
@@ -197,7 +198,61 @@
         }
       ],
       "from": {
-        "key_code": "spacebar",
+        "key_code": "h",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "left_arrow",
+          "modifiers": []
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "keynote_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "l",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "right_arrow",
+          "modifiers": []
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "keynote_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "j",
         "modifiers": {
           "mandatory": [],
           "optional": []
@@ -265,7 +320,60 @@
       ],
       "type": "basic"
     },
-
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "keynote_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "h",
+        "modifiers": {
+          "mandatory": ["shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "left_arrow",
+          "modifiers": ["shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "keynote_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "l",
+        "modifiers": {
+          "mandatory": ["shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "right_arrow",
+          "modifiers": ["shift"]
+        }
+      ],
+      "type": "basic"
+    },
     {
       "conditions": [
         {
@@ -328,9 +436,9 @@
         }
       ],
       "from": {
-        "key_code": "1",
+        "key_code": "o",
         "modifiers": {
-          "mandatory": [],
+          "mandatory": ["option"],
           "optional": []
         }
       },
@@ -463,33 +571,6 @@
         }
       ],
       "from": {
-        "key_code": "v",
-        "modifiers": {
-          "mandatory": ["option"],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "b",
-          "modifiers": ["command", "control"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
         "key_code": "c",
         "modifiers": {
           "mandatory": ["option"],
@@ -517,16 +598,16 @@
         }
       ],
       "from": {
-        "key_code": "d",
+        "key_code": "x",
         "modifiers": {
-          "mandatory": ["option"],
+          "mandatory": [],
           "optional": []
         }
       },
       "to": [
         {
-          "key_code": "d",
-          "modifiers": ["command"]
+          "key_code": "i",
+          "modifiers": ["command", "option"]
         }
       ],
       "type": "basic"
@@ -546,14 +627,14 @@
       "from": {
         "key_code": "x",
         "modifiers": {
-          "mandatory": [],
+          "mandatory": ["shift"],
           "optional": []
         }
       },
       "to": [
         {
-          "key_code": "delete_or_backspace",
-          "modifiers": []
+          "key_code": "t",
+          "modifiers": ["command", "option"]
         }
       ],
       "type": "basic"
@@ -579,8 +660,8 @@
       },
       "to": [
         {
-          "key_code": "z",
-          "modifiers": ["command"]
+          "key_code": "7",
+          "modifiers": ["command", "control"]
         }
       ],
       "type": "basic"
@@ -606,78 +687,8 @@
       },
       "to": [
         {
-          "key_code": "z",
-          "modifiers": ["command", "shift"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
-        "key_code": "z",
-        "modifiers": {
-          "mandatory": ["option"],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "7",
-          "modifiers": ["command", "control"]
-        },
-        {
-          "key_code": "i",
-          "modifiers": ["command", "option"]
-        },
-        {
-          "key_code": "t",
-          "modifiers": ["command", "option"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
-        "key_code": "x",
-        "modifiers": {
-          "mandatory": ["option"],
-          "optional": []
-        }
-      },
-      "to": [
-        {
           "key_code": "4",
           "modifiers": ["command", "control"]
-        },
-        {
-          "key_code": "i",
-          "modifiers": ["command", "option"]
-        },
-        {
-          "key_code": "t",
-          "modifiers": ["command", "option"]
         }
       ],
       "type": "basic"
@@ -697,7 +708,7 @@
       "from": {
         "key_code": "z",
         "modifiers": {
-          "mandatory": ["option", "shift"],
+          "mandatory": ["option"],
           "optional": []
         }
       },
@@ -722,9 +733,9 @@
         }
       ],
       "from": {
-        "key_code": "y",
+        "key_code": "p",
         "modifiers": {
-          "mandatory": [],
+          "mandatory": ["option"],
           "optional": []
         }
       },
@@ -803,9 +814,9 @@
         }
       ],
       "from": {
-        "key_code": "r",
+        "key_code": "i",
         "modifiers": {
-          "mandatory": ["control"],
+          "mandatory": ["option"],
           "optional": []
         }
       },
@@ -928,7 +939,6 @@
       ],
       "type": "basic"
     },
-
     {
       "conditions": [
         {
@@ -1050,7 +1060,7 @@
         }
       ],
       "from": {
-        "key_code": "h",
+        "key_code": "0",
         "modifiers": {
           "mandatory": ["shift"],
           "optional": []
@@ -1131,9 +1141,9 @@
         }
       ],
       "from": {
-        "key_code": "h",
+        "key_code": "0",
         "modifiers": {
-          "mandatory": [],
+          "mandatory": ["control"],
           "optional": []
         }
       },
@@ -1242,7 +1252,7 @@
         }
       ],
       "from": {
-        "key_code": "tab",
+        "key_code": "d",
         "modifiers": {
           "mandatory": [],
           "optional": []
@@ -1269,9 +1279,9 @@
         }
       ],
       "from": {
-        "key_code": "tab",
+        "key_code": "s",
         "modifiers": {
-          "mandatory": ["control"],
+          "mandatory": [],
           "optional": []
         }
       },
@@ -1400,497 +1410,6 @@
         {
           "name": "keynote_vim",
           "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
-        "key_code": "c",
-        "modifiers": {
-          "mandatory": [],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "c",
-          "modifiers": ["command", "option"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
-        "key_code": "v",
-        "modifiers": {
-          "mandatory": [],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "v",
-          "modifiers": ["command", "option"]
-        }
-      ],
-      "type": "basic"
-    },
-
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
-        "key_code": "t",
-        "modifiers": {
-          "mandatory": [],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "t",
-          "modifiers": ["command", "control"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
-        "key_code": "t",
-        "modifiers": {
-          "mandatory": ["control"],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "t",
-          "modifiers": ["control"]
-        },
-        {
-          "set_notification_message": {
-            "id": "my_message",
-            "text": "Insert Mode!"
-          }
-        },
-        {
-          "set_variable": {
-            "name": "keynote_vim",
-            "value": 1
-          }
-        }
-      ],
-      "to_delayed_action": {
-        "to_if_canceled": [
-          {
-            "set_notification_message": {
-              "id": "my_message",
-              "text": ""
-            }
-          }
-        ],
-        "to_if_invoked": [
-          {
-            "set_notification_message": {
-              "id": "my_message",
-              "text": ""
-            }
-          }
-        ]
-      },
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
-        "key_code": "a",
-        "modifiers": {
-          "mandatory": [],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "a",
-          "modifiers": ["control", "shift"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
-        "key_code": "s",
-        "modifiers": {
-          "mandatory": [],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "c",
-          "modifiers": ["control", "shift"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
-        "key_code": "a",
-        "modifiers": {
-          "mandatory": ["control"],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "j",
-          "modifiers": ["control", "shift"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
-        "key_code": "s",
-        "modifiers": {
-          "mandatory": ["control"],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "k",
-          "modifiers": ["control", "shift"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
-        "key_code": "d",
-        "modifiers": {
-          "mandatory": [],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "t",
-          "modifiers": ["control", "shift"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
-        "key_code": "f",
-        "modifiers": {
-          "mandatory": [],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "m",
-          "modifiers": ["control", "shift"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
-        "key_code": "d",
-        "modifiers": {
-          "mandatory": ["control"],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "h",
-          "modifiers": ["control", "shift"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
-        "key_code": "f",
-        "modifiers": {
-          "mandatory": ["control"],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "v",
-          "modifiers": ["control", "shift"]
-        }
-      ],
-      "type": "basic"
-    },
-
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
-        "key_code": "2",
-        "modifiers": {
-          "mandatory": [],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "r",
-          "modifiers": ["command", "control"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
-        "key_code": "3",
-        "modifiers": {
-          "mandatory": [],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "r",
-          "modifiers": ["command", "control", "shift"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
-        "key_code": "4",
-        "modifiers": {
-          "mandatory": [],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "o",
-          "modifiers": ["control"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
-        "key_code": "5",
-        "modifiers": {
-          "mandatory": [],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "l",
-          "modifiers": ["control"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
-        "key_code": "6",
-        "modifiers": {
-          "mandatory": [],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "l",
-          "modifiers": ["control", "shift"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
           "value": 1
         }
       ],
@@ -1949,10 +1468,8 @@
         }
       ],
       "from": {
-        "pointing_button": "button1",
-        "modifiers": {
-          "optional": ["any"]
-        }
+        "modifiers": { "optional": ["any"] },
+        "pointing_button": "button1"
       },
       "to": [
         {
@@ -1966,60 +1483,6 @@
             "name": "keynote_vim",
             "value": 0
           }
-        }
-      ],
-      "to_delayed_action": {
-        "to_if_canceled": [
-          {
-            "set_notification_message": {
-              "id": "my_message",
-              "text": ""
-            }
-          }
-        ],
-        "to_if_invoked": [
-          {
-            "set_notification_message": {
-              "id": "my_message",
-              "text": ""
-            }
-          }
-        ]
-      },
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 1
-        }
-      ],
-      "from": {
-        "key_code": "spacebar",
-        "modifiers": { "mandatory": "shift" }
-      },
-      "to": [
-        {
-          "set_notification_message": {
-            "id": "my_message",
-            "text": "Normal Mode"
-          }
-        },
-        {
-          "set_variable": {
-            "name": "keynote_vim",
-            "value": 0
-          }
-        },
-        {
-          "key_code": "return_or_enter",
-          "modifiers": []
         }
       ],
       "to_delayed_action": {
