@@ -44,3 +44,4 @@ fi
 #
 # brew update frequency
 export HOMEBREW_AUTO_UPDATE_SECS=86400   # Update at most once per day
+export HOMEBREW_NO_ENV_HINTS=1

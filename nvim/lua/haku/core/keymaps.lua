@@ -51,6 +51,8 @@ keymap.set("n", "<C-g>", ":echo expand('%:p')<CR>", { desc = "show full path" })
 -- Lazy and Mason
 keymap.set("n", "<leader>ll", ":Lazy<CR>", { desc = "open lazy" })
 keymap.set("n", "<leader>lm", ":Mason<CR>", { desc = "open mason" })
+-- Copy whole file
+keymap.set("n", "<leader>gg", "ggVGy", { desc = "open mason" })
 
 keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 

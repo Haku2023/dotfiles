@@ -1,5 +1,5 @@
 {
-  "description": "Note Options Key Remap(haku):1. Option 1 2 3 4, m,0,-,=,',e,l to Note title,heading,subheading,body,bulleted list,dashed list, numbered list,monostyled,block quote,highlight,checklist; 2. Option n, N to command n, N; 3. Option z to toggle sidebar, option(shift) x to hide(show) toolbar; 4. Option j,k to Move item up down;5. Option g,c,t to note list search,show color,show table",
+  "description": "Note Options Key Remap(haku):1. Option 1 2 3 4, m,0,-,=,',e,l to Note title,heading,subheading,body,bulleted list,dashed list, numbered list,monostyled,block quote,highlight,checklist; 2. Option n, N to command n, N; 3. Option z to toggle sidebar, option(shift) x to hide(show) toolbar; 4. Option j,k to Move item up down;5. Option g,c,t to note list search,show color,show table; 6. <C-->,<C-=> -> zoom in/out",
   "manipulators": [
     {
       "conditions": [
@@ -440,6 +440,56 @@
         {
           "key_code": "t",
           "modifiers": ["command", "option"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": [
+            "^com.apple.Notes$",
+            "^com.apple.iWork.Pages$"
+          ],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "hyphen",
+        "modifiers": {
+          "mandatory": ["control"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "period",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": [
+            "^com.apple.Notes$",
+            "^com.apple.iWork.Pages$"
+          ],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "equal_sign",
+        "modifiers": {
+          "mandatory": ["control"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "comma",
+          "modifiers": ["command", "shift"]
         }
       ],
       "type": "basic"

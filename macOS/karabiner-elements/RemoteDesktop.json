@@ -1,6 +1,22 @@
 {
-  "description": "Remote Desktop(haku) Command :  tab → command tab; Control : 1. w → connection center 2. m → window fill; 3. , . → go left/right desktop ",
+  "description": "Remote Desktop(haku) Command :Control -> 2 in 1;  tab → command tab; Control : 1. w → connection center 2. m → window fill; 3. , . → go left/right desktop ",
   "manipulators": [
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.microsoft.rdc.macos$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": { "key_code": "left_control" },
+      "to": [
+        {
+          "key_code": "left_control"
+        }
+      ],
+      "to_if_alone": [{ "key_code": "escape" }],
+      "type": "basic"
+    },
     {
       "conditions": [
         {
@@ -12,7 +28,7 @@
         "key_code": "tab",
         "modifiers": {
           "mandatory": ["command"],
-          "optional": ["any"]
+          "optional": []
         }
       },
       "to": [

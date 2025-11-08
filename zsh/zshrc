@@ -126,6 +126,7 @@ alias hlisten="echo '(head -n 1 && grep LISTEN) <<< sudo lsof -i -P -n ';(head -
 # mac
 if [[ "$(uname)" == "Darwin" ]];then
 alias haku25="cd '/Users/bai.haodong/Documents/Doctor_Life/G-学会/14. English Thesis/graphs'"
+alias haku26="cd '/Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2025_Projects/H-Fresh'; vi Yodo_Read.md"
 # life
 alias myLove="open https://meeting.tencent.com/p/9796730765\?pwd\=500012"
 alias japaneseCourse="open https://kyoto-u-edu.zoom.us/j/91423186918\?pwd\=alhtRnhlcUljVi84Z0hncjRZREtjZz09"
