@@ -561,6 +561,11 @@
             "^com.github.wez.wezterm$"
           ],
           "type": "frontmost_application_unless"
+        },
+        {
+          "name": "keynote_vim",
+          "type": "variable_unless",
+          "value": 2
         }
       ],
       "from": {

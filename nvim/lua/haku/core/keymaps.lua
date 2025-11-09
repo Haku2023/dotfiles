@@ -13,6 +13,11 @@ keymap.set("i", "<C-b>", "<Left>", { desc = "backward in insertmode" })
 keymap.set("i", "hh", "<C-w>", { desc = "delete words in insertmode" })
 keymap.set({ "n" }, "<C-t>", ":set wrap<CR>", { desc = "wrap the lines" })
 keymap.set({ "i" }, "<C-t>", "<ESC>:set wrap<CR>", { desc = "wrap the lines" })
+-- commandline mode
+keymap.set("c", "<C-A>", "<HOME>")
+keymap.set("c", "<C-F>", "<Right>")
+keymap.set("c", "<C-B>", "<Left>")
+keymap.set("c", "<C-D>", "<C-W>")
 
 --From dycw/dotfiles
 -- global marks
@@ -51,8 +56,12 @@ keymap.set("n", "<C-g>", ":echo expand('%:p')<CR>", { desc = "show full path" })
 -- Lazy and Mason
 keymap.set("n", "<leader>ll", ":Lazy<CR>", { desc = "open lazy" })
 keymap.set("n", "<leader>lm", ":Mason<CR>", { desc = "open mason" })
--- Copy whole file
-keymap.set("n", "<leader>gg", "ggVGy", { desc = "open mason" })
+-- Yank content, filepath
+keymap.set("n", "<leader>yy", "<Cmd>%y+<CR>", { desc = "yank entire file content" })
+keymap.set("n", "<leader>yf", "<Cmd>let @+ = expand('%:t')<CR>", { desc = "yank filename" })
+keymap.set("n", "<leader>ya", "<Cmd>let @+ = expand('%:p')<CR>", { desc = "yank absolute path" })
+keymap.set("n", "<leader>yr", "<Cmd>let @+ = expand('%')<CR>", { desc = "yank relative path" })
+keymap.set("n", "<leader>yd", "<Cmd>let @+ = expand('%:h')<CR>", { desc = "yank directory" })
 
 keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 
