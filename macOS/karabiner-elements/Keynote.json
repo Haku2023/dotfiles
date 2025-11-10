@@ -2326,7 +2326,7 @@
         }
       ],
       "from": {
-        "key_code": "tab",
+        "key_code": "spacebar",
         "modifiers": {
           "mandatory": [],
           "optional": []
