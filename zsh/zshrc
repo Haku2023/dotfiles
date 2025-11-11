@@ -126,6 +126,8 @@ alias cd="z"
 # check which port is on listening
 alias hlisten="echo '(head -n 1 && grep LISTEN) <<< sudo lsof -i -P -n ';(head -n 1 && grep LISTEN) <<< \`sudo lsof -i -P -n\`"
 # mac
+alias rsync_homepage="echo 'rsync -avz --progress ./* \"85:/srv/Taisui_WebSite/Tests/\"';rsync -avz --progress ./* "85:/srv/Taisui_WebSite/Tests/""
+ 
 if [[ "$(uname)" == "Darwin" ]];then
 alias haku25="cd '/Users/bai.haodong/Documents/Doctor_Life/G-学会/14. English Thesis/graphs'"
 alias haku26="cd '/Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2025_Projects/H-Fresh'; vi Yodo_Read.md"
