@@ -62,12 +62,12 @@
     "command": "workbench.action.toggleDevTools"
   },
   {
-    "key": "ctrl+cmd+6",
+    "key": "shift+cmd+6",
     "command": "workbench.action.toggleSidebarVisibility",
     "when": "explorerViewletFocus"
   },
   {
-    "key": "ctrl+cmd+6",
+    "key": "shift+cmd+6",
     "command": "workbench.explorer.fileView.focus",
     "when": "editorFocus"
   },
