@@ -110,6 +110,8 @@ source $ZSH/oh-my-zsh.sh
 
 # haku alias
 # >>>>>>>>>>>>>>>{{{
+alias rm="rm --preserve-root -i"
+alias chmod="chmod --preserve-root"
 alias zrc="nvim ~/.zshrc"
 alias sou="exec zsh"
 alias nlua="nvim ~/.config/nvim/lua/haku/core/options.lua"
