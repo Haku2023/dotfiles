@@ -187,6 +187,8 @@ config.bind("x", "tab-close")
 config.bind("X", "tab-only -p")
 # config.bind("w", "mode-enter passthrough", mode="normal")
 config.bind("<shift-u>", "undo")
+config.bind("=", "zoom-in")
+config.bind("0", "zoom")
 
 # meta keys : command / windows
 ## for mac; linux suppose use one window
