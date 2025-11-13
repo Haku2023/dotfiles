@@ -2109,8 +2109,12 @@
       },
       "to_if_held_down": [
         {
-          "pointing_button": "button1"
-        }
+          "set_variable": {
+            "name": "single_click_expiration",
+            "expression": "system.now.milliseconds + 150"
+          }
+        },
+        { "pointing_button": "button1" }
       ],
       "to_if_alone": [
         { "pointing_button": "button1" },
