@@ -1,6 +1,7 @@
 local wezterm = require("wezterm")
 
 local config = {}
+local Background = {}
 
 if wezterm.config_builder then
 	config = wezterm.config_builder()
@@ -21,6 +22,7 @@ elseif wezterm.target_triple == "aarch64-apple-darwin" then
 	config.font_size = 21
 	Gotop = "/usr/local/bin/gotop"
 	HOME = os.getenv("HOME")
+	-- HOME = wezterm.home_dir
 	config.window_background_opacity = 0.80
 	Background = {
 		{
@@ -402,7 +404,12 @@ end
 
 -- haku test use <A-r>
 wezterm.on("show_status", function(window, _)
-	window:set_right_status("This is test for <A-r> show status")
+	-- window:set_right_status("This is test for <A-r> show status")
+	-- window:set_right_status(Background and "BG:ON" or "BG:OFF")
+	-- use C-S-L to show the debug info
+	local overrides = window:get_config_overrides() or {}
+	wezterm.log_info(wezterm.json_encode(overrides.background[1].source))
+	-- wezterm.log_info(wezterm.json_encode(overrides.backgorund))
 end)
 
 -- Define a "launcher" window class for floating prompts
