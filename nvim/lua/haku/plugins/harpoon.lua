@@ -31,11 +31,11 @@ return {
     -- end)
 
     -- Toggle previous & next buffers stored within Harpoon list
-    vim.keymap.set("n", "<C-S-i>", function()
+    vim.keymap.set("n", "<leader>o", function()
       harpoon:list():prev({ ui_nav_wrap = true })
       -- require("harpoon.ui").nav_prev()
     end)
-    vim.keymap.set("n", "<C-S-o>", function()
+    vim.keymap.set("n", "<leader>i", function()
       harpoon:list():next({ ui_nav_wrap = true })
     end)
     -- basic telescope configuration
