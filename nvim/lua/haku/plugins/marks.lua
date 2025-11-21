@@ -40,10 +40,10 @@ return {
         annotate = false,
       },
       mappings = {
-        toggle = "<leader>mm",
-        next = "<leader>m.",
-        prev = "<leader>m,",
-        delete_buf = "<leader>md",
+        toggle = "<leader>kk",
+        next = "<leader>l",
+        prev = "<leader>L",
+        delete_buf = "<leader>kl",
       },
     })
     -- vim.api.nvim_set_hl(0, "MarkSignHL", {})

@@ -54,8 +54,8 @@ keymap.set("n", "<leader>i", "<Cmd>Inspect<CR>", { desc = "Inspect in Treesitter
 -- show full path
 keymap.set("n", "<C-g>", ":echo expand('%:p')<CR>", { desc = "show full path" })
 -- Lazy and Mason
-keymap.set("n", "<leader>ll", ":Lazy<CR>", { desc = "open lazy" })
-keymap.set("n", "<leader>lm", ":Mason<CR>", { desc = "open mason" })
+keymap.set("n", "<leader>;l", ":Lazy<CR>", { desc = "open lazy" })
+keymap.set("n", "<leader>;m", ":Mason<CR>", { desc = "open mason" })
 -- Yank content, filepath
 keymap.set("n", "<leader>yy", "<Cmd>%y+<CR>", { desc = "yank entire file content" })
 keymap.set("n", "<leader>yf", "<Cmd>let @+ = expand('%:t')<CR>", { desc = "yank filename" })
