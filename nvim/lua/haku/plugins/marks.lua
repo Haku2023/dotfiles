@@ -40,7 +40,7 @@ return {
         annotate = false,
       },
       mappings = {
-        toggle = "<leader>kk",
+        toggle = "<leader>m",
         next = "<leader>l",
         prev = "<leader>L",
         delete_buf = "<leader>kl",

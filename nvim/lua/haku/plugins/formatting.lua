@@ -30,7 +30,7 @@ return {
     })
     conform.formatters.fprettify = { append_args = { "--indent", "4" } }
 
-    vim.keymap.set({ "n", "v" }, "<leader>mp", function()
+    vim.keymap.set({ "n", "v" }, "<leader>kp", function()
       conform.format({
         lsp_fallback = true,
         async = false,
