@@ -9,7 +9,7 @@ return {
     harpoon:setup()
     -- REQUIRED
 
-    vim.keymap.set("n", "<leader>a", function()
+    vim.keymap.set("n", "<leader>hh", function()
       harpoon:list():add()
     end, { desc = "add harpoon" })
     vim.keymap.set("n", "<leader>ho", function()
@@ -31,11 +31,12 @@ return {
     -- end)
 
     -- Toggle previous & next buffers stored within Harpoon list
-    vim.keymap.set("n", "<leader>,", function()
-      harpoon:list():prev()
+    vim.keymap.set("n", "<C-,>", function()
+      harpoon:list():prev({ ui_nav_wrap = true })
+      -- require("harpoon.ui").nav_prev()
     end)
-    vim.keymap.set("n", "<leader>.", function()
-      harpoon:list():next()
+    vim.keymap.set("n", "<C-.>", function()
+      harpoon:list():next({ ui_nav_wrap = true })
     end)
     -- basic telescope configuration
     -- local conf = require("telescope.config").values
