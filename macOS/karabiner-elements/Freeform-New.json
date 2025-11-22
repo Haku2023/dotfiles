@@ -290,7 +290,7 @@
         {
           "set_variable": {
             "name": "single_click_expiration",
-            "expression": "system.now.milliseconds + 150"
+            "expression": "system.now.milliseconds + 350"
           }
         },
         { "pointing_button": "button1" }
@@ -300,7 +300,7 @@
         {
           "set_variable": {
             "name": "single_click_expiration",
-            "expression": "system.now.milliseconds + 150"
+            "expression": "system.now.milliseconds + 350"
           }
         }
       ],

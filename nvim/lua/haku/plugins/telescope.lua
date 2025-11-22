@@ -1,5 +1,6 @@
 return {
   "nvim-telescope/telescope.nvim",
+  tag = "v0.1.9",
   branch = "0.1.x",
   dependencies = {
     "nvim-lua/plenary.nvim",
@@ -57,10 +58,18 @@ return {
         path_display = { "smart" },
         mappings = {
           i = {
-            ["<C-k>"] = actions.move_selection_previous,
-            ["<C-j>"] = actions.move_selection_next,
+            -- ["<C-k>"] = actions.move_selection_previous,
+            -- ["<C-j>"] = actions.move_selection_next,
             ["<C-q>"] = actions.send_selected_to_qflist + custom_actions.open_trouble_qflist,
             ["<C-t>"] = trouble_telescope.open,
+            ["<C-l>"] = actions.preview_scrolling_right,
+            ["<C-h>"] = actions.preview_scrolling_left,
+            ["<C-k>"] = actions.preview_scrolling_up,
+            ["<C-j>"] = actions.preview_scrolling_down,
+            ["<C-f>"] = actions.results_scrolling_right,
+            ["<C-i>"] = actions.results_scrolling_left,
+            ["<C-u>"] = actions.complete_tag,
+            -- ["<C-g>"] = actions.send_selected_to_qflist + custom_actions.open_trouble_qflist,
           },
         },
       },
@@ -83,5 +92,6 @@ return {
     keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
     keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
     keymap.set("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", { desc = "Find keymaps?" })
+    keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
   end,
 }
