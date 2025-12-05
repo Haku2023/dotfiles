@@ -21,3 +21,4 @@ django documentation tutorial web https://docs.djangoproject.com/en/5.2/intro/tu
 CPU benchmarks intel Core Ultra https://www.cpubenchmark.net/cpu.php?cpu=Intel+Core+Ultra+9+285
 vectorization ifx fortran intel https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2024-2/vectorization-programming-guidelines.html
 fortran learning OOP https://fortran-lang.org/learn/oop_features_in_fortran/
+nvim search pattern regex https://neovim.io/doc/user/pattern.html
