@@ -1,0 +1,95 @@
+" Set <Space> as the leader key
+let mapleader = " "
+set relativenumber
+set number
+set clipboard=unnamed
+
+
+"inoremap jk <Esc>:w<CR>
+"inoremap kk <Esc>
+nnoremap <space> <Nop>
+nnoremap K :vsc Edit.QuickInfo<CR>
+nnoremap J :vsc Edit.PeekDefinition<CR>
+nnoremap <C-s> :w<CR>
+inoremap <C-s> <Esc>:w<CR>
+
+
+nnoremap <Leader>/ :vsc Edit.CommentSelection<CR>
+nnoremap <Leader>? :vsc Edit.UncommentSelection<CR>
+nnoremap <Leader><m> :vsc Edit.ToggleBookmark<CR>
+nnoremap <Leader><l> :vsc Edit.NextBookmark<CR>
+nnoremap <Leader><L> :vsc Edit.PreviousBookmark<CR>
+nnoremap <Leader><n> :vsc Window.MovetoNextTabGroup<CR>
+nnoremap <Leader><N> :vsc Window.MovetoPreviousTabGroup<CR>
+nnoremap <Leader><q> :vsc Window.MovetoNavigationBar<CR>
+nnoremap <Leader><Tab> :vsc Window.ShowEzMDIFileList<CR>
+nnoremap <Leader><i> :vsc Edit.QuickInfo<CR>
+
+" nav in method
+nnoremap <Leader><space> :vsc EditorContextMenus.Navigate.GoToContainingBlock<CR>
+nnoremap <Leader>. :vsc Edit.NextMethod<CR>
+nnoremap <Leader>, :vsc Edit.PreviousMethod<CR>
+
+" set for pane
+nnoremap <A-h> <C-w>h
+nnoremap <A-l> <C-w>l
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <Leader>ss :source C:\Users\baihaodong\_vsvimrc<CR>
+nnoremap <Leader>sh :vsc Window.Split<CR>
+nnoremap <Leader>sv :vs<CR>
+
+" set for focus
+nnoremap <Leader>zz :vsc View.FullScreen<CR> 
+nnoremap <Leader>zd :vsc Window.ApplyWindowLayout1<CR>
+nnoremap <Leader>zs :vsc Window.ApplyWindowLayout2<CR>
+
+" set for explorer
+nnoremap <Leader>ee :vsc View.SolutionExplorer<CR>
+nnoremap <Leader>ef :vsc Window.SolutionExplorerSearch<CR>
+nnoremap <Leader>ec :vsc SolutionExplorer.CollapseAll<CR>
+
+" set for searching
+nnoremap <Leader>ff :vsc Edit.GoToFile<CR>
+nnoremap <Leader>fg :vsc Edit.GoToText<CR>
+
+
+" set for view
+nnoremap <Leader>oo :vsc View.Output<CR>
+nnoremap <Leader>oe :vsc View.ErrorList<CR>
+nnoremap <Leader>ob :vsc Debug.Breakpoints<CR>
+nnoremap <Leader>od :vsc Debug.DiagnosticAnalysis<CR>
+
+" set for watch window
+nnoremap <Leader>wq :vsc Debug.QuickWatch<CR>
+nnoremap <Leader>wa :vsc Debug.AddWatch<CR>
+nnoremap <Leader>w1 :vsc Debug.Watch1<CR>
+nnoremap <Leader>w2 :vsc Debug.Watch2<CR>
+nnoremap <Leader>w3 :vsc Debug.Watch3<CR>
+nnoremap <Leader>wl :vsc Debug.Locals<CR>
+
+" set for build
+nnoremap <Leader>c :vsc Build.Compile<CR>
+
+" set for debug
+nnoremap <Leader>q :vsc Debug.Start<CR>
+nnoremap <Leader>db :vsc Debug.BreakAll<CR>
+nnoremap <Leader>dw :vsc Debug.StartWithoutDebugging<CR>
+nnoremap <Leader>da :vsc Debug.DiagnosticAnalysis<CR>
+nnoremap <Leader>ds :vsc Debug.StopDebugging<CR>
+nnoremap <Leader>dr :vsc Debug.Restart<CR>
+nnoremap <enter> :vsc Debug.StepInto<CR>
+nnoremap <Leader>h :vsc Debug.StepOut<CR>
+nnoremap <Leader>k :vsc Debug.StepOver<CR>
+nnoremap <Leader>sn :vsc Debug.ShowNextStatement<CR>
+nnoremap <Leader>b :vsc Debug.ToggleBreakpoint<CR>
+
+" set for outline
+nnoremap za :vsc Edit.ToggleOutliningExpansion<CR>
+nnoremap zA :vsc Edit.ToggleAllOutlining<CR>
+
+" set for find reference
+nnoremap gr :vsc Edit.FindAllReferences<CR>
+nnoremap gR :vsc Edit.GoToReference<CR>
+nnoremap gD :vsc Edit.GoToDefinition<CR>
+nnoremap gh :vsc EditorContextMenus.CodeWindow.ViewCallHierarchy<CR>

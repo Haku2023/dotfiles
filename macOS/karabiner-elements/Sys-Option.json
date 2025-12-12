@@ -98,7 +98,10 @@
     {
       "conditions": [
         {
-          "bundle_identifiers": ["^com.microsoft.VSCode$"],
+          "bundle_identifiers": [
+            "^com.microsoft.VSCode$",
+            "^com.microsoft.rdc.macos$"
+          ],
           "type": "frontmost_application_unless"
         }
       ],
@@ -124,7 +127,8 @@
             "^com.github.wez.wezterm$",
             "^com.apple.finder$",
             "^com.apple.iWork.Keynote$",
-            "^org.qutebrowser.qutebrowser$"
+            "^org.qutebrowser.qutebrowser$",
+            "^com.microsoft.rdc.macos$"
           ],
           "type": "frontmost_application_unless"
         }
