@@ -1,5 +1,5 @@
 {
-  "description": "Keynote-New-v2 Vim + Mouse(by haku)",
+  "description": "Keynote Vim + Mouse v2(by haku)",
   "manipulators": [
     {
       "conditions": [
@@ -2808,6 +2808,61 @@
           "modifiers": ["command", "shift"]
         }
       ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "keynote_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "i",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": "Insert Mode!"
+          }
+        },
+
+        {
+          "set_variable": {
+            "name": "keynote_vim",
+            "value": 1
+          }
+        }
+      ],
+      "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 },
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
       "type": "basic"
     }
   ]

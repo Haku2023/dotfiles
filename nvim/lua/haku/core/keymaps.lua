@@ -4,9 +4,9 @@ local keymap = vim.keymap -- for conciseness
 
 -- keymap.set("i", "jj", "<ESC>", { desc = "Exit insert mode with kk" })
 keymap.set("i", "jk", "<ESC>:w<CR>", { desc = "Exit insert mode and save with jk" })
-keymap.set({ "n", "x" }, "wq", ":wq<CR>", { desc = "Save and quit" })
-keymap.set({ "n", "x" }, "qq", ":q!<CR>", { desc = "Save and quit" })
-keymap.set({ "n", "x" }, "wa", ":wqa<CR>", { desc = "Save all and quit" })
+keymap.set({ "n", "x" }, "wq", "<cmd>wq<CR>", { desc = "Save and quit" })
+keymap.set({ "n", "x" }, "qq", "<cmd>q!<CR>", { desc = "Save and quit" })
+keymap.set({ "n", "x" }, "wa", "<cmd>wqa<CR>", { desc = "Save all and quit" })
 keymap.set("x", "s", "<ESC>", { desc = "Exit visual mode with s" })
 keymap.set("i", "<C-f>", "<Right>", { desc = "forward in insertmode" })
 keymap.set("i", "<C-b>", "<Left>", { desc = "backward in insertmode" })
@@ -80,3 +80,14 @@ keymap.set("n", "<leader>tw", "<cmd>tabclose<CR>", { desc = "Close current tab" 
 keymap.set("n", "<leader>tn", "<cmd>tabn<CR>=", { desc = "Go to next tab" })
 keymap.set("n", "<leader>tp", "<Cmd>tabp<CR>", { desc = "Go to previous tab" })
 keymap.set("n", "<leader>tf", "<Cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" })
+
+-- Dismiss Noice Message
+keymap.set("n", "<leader>nd", "<cmd>NoiceDismiss<CR>", { desc = "Dismiss Noice Message" })
+keymap.set("n", "<leader>nt", "<cmd>Noice telescope<CR>", { desc = "Telescope Noice Message" })
+
+-- Toggleterm
+keymap.set({ "n", "t" }, "<leader>\\", "<cmd>ToggleTerm direction=float<cr>", { desc = "ToggleTerm float" })
+keymap.set({ "n", "t" }, "<leader>\\s", "<cmd>ToggleTerm direction=horizontal<cr>", { desc = "ToggleTerm float" })
+keymap.set({ "n", "t" }, "<leader>\\v", "<cmd>ToggleTerm direction=vertical<cr>", { desc = "ToggleTerm float" })
+--
+--

@@ -1,5 +1,5 @@
 {
-  "description": "Preview Option/Control Remap(by haku)::Option Key: space/j → toggle keymaps; Vanilla Key: 1. m,n : mark, open marklist; 2. j,k,g,G,u,d → move up,down,top,bottom,up page,down page; 3. o,i → back,forward item; 4. z,Z → hide/open sidebar; 5. x → hide tool bar; 6. d → delete; 7. a,s,q,w,e,r,t → annotation; 8. h → open highlight pane; 9. f → search; 10. C-enter -> click; 11. u/C-r -> undo/redo; 12. <C-d> -> Duplicate",
+  "description": "Preview Vim + Mouse(by haku)",
   "manipulators": [
     {
       "conditions": [
@@ -1007,6 +1007,50 @@
       "to": [
         {
           "key_code": "s",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.Preview$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "pointing_button": "button4",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "z",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.Preview$"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "pointing_button": "button5",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "z",
           "modifiers": ["command", "shift"]
         }
       ],

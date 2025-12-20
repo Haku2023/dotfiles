@@ -27,7 +27,8 @@ elseif wezterm.target_triple == "aarch64-apple-darwin" then
 	Background = {
 		{
 			source = {
-				File = HOME .. "/Pictures/WallPaper/cybercity-keepforward.jpg",
+				-- File = HOME .. "/Pictures/WallPaper/cybercity-keepforward.jpg",
+				File = HOME .. "/Pictures/WallPaper/fuji-maples.jpg",
 			},
 			hsb = { brightness = 0.2 },
 			opacity = 1.0,
