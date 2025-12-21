@@ -93,3 +93,7 @@ nnoremap gr :vsc Edit.FindAllReferences<CR>
 nnoremap gR :vsc Edit.GoToReference<CR>
 nnoremap gD :vsc Edit.GoToDefinition<CR>
 nnoremap gh :vsc EditorContextMenus.CodeWindow.ViewCallHierarchy<CR>
+
+" zoom
+nnoremap = :vsc View.ZoomIn<CR>
+nnoremap - :vsc View.ZoomOut<CR>

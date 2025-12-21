@@ -192,8 +192,8 @@ config.bind("0", "zoom")
 
 # meta keys : command / windows
 ## for mac; linux suppose use one window
-config.bind("<Meta-1>", "tab-select 0/1")
-config.bind("<Meta-2>", "tab-select 1/1")
+config.bind("<ctrl-1>", "tab-select 0/1")
+config.bind("<ctrl-2>", "tab-select 1/1")
 config.bind("<Meta-shift-1>", "tab-give 0")
 config.bind("<Meta-shift-2>", "tab-give 1")
 

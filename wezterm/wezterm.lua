@@ -17,8 +17,11 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	-- config.default_prog = { "C:\\cygwin64\\bin\\zsh.exe", "-l" }
 	-- wezterm.log_info("OS: Windows, Prog: cygwin")
 	config.font_size = 17
+	config.font = wezterm.font("JetBrainsMonoNL Nerd Font", { weight = "Medium", stretch = "Normal", style = "Normal" })
 elseif wezterm.target_triple == "aarch64-apple-darwin" then
 	wezterm.log_info("OS: Mac")
+	-- font setting
+	config.font = wezterm.font("MesloLGS NF", { weight = "Medium", stretch = "Normal", style = "Normal" })
 	config.font_size = 21
 	Gotop = "/usr/local/bin/gotop"
 	HOME = os.getenv("HOME")
@@ -49,9 +52,9 @@ elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
 	config.font_size = 17
 	Gotop = "gotop"
 	config.window_background_opacity = 0.80
+	-- font setting
+	config.font = wezterm.font("MesloLGS NF", { weight = "Medium", stretch = "Normal", style = "Normal" })
 end -- }}}
--- font setting
-config.font = wezterm.font("MesloLGS NF", { weight = "Medium", stretch = "Normal", style = "Normal" })
 -- config.font = wezterm.font("MesloLGS NF")
 
 -- workspace setting
