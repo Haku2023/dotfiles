@@ -20,12 +20,20 @@ if vim.g.vscode then
       enabled = true,
       notify = false,
     },
-    change_detextion = {
+    change_detection = {
       notify = false,
     },
   })
 else
-  require("lazy").setup({ { import = "haku.plugins" }, { import = "haku.plugins.lsp" } }, {
+  require("lazy").setup({
+    { import = "haku.plugins" },
+    { import = "haku.plugins.ui" },
+    { import = "haku.plugins.editor" },
+    { import = "haku.plugins.navigation" },
+    { import = "haku.plugins.coding" },
+    { import = "haku.plugins.tools" },
+    { import = "haku.plugins.lsp" },
+  }, {
     install = {
       colorscheme = { "nightfily" },
     },
@@ -33,7 +41,7 @@ else
       enabled = true,
       notify = false,
     },
-    change_detextion = {
+    change_detection = {
       notify = false,
     },
   })

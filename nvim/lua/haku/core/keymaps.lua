@@ -11,7 +11,7 @@ keymap.set("x", "s", "<ESC>", { desc = "Exit visual mode with s" })
 keymap.set("i", "<C-f>", "<Right>", { desc = "forward in insertmode" })
 keymap.set("i", "<C-b>", "<Left>", { desc = "backward in insertmode" })
 keymap.set("i", "hh", "<C-w>", { desc = "delete words in insertmode" })
-keymap.set({ "n" }, "<C-t>", ":set wrap<CR>", { desc = "wrap the lines" })
+keymap.set({ "n" }, "<C-t>", "<cmd>set wrap<CR>", { desc = "wrap the lines" })
 keymap.set({ "i" }, "<C-t>", "<ESC>:set wrap<CR>", { desc = "wrap the lines" })
 -- commandline mode
 keymap.set("c", "<C-A>", "<HOME>")
