@@ -22,12 +22,25 @@ return {
         lua = { "stylua" },
         python = { "black" },
       },
-      format_on_save = {
-        lsp_fallback = true,
-        async = false,
-        timeout_ms = 3000,
-      },
+      format_on_save = function(bufnr)
+        -- Disable for markdown
+        if vim.bo[bufnr].filetype == "markdown" then
+          return
+        end
+
+        return {
+          lsp_fallback = true,
+          async = false,
+          timeout_ms = 3000,
+        }
+      end,
+      -- format_on_save = {
+      --   lsp_fallback = true,
+      --   async = false,
+      --   timeout_ms = 3000,
+      -- },
     })
+
     conform.formatters.fprettify = { append_args = { "--indent", "4" } }
 
     vim.keymap.set({ "n", "v" }, "<leader>kp", function()

@@ -20,6 +20,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
     vim.bo.shiftwidth = 4
     vim.bo.tabstop = 4
     vim.bo.softtabstop = 4
-    print("Project settings applied: Tabs set to 4 spaces.") -- Optional: for confirmation
+    -- print("Project settings applied: Tabs set to 4 spaces.") -- Optional: for confirmation
   end,
 })

@@ -8,8 +8,9 @@ set clipboard=unnamed
 "inoremap jk <Esc>:w<CR>
 "inoremap kk <Esc>
 nnoremap <space> <Nop>
-nnoremap K :vsc Edit.QuickInfo<CR>
-nnoremap J :vsc Edit.PeekDefinition<CR>
+nnoremap K :vsc Window.NextTab<CR>
+nnoremap J :vsc Window.PreviousTab<CR>
+nnoremap X :vsc Window.CloseAllButPinned<CR>
 nnoremap <C-s> :w<CR>
 inoremap <C-s> <Esc>:w<CR>
 
