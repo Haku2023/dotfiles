@@ -11,7 +11,7 @@ return {
         adapter = "claude_code", -- ACP adapter (chat only)
         keymaps = {
           send = {
-            modes = { n = "<C-s>", i = "<C-s>" },
+            modes = { i = "<C-s>" },
             opts = {},
           },
           close = {
