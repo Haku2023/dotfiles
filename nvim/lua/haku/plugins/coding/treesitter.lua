@@ -127,14 +127,17 @@ return {
         vim.fn.matchadd("NamelistGroup", "^&\\w\\+", -1)
         -- Highlight end of namelist (/)
         vim.fn.matchadd("NamelistGroup", "^/", -1)
-        -- Highlight strings (quoted text) - link to standard String
-        vim.fn.matchadd("String", '"[^"]*"', -1)
-        vim.fn.matchadd("String", "'[^']*'", -1)
+        -- Highlight strings (quoted text) - higher priority (11) to prevent numbers inside strings from being highlighted
+        vim.fn.matchadd("String", '"[^"]*"', 11)
+        vim.fn.matchadd("String", "'[^']*'", 11)
         -- Highlight numbers - link to standard Number
         vim.fn.matchadd("Number", "\\<\\d\\+\\>", -1)
         vim.fn.matchadd("Number", "\\<\\d\\+\\.\\d\\+\\>", -1)
         vim.fn.matchadd("Number", "\\<\\d\\+[eE][+-]\\?\\d\\+\\>", -1)
         vim.fn.matchadd("Number", "\\<\\d\\+\\.\\d\\+[eE][+-]\\?\\d\\+\\>", -1)
+        -- Highlight Fortran double precision numbers (d/D suffix)
+        vim.fn.matchadd("Number", "\\<\\d\\+\\.\\d\\+[dD][+-]\\?\\d\\+\\>", -1)
+        vim.fn.matchadd("Number", "\\<\\d\\+[dD][+-]\\?\\d\\+\\>", -1)
         -- Highlight operators - link to standard Operator
         vim.fn.matchadd("Operator", "=", -1)
         vim.fn.matchadd("Operator", ",", -1)
