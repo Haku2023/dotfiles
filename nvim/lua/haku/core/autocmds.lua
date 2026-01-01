@@ -1,6 +1,23 @@
 -- telescope preview show linenumber
 vim.cmd("autocmd User TelescopePreviewerLoaded setlocal number")
 
+-- Auto-align OpenMP directives in Fortran files
+local fortranOmpAugroup = vim.api.nvim_create_augroup("FortranOmpAlign", { clear = true })
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = { "*.f90", "*.f", "*.F90", "*.F", "*.for" },
+  group = fortranOmpAugroup,
+  desc = "Align !$omp directives to first column before save",
+  callback = function()
+    -- Save cursor position
+    local cursor_pos = vim.api.nvim_win_get_cursor(0)
+    -- Replace lines with leading whitespace + !$omp with !$omp at column 1
+    vim.cmd([[silent! %s/^\s*!\$omp/!\$omp/e]])
+    -- Restore cursor position
+    vim.api.nvim_win_set_cursor(0, cursor_pos)
+  end,
+})
+
 -- Create a new group for our project-specific settings to keep things tidy.
 -- The { clear = true } part is important to prevent duplicating autocommands on re-sourcing.
 local projectSettingsAugroup_Fortran_Yodo = vim.api.nvim_create_augroup("ProjectSettings", { clear = true })

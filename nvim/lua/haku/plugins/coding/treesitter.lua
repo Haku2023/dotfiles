@@ -20,10 +20,12 @@ return {
         enable = true,
         -- also use the legacy regex highlighter for Fortran
         additional_vim_regex_highlighting = { "fortran" },
+        -- disable tree-sitter for namelist files to avoid & errors
+        disable = { "namelist" },
       },
 
       -- enable indentation
-      indent = { enable = true, disable = { "fortran" } },
+      indent = { enable = true, disable = { "fortran", "namelist" } },
       -- ensure these language parsers are installed
       --
       ensure_installed = {
@@ -67,8 +69,8 @@ return {
     vim.treesitter.language.register("bash", "zsh")
     vim.treesitter.language.register("html", "htmldjango")
 
-    -- use Fortran tree-sitter for highlighting
-    vim.treesitter.language.register("fortran", "namelist")
+    -- Don't use tree-sitter for namelist files (causes errors with & syntax)
+    -- vim.treesitter.language.register("fortran", "namelist")
 
     vim.filetype.add({
       extension = {
@@ -109,6 +111,33 @@ return {
       pattern = "fortran",
       callback = function()
         vim.api.nvim_set_hl(0, "@variable.fortran", { link = "NONE" })
+      end,
+    })
+
+    -- Custom syntax highlighting for namelist files
+    vim.api.nvim_set_hl(0, "NamelistGroup", { fg = "#82d600", bold = true })
+
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "namelist",
+      callback = function()
+        -- Comments have highest priority (priority 10)
+        vim.fn.matchadd("Comment", "!.*$", 10)
+        vim.fn.matchadd("Comment", "#.*$", 10)
+        -- Highlight &namelist_group lines (priority -1, lower than default)
+        vim.fn.matchadd("NamelistGroup", "^&\\w\\+", -1)
+        -- Highlight end of namelist (/)
+        vim.fn.matchadd("NamelistGroup", "^/", -1)
+        -- Highlight strings (quoted text) - link to standard String
+        vim.fn.matchadd("String", '"[^"]*"', -1)
+        vim.fn.matchadd("String", "'[^']*'", -1)
+        -- Highlight numbers - link to standard Number
+        vim.fn.matchadd("Number", "\\<\\d\\+\\>", -1)
+        vim.fn.matchadd("Number", "\\<\\d\\+\\.\\d\\+\\>", -1)
+        vim.fn.matchadd("Number", "\\<\\d\\+[eE][+-]\\?\\d\\+\\>", -1)
+        vim.fn.matchadd("Number", "\\<\\d\\+\\.\\d\\+[eE][+-]\\?\\d\\+\\>", -1)
+        -- Highlight operators - link to standard Operator
+        vim.fn.matchadd("Operator", "=", -1)
+        vim.fn.matchadd("Operator", ",", -1)
       end,
     })
   end,

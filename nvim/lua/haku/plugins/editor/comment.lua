@@ -10,6 +10,14 @@ return {
 
     local ts_context_commentstring = require("ts_context_commentstring.integrations.comment_nvim")
 
+    -- Set commentstring for namelist files
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "namelist",
+      callback = function()
+        vim.bo.commentstring = "! %s"
+      end,
+    })
+
     -- enable comment
     comment.setup({
       -- for commenting tsx, jsx, svelte, html files
