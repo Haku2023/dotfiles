@@ -67,6 +67,20 @@ return {
     vim.treesitter.language.register("bash", "zsh")
     vim.treesitter.language.register("html", "htmldjango")
 
+    -- use Fortran tree-sitter for highlighting
+    vim.treesitter.language.register("fortran", "namelist")
+
+    vim.filetype.add({
+      extension = {
+        fypp = "fortran",
+      },
+    })
+
+    -- .nml is NOT Fortran source -> different filetype
+    vim.filetype.add({
+      extension = { nml = "namelist" },
+    })
+
     vim.filetype.add({
       extension = {
         ejs = "html",
