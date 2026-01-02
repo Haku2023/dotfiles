@@ -86,6 +86,7 @@ return {
     vim.filetype.add({
       extension = {
         ejs = "html",
+        fypp = "fortran",
       },
     })
 
