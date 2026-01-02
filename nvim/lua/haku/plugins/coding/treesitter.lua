@@ -129,8 +129,8 @@ return {
         -- Highlight end of namelist (/)
         vim.fn.matchadd("NamelistGroup", "^/", -1)
         -- Highlight strings (quoted text) - higher priority (11) to prevent numbers inside strings from being highlighted
-        vim.fn.matchadd("String", '"[^"]*"', 11)
-        vim.fn.matchadd("String", "'[^']*'", 11)
+        vim.fn.matchadd("String", '"[^"]*"', 5)
+        vim.fn.matchadd("String", "'[^']*'", 5)
         -- Highlight numbers - link to standard Number
         vim.fn.matchadd("Number", "\\<\\d\\+\\>", -1)
         vim.fn.matchadd("Number", "\\<\\d\\+\\.\\d\\+\\>", -1)

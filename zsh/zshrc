@@ -118,6 +118,7 @@ alias nlua="nvim ~/.config/nvim/lua/haku/core/options.lua"
 alias wlua="nvim ~/.config/wezterm/wezterm.lua"
 alias vi="nvim"
 alias ls="eza --icons=always"
+alias lsn="eza --icons=always -l -snew"
 alias vu="vi ~/Documents/Projects/haku_git/haku_tools_linux/useful_linux_commands.md"
 alias vc="vi ~/haku_git/wezterm-nvim_setup/zsh_setup.md"
 alias hwlua="vi ~/haku_git/wezterm-nvim_setup/wezterm.lua"
@@ -144,10 +145,11 @@ fi
 
 # haku functions
 # >>>>>>>>>>>>>>>>{{{
-# cdn
+# cdn - cd to newest directory, or nth newest with argument
 cdn() {
-  new_file=$(eza -snew -D --icons=never | tail -n1)
-cd ${new_file}
+  local n=${1:-1}
+  new_file=$(eza -snew -D --icons=never | tail -n${n} | head -n1)
+  cd ${new_file}
 }
 # mkdir,cd it
 mcd() {
