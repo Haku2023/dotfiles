@@ -15,7 +15,7 @@ return {
             opts = {},
           },
           close = {
-            modes = { n = "qq", i = "qq" },
+            modes = { n = "qq" },
             opts = {},
           },
           -- Add further custom keymaps here
