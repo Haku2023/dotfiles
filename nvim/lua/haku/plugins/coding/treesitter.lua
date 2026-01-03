@@ -101,17 +101,27 @@ return {
     -- })
 
     vim.api.nvim_set_hl(0, "OmpDirective", { fg = "#ffaa00", bold = true })
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = { "fortran" },
+    vim.api.nvim_create_autocmd({ "FileType", "BufWinEnter", "WinEnter" }, {
+      pattern = "*",
       callback = function()
-        vim.fn.matchadd("OmpDirective", "^!\\$.*")
+        if vim.bo.filetype == "fortran" then
+          -- Clear any existing OmpDirective matches first to avoid duplicates
+          local matches = vim.fn.getmatches()
+          for _, match in ipairs(matches) do
+            if match.group == "OmpDirective" then
+              vim.fn.matchdelete(match.id)
+            end
+          end
+          -- Add the match for this window
+          vim.fn.matchadd("OmpDirective", "^!\\$.*")
+        end
       end,
     })
 
-    vim.api.nvim_create_autocmd("FileType", {
+    vim.api.nvim_create_autocmd({ "FileType", "BufWinEnter", "ColorScheme" }, {
       pattern = "fortran",
       callback = function()
-        vim.api.nvim_set_hl(0, "@variable.fortran", { link = "NONE" })
+        vim.api.nvim_set_hl(0, "@variable.fortran", { fg = "NONE", bg = "NONE" })
       end,
     })
 
