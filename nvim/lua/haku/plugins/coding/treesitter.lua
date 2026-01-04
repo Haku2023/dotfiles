@@ -74,19 +74,10 @@ return {
 
     vim.filetype.add({
       extension = {
-        fypp = "fortran",
-      },
-    })
-
-    -- .nml is NOT Fortran source -> different filetype
-    vim.filetype.add({
-      extension = { nml = "namelist" },
-    })
-
-    vim.filetype.add({
-      extension = {
         ejs = "html",
         fypp = "fortran",
+        -- .nml is NOT Fortran source -> different filetype
+        nml = "namelist",
       },
     })
 
@@ -118,12 +109,12 @@ return {
       end,
     })
 
-    vim.api.nvim_create_autocmd({ "FileType", "BufWinEnter", "ColorScheme" }, {
-      pattern = "fortran",
-      callback = function()
-        vim.api.nvim_set_hl(0, "@variable.fortran", { fg = "NONE", bg = "NONE" })
-      end,
-    })
+    -- vim.api.nvim_create_autocmd({ "FileType", "BufWinEnter", "ColorScheme" }, {
+    --   pattern = "fortran",
+    --   callback = function()
+    --     vim.api.nvim_set_hl(0, "@variable.fortran", { fg = "NONE", bg = "NONE" })
+    --   end,
+    -- })
 
     -- Custom syntax highlighting for namelist files
     vim.api.nvim_set_hl(0, "NamelistGroup", { fg = "#82d600", bold = true })

@@ -82,7 +82,7 @@ function zvm_config() {
   ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 }
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-vi-mode zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting  web-search history dirhistory )
+plugins=(git zsh-vi-mode zsh-autosuggestions fast-syntax-highlighting  web-search history dirhistory )
 # ctrl space for accept
 bindkey '^ ' autosuggest-accept
 
