@@ -302,7 +302,7 @@ bindsym Mod1+Shift+3 exec --no-startup-id maim -s | xclip -selection clipboard -
 bindsym Mod1+Shift+5 exec --no-startup-id maim -i $(xdotool getactivewindow) ~/Pictures/Screenshots/$(date +%s).png && notify-send "Screenshot taken" "Active window saved."
 
 # add the WallPapaer
-exec --no-startup-id feh --no-fehbg --bg-fill ~/Assets/Wallpaper/cybercity-fantastic-red.jpg
+exec --no-startup-id feh --no-fehbg --bg-fill ~/Assets/Wallpaper/purple-night.jpg
 
 # floating pop up automatically 
 for_window [window_role="pop-up"] floating enable
