@@ -92,19 +92,58 @@ return {
     -- })
 
     vim.api.nvim_set_hl(0, "OmpDirective", { fg = "#ffaa00", bold = true })
+
+    -- Track which windows have OMP highlighting
+    local omp_windows = {}
     vim.api.nvim_create_autocmd({ "FileType", "BufWinEnter", "WinEnter" }, {
       pattern = "*",
+      callback = function(ev)
+        if vim.bo[ev.buf].filetype ~= "fortran" then
+          return
+        end
+        if vim.w.omp_match_id then
+          return
+        end -- window-local guard
+
+        -- window-local match, without polluting jumplist or search register
+        vim.cmd([[
+      silent! keepjumps keeppatterns
+        let w:omp_match_id = matchadd('OmpDirective', '^!\$.*')
+    ]])
+      end,
+    })
+
+    -- optional cleanup when leaving the window/buffer
+    vim.api.nvim_create_autocmd({ "BufWinLeave", "WinClosed" }, {
       callback = function()
-        if vim.bo.filetype == "fortran" then
-          -- Clear any existing OmpDirective matches first to avoid duplicates
-          local matches = vim.fn.getmatches()
-          for _, match in ipairs(matches) do
-            if match.group == "OmpDirective" then
-              vim.fn.matchdelete(match.id)
-            end
-          end
-          -- Add the match for this window
-          vim.fn.matchadd("OmpDirective", "^!\\$.*")
+        local id = vim.w.omp_match_id
+        if id then
+          pcall(vim.fn.matchdelete, id)
+          vim.w.omp_match_id = nil
+        end
+      end,
+    })
+
+    -- vim.api.nvim_create_autocmd({ "FileType", "BufWinEnter", "WinEnter" }, {
+    --   pattern = "*",
+    --   callback = function()
+    --     if vim.bo.filetype == "fortran" then
+    --       local win_id = vim.api.nvim_get_current_win()
+    --       -- Only add match if this window hasn't been marked yet
+    --       if not omp_windows[win_id] then
+    --         vim.fn.matchadd("OmpDirective", "^!\\$.*")
+    --         omp_windows[win_id] = true
+    --       end
+    --     end
+    --   end,
+    -- })
+
+    -- Clean up tracking when window closes
+    vim.api.nvim_create_autocmd("WinClosed", {
+      callback = function(args)
+        local win_id = tonumber(args.match)
+        if win_id then
+          omp_windows[win_id] = nil
         end
       end,
     })
@@ -119,7 +158,7 @@ return {
     -- Custom syntax highlighting for namelist files
     vim.api.nvim_set_hl(0, "NamelistGroup", { fg = "#82d600", bold = true })
 
-    vim.api.nvim_create_autocmd("FileType", {
+    vim.api.nvim_create_autocmd({ "FileType", "BufWinEnter", "WinEnter" }, {
       pattern = "namelist",
       callback = function()
         -- Comments have highest priority (priority 10)
