@@ -81,81 +81,56 @@ return {
       },
     })
 
-    -- disable treesitter fortran to use lsp fortls
-    -- fortran omp and fortran directive
-    -- vim.api.nvim_set_hl(0, "fortranDirective", { fg = "#82d600", bold = true })
-    -- vim.api.nvim_create_autocmd("FileType", {
-    --   pattern = { "fortran" },
-    --   callback = function()
-    --     vim.fn.matchadd("fortranDirective", "^#.*")
-    --   end,
-    -- })
+    -- Fortran OpenMP and preprocessor directive highlighting
+    -- fold <<<{{{
+    vim.api.nvim_set_hl(0, "fortranDirective", { fg = "#82d600", bold = true })
+    vim.api.nvim_set_hl(0, "fortranOpenMP", { fg = "#ffaa00", bold = true })
 
-    vim.api.nvim_set_hl(0, "OmpDirective", { fg = "#ffaa00", bold = true })
+    -- Function to add Fortran matches to current window
+    local function add_fortran_matches()
+      -- Only proceed if current buffer is Fortran
+      if vim.bo.filetype ~= "fortran" then
+        return
+      end
 
-    -- Track which windows have OMP highlighting
-    local omp_windows = {}
+      -- Check if matches already exist for this window
+      if vim.w.fortran_omp_match_id and vim.w.fortran_dir_match_id then
+        return
+      end
+
+      -- Add matches with high priority to override Treesitter's @comment
+      -- Use silent! keepjumps keeppatterns to avoid polluting jumplist
+      vim.cmd([[
+        silent! keepjumps keeppatterns
+          let w:fortran_omp_match_id = matchadd('fortranOpenMP', '^\s*!\$.*', 200)
+      ]])
+      vim.cmd([[
+        silent! keepjumps keeppatterns
+          let w:fortran_dir_match_id = matchadd('fortranDirective', '^\s*#.*', 200)
+      ]])
+    end
+
     vim.api.nvim_create_autocmd({ "FileType", "BufWinEnter", "WinEnter" }, {
-      pattern = "*",
-      callback = function(ev)
-        if vim.bo[ev.buf].filetype ~= "fortran" then
-          return
-        end
-        if vim.w.omp_match_id then
-          return
-        end -- window-local guard
-
-        -- window-local match, without polluting jumplist or search register
-        vim.cmd([[
-      silent! keepjumps keeppatterns
-        let w:omp_match_id = matchadd('OmpDirective', '^!\$.*')
-    ]])
-      end,
+      callback = add_fortran_matches,
     })
 
-    -- optional cleanup when leaving the window/buffer
+    -- Cleanup when leaving window or closing buffer
     vim.api.nvim_create_autocmd({ "BufWinLeave", "WinClosed" }, {
       callback = function()
-        local id = vim.w.omp_match_id
-        if id then
-          pcall(vim.fn.matchdelete, id)
-          vim.w.omp_match_id = nil
+        if vim.w.fortran_omp_match_id then
+          pcall(vim.fn.matchdelete, vim.w.fortran_omp_match_id)
+          vim.w.fortran_omp_match_id = nil
+        end
+        if vim.w.fortran_dir_match_id then
+          pcall(vim.fn.matchdelete, vim.w.fortran_dir_match_id)
+          vim.w.fortran_dir_match_id = nil
         end
       end,
     })
+    -- fold <<<}}}
 
-    -- vim.api.nvim_create_autocmd({ "FileType", "BufWinEnter", "WinEnter" }, {
-    --   pattern = "*",
-    --   callback = function()
-    --     if vim.bo.filetype == "fortran" then
-    --       local win_id = vim.api.nvim_get_current_win()
-    --       -- Only add match if this window hasn't been marked yet
-    --       if not omp_windows[win_id] then
-    --         vim.fn.matchadd("OmpDirective", "^!\\$.*")
-    --         omp_windows[win_id] = true
-    --       end
-    --     end
-    --   end,
-    -- })
-
-    -- Clean up tracking when window closes
-    vim.api.nvim_create_autocmd("WinClosed", {
-      callback = function(args)
-        local win_id = tonumber(args.match)
-        if win_id then
-          omp_windows[win_id] = nil
-        end
-      end,
-    })
-
-    -- vim.api.nvim_create_autocmd({ "FileType", "BufWinEnter", "ColorScheme" }, {
-    --   pattern = "fortran",
-    --   callback = function()
-    --     vim.api.nvim_set_hl(0, "@variable.fortran", { fg = "NONE", bg = "NONE" })
-    --   end,
-    -- })
-
-    -- Custom syntax highlighting for namelist files
+    -- Namelist filetype syntax highlighting
+    -- fold <<<{{{
     vim.api.nvim_set_hl(0, "NamelistGroup", { fg = "#82d600", bold = true })
 
     vim.api.nvim_create_autocmd({ "FileType", "BufWinEnter", "WinEnter" }, {
@@ -184,5 +159,6 @@ return {
         vim.fn.matchadd("Operator", ",", -1)
       end,
     })
+    --- fold >>>}}}
   end,
 }
