@@ -19,9 +19,10 @@ return {
       highlight = {
         enable = true,
         -- also use the legacy regex highlighter for Fortran
-        additional_vim_regex_highlighting = { "fortran" },
+        -- additional_vim_regex_highlighting = { "fortran" },
+        additional_vim_regex_highlighting = false,
         -- disable tree-sitter for namelist files to avoid & errors
-        disable = { "namelist" },
+        -- disable = { "namelist" },
       },
 
       -- enable indentation
@@ -81,82 +82,105 @@ return {
       },
     })
 
-    -- Fortran OpenMP and preprocessor directive highlighting
+    -- Custom highlights for Fortran directives and OpenMP
     -- fold <<<{{{
     vim.api.nvim_set_hl(0, "fortranDirective", { fg = "#82d600", bold = true })
     vim.api.nvim_set_hl(0, "fortranOpenMP", { fg = "#ffaa00", bold = true })
-
-    -- Function to add Fortran matches to current window
+    -- Function to add fortran matches to current window
     local function add_fortran_matches()
-      -- Only proceed if current buffer is Fortran
+      -- Only proceed if current buffer is fortran
       if vim.bo.filetype ~= "fortran" then
         return
       end
 
-      -- Check if matches already exist for this window
-      if vim.w.fortran_omp_match_id and vim.w.fortran_dir_match_id then
-        return
+      -- Clear existing matches if they exist to avoid duplicates
+      if vim.w.fortran_matches then
+        for _, match_id in ipairs(vim.w.fortran_matches) do
+          pcall(vim.fn.matchdelete, match_id)
+        end
       end
+      vim.w.fortran_matches = {}
 
-      -- Add matches with high priority to override Treesitter's @comment
-      -- Use silent! keepjumps keeppatterns to avoid polluting jumplist
-      vim.cmd([[
-        silent! keepjumps keeppatterns
-          let w:fortran_omp_match_id = matchadd('fortranOpenMP', '^\s*!\$.*', 200)
-      ]])
-      vim.cmd([[
-        silent! keepjumps keeppatterns
-          let w:fortran_dir_match_id = matchadd('fortranDirective', '^\s*#.*', 200)
-      ]])
+      table.insert(vim.w.fortran_matches, vim.fn.matchadd("fortranOpenMP", "^s*!$.*", 200))
+      table.insert(vim.w.fortran_matches, vim.fn.matchadd("fortranDirective", "^s*#.*", 200))
     end
 
+    -- Apply matches when entering a fortran buffer/window
     vim.api.nvim_create_autocmd({ "FileType", "BufWinEnter", "WinEnter" }, {
-      callback = add_fortran_matches,
-    })
-
-    -- Cleanup when leaving window or closing buffer
-    vim.api.nvim_create_autocmd({ "BufWinLeave", "WinClosed" }, {
       callback = function()
-        if vim.w.fortran_omp_match_id then
-          pcall(vim.fn.matchdelete, vim.w.fortran_omp_match_id)
-          vim.w.fortran_omp_match_id = nil
-        end
-        if vim.w.fortran_dir_match_id then
-          pcall(vim.fn.matchdelete, vim.w.fortran_dir_match_id)
-          vim.w.fortran_dir_match_id = nil
+        if vim.bo.filetype == "fortran" then
+          add_fortran_matches()
         end
       end,
     })
-    -- fold <<<}}}
+
+    -- Cleanup when leaving window
+    vim.api.nvim_create_autocmd({ "BufWinLeave" }, {
+      callback = function()
+        if vim.w.fortran_matches then
+          for _, match_id in ipairs(vim.w.fortran_matches) do
+            pcall(vim.fn.matchdelete, match_id)
+          end
+          vim.w.fortran_matches = nil
+        end
+      end,
+    })
+    --- fold >>>}}}
 
     -- Namelist filetype syntax highlighting
     -- fold <<<{{{
     vim.api.nvim_set_hl(0, "NamelistGroup", { fg = "#82d600", bold = true })
 
+    -- Function to add namelist matches to current window
+    local function add_namelist_matches()
+      -- Only proceed if current buffer is namelist
+      if vim.bo.filetype ~= "namelist" then
+        return
+      end
+
+      -- Clear existing matches if they exist to avoid duplicates
+      if vim.w.namelist_matches then
+        for _, match_id in ipairs(vim.w.namelist_matches) do
+          pcall(vim.fn.matchdelete, match_id)
+        end
+      end
+      vim.w.namelist_matches = {}
+
+      -- Add matches and store their IDs
+      table.insert(vim.w.namelist_matches, vim.fn.matchadd("Comment", "!.*$", 10))
+      table.insert(vim.w.namelist_matches, vim.fn.matchadd("Comment", "#.*$", 10))
+      table.insert(vim.w.namelist_matches, vim.fn.matchadd("NamelistGroup", "^&\\w\\+", -1))
+      table.insert(vim.w.namelist_matches, vim.fn.matchadd("NamelistGroup", "^/", -1))
+      table.insert(vim.w.namelist_matches, vim.fn.matchadd("String", '"[^"]*"', 5))
+      table.insert(vim.w.namelist_matches, vim.fn.matchadd("String", "'[^']*'", 5))
+      table.insert(vim.w.namelist_matches, vim.fn.matchadd("Number", "\\<\\d\\+\\>", -1))
+      table.insert(vim.w.namelist_matches, vim.fn.matchadd("Number", "\\<\\d\\+\\.\\d\\+\\>", -1))
+      table.insert(vim.w.namelist_matches, vim.fn.matchadd("Number", "\\<\\d\\+[eE][+-]\\?\\d\\+\\>", -1))
+      table.insert(vim.w.namelist_matches, vim.fn.matchadd("Number", "\\<\\d\\+\\.\\d\\+[eE][+-]\\?\\d\\+\\>", -1))
+      table.insert(vim.w.namelist_matches, vim.fn.matchadd("Number", "\\<\\d\\+\\.\\d\\+[dD][+-]\\?\\d\\+\\>", -1))
+      table.insert(vim.w.namelist_matches, vim.fn.matchadd("Number", "\\<\\d\\+[dD][+-]\\?\\d\\+\\>", -1))
+      table.insert(vim.w.namelist_matches, vim.fn.matchadd("Operator", "=", -1))
+      table.insert(vim.w.namelist_matches, vim.fn.matchadd("Operator", ",", -1))
+    end
+
+    -- Apply matches when entering a namelist buffer/window
     vim.api.nvim_create_autocmd({ "FileType", "BufWinEnter", "WinEnter" }, {
-      pattern = "namelist",
       callback = function()
-        -- Comments have highest priority (priority 10)
-        vim.fn.matchadd("Comment", "!.*$", 10)
-        vim.fn.matchadd("Comment", "#.*$", 10)
-        -- Highlight &namelist_group lines (priority -1, lower than default)
-        vim.fn.matchadd("NamelistGroup", "^&\\w\\+", -1)
-        -- Highlight end of namelist (/)
-        vim.fn.matchadd("NamelistGroup", "^/", -1)
-        -- Highlight strings (quoted text) - higher priority (11) to prevent numbers inside strings from being highlighted
-        vim.fn.matchadd("String", '"[^"]*"', 5)
-        vim.fn.matchadd("String", "'[^']*'", 5)
-        -- Highlight numbers - link to standard Number
-        vim.fn.matchadd("Number", "\\<\\d\\+\\>", -1)
-        vim.fn.matchadd("Number", "\\<\\d\\+\\.\\d\\+\\>", -1)
-        vim.fn.matchadd("Number", "\\<\\d\\+[eE][+-]\\?\\d\\+\\>", -1)
-        vim.fn.matchadd("Number", "\\<\\d\\+\\.\\d\\+[eE][+-]\\?\\d\\+\\>", -1)
-        -- Highlight Fortran double precision numbers (d/D suffix)
-        vim.fn.matchadd("Number", "\\<\\d\\+\\.\\d\\+[dD][+-]\\?\\d\\+\\>", -1)
-        vim.fn.matchadd("Number", "\\<\\d\\+[dD][+-]\\?\\d\\+\\>", -1)
-        -- Highlight operators - link to standard Operator
-        vim.fn.matchadd("Operator", "=", -1)
-        vim.fn.matchadd("Operator", ",", -1)
+        if vim.bo.filetype == "namelist" then
+          add_namelist_matches()
+        end
+      end,
+    })
+
+    -- Cleanup when leaving window
+    vim.api.nvim_create_autocmd({ "BufWinLeave" }, {
+      callback = function()
+        if vim.w.namelist_matches then
+          for _, match_id in ipairs(vim.w.namelist_matches) do
+            pcall(vim.fn.matchdelete, match_id)
+          end
+          vim.w.namelist_matches = nil
+        end
       end,
     })
     --- fold >>>}}}

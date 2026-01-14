@@ -9,6 +9,7 @@ return {
     interactions = {
       chat = {
         adapter = "claude_code", -- ACP adapter (chat only)
+        -- adapter = "codex", -- ACP adapter (chat only)
         keymaps = {
           send = {
             modes = { i = "<C-s>" },
@@ -30,12 +31,23 @@ return {
     },
 
     adapters = {
+
       acp = {
+        codex = function()
+          return require("codecompanion.adapters").extend("codex", {
+            defaults = {
+              auth_method = "openai-api-key", -- "openai-api-key"|"codex-api-key"|"chatgpt"
+            },
+            env = {
+              -- OPENAI_API_KEY = "my-api-key",
+            },
+          })
+        end,
         claude_code = function()
           return require("codecompanion.adapters").extend("claude_code", {
             env = {
               -- BETTER: set this via environment variable instead of hardcoding
-              CLAUDE_CODE_OAUTH_TOKEN = "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",
+              -- CLAUDE_CODE_OAUTH_TOKEN = "kQNCk0zor2PZXFDVYxEkKBUGuUo2hNxY4rX3aAEHZ48mTFFF#KnzAR7mk5q9Or3K0fq54H-9nMXTa1CwdjNdyjXnY_a4",
             },
           })
         end,
