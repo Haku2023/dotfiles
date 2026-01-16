@@ -48,3 +48,8 @@ export HOMEBREW_NO_ENV_HINTS=1
 
 # set .local/bin in path
 export PATH="$HOME/.local/bin:$PATH"
+
+# Load local secrets (not in repo)
+if [[ -f "$HOME/.zshenv.local" ]]; then
+  source "$HOME/.zshenv.local"
+fi

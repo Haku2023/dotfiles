@@ -21,6 +21,8 @@ return {
         liquid = { "prettier" },
         lua = { "stylua" },
         python = { "black" },
+        c = { "clang-format" },
+        cpp = { "clang-format" },
       },
       format_on_save = function(bufnr)
         -- Disable for markdown
