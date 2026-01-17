@@ -45,7 +45,7 @@ return {
         swap = {
           enable = true,
           swap_next = {
-            ["<leader>na"] = "@parameter.inner", -- swap parameters/argument with next
+            -- ["<leader>na"] = "@parameter.inner", -- swap parameters/argument with next
             ["<leader>n:"] = "@property.outer", -- swap object property with next
             ["<leader>nm"] = "@function.outer", -- swap function with next
           },

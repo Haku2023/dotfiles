@@ -54,8 +54,8 @@ keymap.set("n", "<leader>i", "<Cmd>Inspect<CR>", { desc = "Inspect in Treesitter
 -- show full path
 keymap.set("n", "<C-g>", ":echo expand('%:p')<CR>", { desc = "show full path" })
 -- Lazy and Mason
-keymap.set("n", "<leader>;l", ":Lazy<CR>", { desc = "open lazy" })
-keymap.set("n", "<leader>;m", ":Mason<CR>", { desc = "open mason" })
+keymap.set("n", "<leader>;l", "<Cmd>Lazy<CR>", { desc = "open lazy" })
+keymap.set("n", "<leader>;m", "<Cmd>Mason<CR>", { desc = "open mason" })
 -- Yank content, filepath
 keymap.set("n", "<leader>yy", "<Cmd>%y+<CR>", { desc = "yank entire file content" })
 keymap.set("n", "<leader>yf", "<Cmd>let @+ = expand('%:t')<CR>", { desc = "yank filename" })
@@ -63,7 +63,7 @@ keymap.set("n", "<leader>ya", "<Cmd>let @+ = expand('%:p')<CR>", { desc = "yank 
 keymap.set("n", "<leader>yr", "<Cmd>let @+ = expand('%')<CR>", { desc = "yank relative path" })
 keymap.set("n", "<leader>yd", "<Cmd>let @+ = expand('%:h')<CR>", { desc = "yank directory" })
 
-keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
+keymap.set("n", "<leader>nh", "<Cmd>nohl<CR>", { desc = "Clear search highlights" })
 
 -- increment/decrement numbers
 keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- increment
@@ -84,6 +84,7 @@ keymap.set("n", "<leader>tf", "<Cmd>tabnew %<CR>", { desc = "Open current buffer
 -- Dismiss Noice Message
 keymap.set("n", "<leader>nd", "<cmd>NoiceDismiss<CR>", { desc = "Dismiss Noice Message" })
 keymap.set("n", "<leader>nt", "<cmd>Noice telescope<CR>", { desc = "Telescope Noice Message" })
+keymap.set("n", "<leader>na", "<cmd>NoiceAll<CR>", { desc = "Noice All" })
 
 -- Toggleterm
 keymap.set({ "n", "t" }, "<leader>\\", "<cmd>ToggleTerm direction=float<cr>", { desc = "ToggleTerm float" })
