@@ -5,8 +5,16 @@
 
 ## freeform
 
-> "description": "Freeform-New-v1 Vim + Mouse(by haku) : Toggle Basic -> <A-Space>,<A-j>,mouse button1; Mousbutton -> z/command z; Nav -> w,e;Note -> q; Insert Shape -> 123456; Arrangement -> asdf; copy/paste Style -> c/v; add move scene -> option/space/s-space; Show/Hide Color,connectors -> A-c, r; A-s -> save as insert scene; t -> table ",
+> "description": "Freeform-New-v1 Vim + Mouse(by haku) : Toggle Basic -> <A-Space>,<A-j>,mouse button1; ; add move scene -> option/space/s-space; Show/Hide Color,connectors -> A-c, r; A-s -> save as insert scene; t -> table ",
 > i : insert mode
+> q : insert note
+> w,e : move scene left,right
+> 1,2,3,4,5,6 : insert rectangle, rounded rectangle, oval, line, arrow line
+> a,s,d,f : align left,center,right,top
+> c,v : copy,paste style
+> pointing button 1,2 : undo,redo
+> A-c : show/hide color panel
+> r : show/hide connectors
 
 ## preview
 

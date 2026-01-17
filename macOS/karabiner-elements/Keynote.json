@@ -2366,7 +2366,7 @@
       "to": [
         {
           "key_code": "slash",
-          "modifiers": ["command"]
+          "modifiers": ["command", "option"]
         }
       ],
       "type": "basic"
