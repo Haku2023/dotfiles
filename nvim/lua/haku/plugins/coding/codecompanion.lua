@@ -8,8 +8,10 @@ return {
   opts = {
     interactions = {
       chat = {
-        adapter = "claude_code", -- ACP adapter (chat only)
+        -- adapter = "claude_code", -- ACP adapter (chat only)
+        adapter = "codex", -- ACP adapter (chat only)
         keymaps = {
+          debug = { modes = { n = "<C-d>" }, opts = { silent = true } },
           send = {
             modes = { i = "<C-s>" },
             opts = {},
@@ -35,7 +37,7 @@ return {
         codex = function()
           return require("codecompanion.adapters").extend("codex", {
             defaults = {
-              auth_method = "openai-api-key", -- "openai-api-key"|"codex-api-key"|"chatgpt"
+              auth_method = "chatgpt", -- "openai-api-key"|"codex-api-key"|"chatgpt"
             },
             env = {},
           })
@@ -45,9 +47,9 @@ return {
             env = {
               -- BETTER: set this via environment variable instead of hardcoding
             },
-            defaults = {
-              model = "opus",
-            },
+            -- defaults = {
+            --   model = "haiku",
+            -- },
           })
         end,
       },

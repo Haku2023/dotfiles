@@ -82,6 +82,13 @@ return {
       },
     })
 
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "codecompanion",
+      callback = function(ev)
+        vim.keymap.set("n", "gd", "<Nop>", { buffer = ev.buf, silent = true })
+      end,
+    })
+
     -- Custom highlights for Fortran directives and OpenMP
     -- fold <<<{{{
     vim.api.nvim_set_hl(0, "fortranDirective", { fg = "#82d600", bold = true })

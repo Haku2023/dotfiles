@@ -19,6 +19,9 @@ keymap.set("c", "<C-F>", "<Right>")
 keymap.set("c", "<C-B>", "<Left>")
 keymap.set("c", "<C-D>", "<C-W>")
 
+-- system settings
+keymap.set("n", "<leader>sf", "<Cmd>luafile %<CR>", { desc = "Source current lua file" })
+
 --From dycw/dotfiles
 -- global marks
 --[[ local prefixes = "m'"
@@ -52,7 +55,7 @@ keymap.set("n", "<leader>kd", "<Cmd>delmarks a-z A-Z 0-9<CR>", { desc = "Clear A
 --inspect
 keymap.set("n", "<leader>i", "<Cmd>Inspect<CR>", { desc = "Inspect in Treesitter" })
 -- show full path
-keymap.set("n", "<C-g>", ":echo expand('%:p')<CR>", { desc = "show full path" })
+keymap.set("n", "<C-g>", "<Cmd>echo expand('%:p')<CR>", { desc = "show full path" })
 -- Lazy and Mason
 keymap.set("n", "<leader>;l", "<Cmd>Lazy<CR>", { desc = "open lazy" })
 keymap.set("n", "<leader>;m", "<Cmd>Mason<CR>", { desc = "open mason" })
@@ -88,8 +91,22 @@ keymap.set("n", "<leader>na", "<cmd>NoiceAll<CR>", { desc = "Noice All" })
 
 -- Toggleterm
 keymap.set({ "n", "t" }, "<leader>\\", "<cmd>ToggleTerm direction=float<cr>", { desc = "ToggleTerm float" })
-keymap.set({ "n", "t" }, "<leader>\\s", "<cmd>ToggleTerm direction=horizontal<cr>", { desc = "ToggleTerm float" })
+keymap.set({ "n", "t" }, "<leader>jj", "<cmd>ToggleTerm direction=horizontal<cr>", { desc = "ToggleTerm float" })
 keymap.set({ "n", "t" }, "<leader>\\v", "<cmd>ToggleTerm direction=vertical<cr>", { desc = "ToggleTerm float" })
 
 -- Open CodeCompanion chat
-vim.keymap.set("n", "<leader>cc", "<cmd>CodeCompanionChat<cr>", { desc = "Open CodeCompanion chat" })
+vim.keymap.set("n", "<leader>a", "<cmd>CodeCompanionChat Toggle<cr>", { desc = "Toggle CodeCompanion chat" })
+vim.keymap.set(
+  { "n", "v" },
+  "<leader>ga",
+  "<cmd>CodeCompanionChat Add<cr>",
+  { desc = "add visually selected chat to current chat buffer" }
+)
+keymap.set("n", "<leader>co", function()
+  require("codecompanion").chat({ adapter = "claude_code" })
+end, { desc = "CodeCompanion with Opus" })
+
+keymap.set("n", "<leader>cx", function()
+  require("codecompanion").chat({ adapter = "codex" })
+end, { desc = "CodeCompanion with Codex" })
+-- vim.keymap.set("n", "<leader>cc", "<cmd>CodeCompanionChat<cr>", { desc = "Open CodeCompanion chat" })
