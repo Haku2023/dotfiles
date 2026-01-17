@@ -11,13 +11,16 @@ return {
         -- adapter = "claude_code", -- ACP adapter (chat only)
         adapter = "codex", -- ACP adapter (chat only)
         keymaps = {
-          debug = { modes = { n = "<C-d>" }, opts = { silent = true } },
+          change_adapter = {
+            modes = { n = "<C-a>" },
+          },
+          debug = { modes = { n = "<leader>d" }, opts = { silent = true } },
           send = {
             modes = { i = "<C-s>" },
             opts = {},
           },
           close = {
-            modes = { n = "qq" },
+            modes = { n = "qq", i = "<C-c>" },
             opts = {},
           },
           -- Add further custom keymaps here

@@ -7,6 +7,7 @@
 
 [
   "allocate"
+  "case"
   ; "deallocate"
 ] @keyword
 

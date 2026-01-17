@@ -3,20 +3,54 @@ vim.cmd("autocmd User TelescopePreviewerLoaded setlocal number")
 
 -- Auto-align OpenMP directives in Fortran files
 local fortranOmpAugroup = vim.api.nvim_create_augroup("FortranOmpAlign", { clear = true })
-
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = { "*.f90", "*.f", "*.F90", "*.F", "*.for" },
   group = fortranOmpAugroup,
   desc = "Align !$omp directives to first column before save",
   callback = function()
-    -- Save cursor position
-    local cursor_pos = vim.api.nvim_win_get_cursor(0)
-    -- Replace lines with leading whitespace + !$omp with !$omp at column 1
-    vim.cmd([[silent! %s/^\s*!\$omp/!\$omp/e]])
-    -- Restore cursor position
-    vim.api.nvim_win_set_cursor(0, cursor_pos)
+    local win = vim.api.nvim_get_current_win()
+    local view = vim.fn.winsaveview()
+
+    local buf = vim.api.nvim_get_current_buf()
+    local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+
+    local changed = false
+    for i, line in ipairs(lines) do
+      local new = line:gsub("^%s*%!%$omp", "!$omp")
+      if new ~= line then
+        lines[i] = new
+        changed = true
+      end
+    end
+
+    if changed then
+      -- one buffer update; typically gives a single clean undo step
+      vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+    end
+
+    vim.fn.winrestview(view)
+    vim.api.nvim_set_current_win(win)
   end,
 })
+
+-- it use %s changed the jumplist, above use lua to change buffer without affecting jumplist
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--   pattern = { "*.f90", "*.f", "*.F90", "*.F", "*.for" },
+--   group = fortranOmpAugroup,
+--   desc = "Align !$omp directives to first column before save",
+--   callback = function()
+--     -- Save cursor position
+--     local cursor_pos = vim.api.nvim_win_get_cursor(0)
+--     local view = vim.fn.winsaveview()
+--
+--     -- Use keepjumps and keeppatterns to avoid polluting jumplist
+--     vim.cmd([[silent! keepjumps keeppatterns %s/^\s*!\$omp/!\$omp/e]])
+--
+--     -- Restore view and cursor
+--     vim.fn.winrestview(view)
+--     vim.api.nvim_win_set_cursor(0, cursor_pos)
+--   end,
+-- })
 
 -- Create a new group for our project-specific settings to keep things tidy.
 -- The { clear = true } part is important to prevent duplicating autocommands on re-sourcing.

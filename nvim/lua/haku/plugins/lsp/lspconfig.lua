@@ -128,6 +128,20 @@ return {
         },
       },
     })
+    -- vim.lsp.config("clangd", {
+    --   on_attach = function(client, bufnr)
+    --     client.server_capabilities.signatureHelpProvider = false
+    --     on_attach(client, bufnr)
+    --       end,
+    --     })
+    --   end,
+    -- })
+    -- require("lspconfig").clangd.setup({
+    --   on_attach = function(client, bufnr)
+    --     on_attach(client, bufnr)
+    --   end,
+    --   capabilities = capabilities,
+    -- })
     -- require("lspconfig").fortls.setup({
     --   cmd = { "fortls", "--debug_log" },
     --   root_dir = require("lspconfig.util").root_pattern(".fortls", ".fortlsrc", ".fortls.json", ".git"),
