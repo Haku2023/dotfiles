@@ -69,6 +69,7 @@ return {
 
     -- use bash parser for zsh files
     vim.treesitter.language.register("bash", "zsh")
+
     vim.treesitter.language.register("html", "htmldjango")
 
     -- Don't use tree-sitter for namelist files (causes errors with & syntax)

@@ -21,6 +21,8 @@ keymap.set("c", "<C-D>", "<C-W>")
 
 -- system settings
 keymap.set("n", "<leader>sf", "<Cmd>luafile %<CR>", { desc = "Source current lua file" })
+keymap.set("n", "[z", "zk", { desc = "Jump to next fold" })
+keymap.set("n", "]z", "zj", { desc = "jump to previous fold" })
 
 --From dycw/dotfiles
 -- global marks

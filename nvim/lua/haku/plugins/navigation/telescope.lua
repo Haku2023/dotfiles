@@ -82,7 +82,7 @@ return {
     local builtin = require("telescope.builtin")
 
     keymap.set("n", "<leader>fm", builtin.marks, { desc = "Fuzzy find marks" })
-    keymap.set("n", "<leader>bb", function()
+    keymap.set("n", "<leader>fB", function()
       builtin.buffers({ sort_mru = true })
     end, { desc = "Fuzzy find in buffers" })
     keymap.set("n", "<leader>fb", builtin.current_buffer_fuzzy_find, { desc = "Fuzzy find in current buffer" })
