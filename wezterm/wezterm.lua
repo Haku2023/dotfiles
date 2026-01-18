@@ -9,6 +9,8 @@ end
 
 -- system setting
 config.default_workspace = "apple"
+-- force X11 instead of Wayland
+config.enable_wayland = false
 -- set for wsl if windows, using <C-S-l> check info{{{
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	config.default_prog = { "wsl.exe", "~", "-e", "zsh" }
@@ -290,7 +292,7 @@ config.keys = { -- {{{
 	{ key = "f", mods = "SHIFT|META", action = wezterm.action.ToggleFullScreen },
 	-- Ctrl+Shift+t Create a new tab
 	{ key = "t", mods = "SHIFT|CTRL", action = act.SpawnTab("CurrentPaneDomain") },
-	{ key = "t", mods = "META", action = act.EmitEvent("toggle-tab-bar") },
+	{ key = "t", mods = "ALT", action = act.EmitEvent("toggle-tab-bar") },
 	-- Tabs manipulation
 	-- Shift Size of Pane
 	{ key = "h", mods = "ALT|SHIFT", action = wezterm.action.AdjustPaneSize({ "Left", 1 }) },
@@ -408,7 +410,7 @@ end
 
 -- haku test use <A-r>
 wezterm.on("show_status", function(window, _)
-	-- window:set_right_status("This is test for <A-r> show status")
+	window:set_right_status("This is test for <A-r> show status")
 	-- window:set_right_status(Background and "BG:ON" or "BG:OFF")
 	-- use C-S-L to show the debug info
 	local overrides = window:get_config_overrides() or {}

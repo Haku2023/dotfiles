@@ -14,7 +14,7 @@ return {
           change_adapter = {
             modes = { n = "<C-a>" },
           },
-          debug = { modes = { n = "<leader>d" }, opts = { silent = true } },
+          debug = { modes = { n = "gm" }, opts = { silent = true } },
           send = {
             modes = { i = "<C-s>" },
             opts = {},

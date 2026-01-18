@@ -1,3 +1,5 @@
 # qutebrowser, ignore autoconfig.yml
 /qutebrowser/autoconfig.yml
+/qutebrowser/qsettings/QtProject.conf
+
 /nvim/lazy-lock.json
