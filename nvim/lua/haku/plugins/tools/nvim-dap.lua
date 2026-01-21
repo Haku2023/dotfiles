@@ -30,6 +30,11 @@ return {
       },
     })
 
+    -- Detect OS for debugger selection
+    local is_mac = vim.fn.has("mac") == 1 or vim.fn.has("macunix") == 1
+    local debugger_mode = is_mac and "lldb" or "gdb"
+    local debugger_path = is_mac and "/usr/bin/lldb" or "/usr/bin/gdb"
+
     -- Configurations
     dap.configurations = {
       c = {
@@ -42,7 +47,8 @@ return {
           end,
           cwd = "${workspaceFolder}",
           stopAtEntry = false,
-          MIMode = "lldb",
+          MIMode = debugger_mode,
+          miDebuggerPath = debugger_path,
         },
         {
           name = "Attach to lldbserver :1234",
@@ -51,7 +57,33 @@ return {
           MIMode = "lldb",
           miDebuggerServerAddress = "localhost:1234",
           miDebuggerPath = "/usr/bin/lldb",
-          cwd = "${woskspaceFolder}",
+          cwd = "${workspaceFolder}",
+          program = function()
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+          end,
+        },
+      },
+      cpp = {
+        {
+          name = "Launch file",
+          type = "cppdbg",
+          request = "launch",
+          program = function()
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+          end,
+          cwd = "${workspaceFolder}",
+          stopAtEntry = false,
+          MIMode = debugger_mode,
+          miDebuggerPath = debugger_path,
+        },
+        {
+          name = "Attach to lldbserver :1234",
+          type = "cppdbg",
+          request = "launch",
+          MIMode = "lldb",
+          miDebuggerServerAddress = "localhost:1234",
+          miDebuggerPath = "/usr/bin/lldb",
+          cwd = "${workspaceFolder}",
           program = function()
             return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
           end,

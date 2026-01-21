@@ -1,0 +1,31 @@
+/* ~/.config/rofi/config.rasi */
+
+configuration {
+    font: "Envy Code R 24";
+    line-margin: 2;
+
+    display-ssh:    "";
+    display-run:    "";
+    display-drun:   "";
+    display-window: "";
+    display-combi:  "";
+    show-icons:     true;
+}
+
+
+@theme "~/.config/rofi/nord.rasi"
+
+listview {
+	lines: 6;
+	columns: 2;
+}
+
+window {
+	width: 50%;
+}
+// configuration {
+    /* Other settings like show-icons, etc. can go here */
+
+    /* Now we override the display format for drun mode */
+
+// }

@@ -1,0 +1,3 @@
+[key_bindings]
+next = ["ctrl-n", "ctrl-j"]
+previous = ["ctrl-p","ctrl-k"]

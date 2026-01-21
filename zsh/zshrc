@@ -152,7 +152,7 @@ cdn() {
   cd ${new_file}
 }
 # mkdir,cd it
-mcd() {
+cmd() {
 mkdir $1
 cd $1
 }
