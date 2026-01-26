@@ -2,6 +2,15 @@ return {
   "mfussenegger/nvim-lint",
   event = { "BufReadPre", "BufNewFile" },
   config = function()
+    -- Suppress the deprecation warning from nvim-lint until it's updated
+    local notify = vim.notify
+    vim.notify = function(msg, ...)
+      if msg:match("vim%.lsp%.get_active_clients%(%%) is deprecated") then
+        return
+      end
+      notify(msg, ...)
+    end
+
     local lint = require("lint")
 
     lint.linters_by_ft = {
