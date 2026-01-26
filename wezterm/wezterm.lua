@@ -19,7 +19,7 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	-- config.default_prog = { "C:\\cygwin64\\bin\\zsh.exe", "-l" }
 	-- wezterm.log_info("OS: Windows, Prog: cygwin")
 	config.font_size = 17
-	config.font = wezterm.font("JetBrainsMonoNL Nerd Font", { weight = "Medium", stretch = "Normal", style = "Normal" })
+	config.font = wezterm.font("JetBrains Mono NL", { weight = "Medium", stretch = "Normal", style = "Normal" })
 elseif wezterm.target_triple == "aarch64-apple-darwin" then
 	wezterm.log_info("OS: Mac")
 	-- font setting
@@ -266,10 +266,13 @@ config.color_scheme_dirs = { "~/.config/color/schemes" } -- {{{
 -- Josean coolnight colorscheme:
 config.colors = {
 	foreground = "#CBE0F0",
-	background = "#011423",
+	--one half black
+	background = "#282c34",
+	cursor_fg = "#282c34",
+	-- background = "#011423",
+	-- cursor_fg = "#011423",
 	cursor_bg = "#47FF9C",
 	cursor_border = "#47FF9C",
-	cursor_fg = "#011423",
 	selection_bg = "#033259",
 	selection_fg = "#CBE0F0",
 	ansi = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#0FC5ED", "#a277ff", "#24EAF7", "#24EAF7" },

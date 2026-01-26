@@ -8,6 +8,7 @@
 [
   "allocate"
   "case"
+  "only"
   ; "deallocate"
 ] @keyword
 
@@ -38,3 +39,18 @@
     ; Miscellaneous
     "present" "null" "transfer" "huge" "tiny" "epsilon"
     ))
+
+[
+  "&"
+] @punctuation.special (#set! "priority" 200)
+
+[
+  "=>"
+] @operator.pointer (#set! "priority" 200)
+
+(block_label) @label.fortran
+(block_label_start_expression) @label.fortran
+(name) @label.fortran
+(type_name) @label.fortran
+(end_block_construct_statement) @keyword
+

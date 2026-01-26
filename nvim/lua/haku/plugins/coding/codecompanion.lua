@@ -8,8 +8,8 @@ return {
   opts = {
     interactions = {
       chat = {
-        -- adapter = "claude_code", -- ACP adapter (chat only)
-        adapter = "codex", -- ACP adapter (chat only)
+        adapter = "claude_code", -- ACP adapter (chat only)
+        -- adapter = "codex", -- ACP adapter (chat only)
         keymaps = {
           change_adapter = {
             modes = { n = "<C-a>" },

@@ -95,6 +95,8 @@ return {
     -- fold <<<{{{
     vim.api.nvim_set_hl(0, "fortranDirective", { fg = "#82d600", bold = true })
     vim.api.nvim_set_hl(0, "fortranOpenMP", { fg = "#ffaa00", bold = true })
+    vim.api.nvim_set_hl(0, "@punctuation.special.fortran", { fg = "#ff8700", bold = true })
+    vim.api.nvim_set_hl(0, "@operator.pointer.fortran", { fg = "#af87ff", bold = true })
     -- Function to add fortran matches to current window
     local function add_fortran_matches()
       -- Only proceed if current buffer is fortran

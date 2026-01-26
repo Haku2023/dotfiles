@@ -181,7 +181,7 @@ return {
         -- ...
         override = function(c)
           return {
-            -- Normal = { bg = "#000000" },
+            Normal = { bg = "#282c34" },
             IndentBlanklineChar = { fg = c.base.dimmed4 },
             Comment = { fg = c.base.dimmed2 },
             -- colors.comment = "#93DA97"
@@ -191,10 +191,16 @@ return {
         -- ...
       })
       vim.cmd("colorscheme monokai-pro-octagon")
-      vim.api.nvim_set_hl(0, "@keyword.function.fortran", { fg = "#A888F8", bold = true })
+      -- vim.api.nvim_set_hl(0, "@keyword.function.fortran", { fg = "#A888F8", bold = true })
+      vim.api.nvim_set_hl(0, "@keyword.function.fortran", { fg = "#EE6188", bold = true })
       vim.api.nvim_set_hl(0, "@module.fortran", { fg = "#A888F8", bold = true })
       vim.api.nvim_set_hl(0, "@function.builtin.fortran", { fg = "#EE6188" })
+      vim.api.nvim_set_hl(0, "@label.fortran", { fg = "#A888F8" })
       vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#FFA500", bold = true })
+
+      -- Search highlights: dark yellow background with white text
+      vim.api.nvim_set_hl(0, "Search", { bg = "#A888F8", fg = "#FFFFFF", bold = true })
+      vim.api.nvim_set_hl(0, "IncSearch", { bg = "#806600", fg = "#FFFFFF", bold = true })
     end,
   },
 }
