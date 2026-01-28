@@ -28,7 +28,7 @@
     "real" "int" "nint" "aint" "anint" "dble" "cmplx"
     ; Array functions
     "size" "shape" "lbound" "ubound" "allocated" "associated"
-    "matmul" "dot_product" "sum" "product" "maxval" "minval" "count"
+    "matmul" "dot_product" "sum" "product" "maxval" "minval" "maxloc" "minloc" "count"
     "any" "all" "merge" "pack" "unpack" "reshape" "transpose" "spread"
     ; String functions
     "len" "len_trim" "trim" "adjustl" "adjustr" "index" "scan" "verify"
