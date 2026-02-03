@@ -23,6 +23,8 @@ fi
 # see 'man strftime' for details.
 export HIST_STAMPS="mm-dd-yyyy"
 # Maximum events for internal history
+#
+export HISTFILE="$ZDOTDIR/.zhistory"
 export HISTSIZE=50000
 export SAVEHIST=10000
 
@@ -37,6 +39,7 @@ export XDG_CONFIG_HOME="${HOME}/.config"
 export XDG_DATA_HOME="${HOME}/.local/share"
 export XDG_CACHE_HOME="${HOME}/.cache"
 export XDG_STATE_HOME="${HOME}/.local/state"
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 # Compilation flags for mac to get the arch compatibale 
 if [[ "$(uname)" == "Darwin" ]];then
   export ARCHFLAGS="-arch $(uname -m)"

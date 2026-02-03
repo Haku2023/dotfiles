@@ -379,6 +379,19 @@ export MCFLY_RESULTS=50
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#d2691e'
 # <<<<<<<<<<<<<<<<# }}}
 
+# haku autocompletion
+autoload -U compinit; compinit
+## autocomplete hidden files
+_comp_options+=(globdots)
+source ~/dotfiles/zsh/external/completion.zsh
+fpath=($ZDOTDIR/external $fpath)
+## vim mapping for completion
+zmodload zsh/complist
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+
 # mac air setting
 # >>>>>>>>>>>>>>>{{{
 if [[ "$(uname)" == "Darwin" ]];then

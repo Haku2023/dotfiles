@@ -180,13 +180,25 @@ return {
         -- ...
         -- ...
         override = function(c)
-          return {
-            Normal = { bg = "#282c34" },
-            IndentBlanklineChar = { fg = c.base.dimmed4 },
-            Comment = { fg = c.base.dimmed2 },
-            -- colors.comment = "#93DA97"
-            -- colors.comment = "#a4aacb"
-          }
+          local is_wsl = vim.fn.has("wsl") == 1
+          if is_wsl then
+            return {
+
+              Normal = { bg = "#282c34" },
+              IndentBlanklineChar = { fg = c.base.dimmed4 },
+              Comment = { fg = c.base.dimmed2 },
+              -- colors.comment = "#93DA97"
+              -- colors.comment = "#a4aacb"
+            }
+          else
+            return {
+              -- Normal = { bg = "#282c34" },
+              IndentBlanklineChar = { fg = c.base.dimmed4 },
+              Comment = { fg = c.base.dimmed2 },
+              -- colors.comment = "#93DA97"
+              -- colors.comment = "#a4aacb"
+            }
+          end
         end,
         -- ...
       })

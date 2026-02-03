@@ -53,7 +53,7 @@ elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
 	wezterm.log_info("OS: Linux")
 	config.font_size = 17
 	Gotop = "gotop"
-	config.window_background_opacity = 0.80
+	config.window_background_opacity = 0.50
 	-- font setting
 	config.font = wezterm.font("MesloLGS NF", { weight = "Medium", stretch = "Normal", style = "Normal" })
 end -- }}}
@@ -264,20 +264,39 @@ end) -- }}}
 config.color_scheme = "Dracula (Official)"
 config.color_scheme_dirs = { "~/.config/color/schemes" } -- {{{
 -- Josean coolnight colorscheme:
-config.colors = {
-	foreground = "#CBE0F0",
-	--one half black
-	background = "#282c34",
-	cursor_fg = "#282c34",
-	-- background = "#011423",
-	-- cursor_fg = "#011423",
-	cursor_bg = "#47FF9C",
-	cursor_border = "#47FF9C",
-	selection_bg = "#033259",
-	selection_fg = "#CBE0F0",
-	ansi = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#0FC5ED", "#a277ff", "#24EAF7", "#24EAF7" },
-	brights = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#A277FF", "#a277ff", "#24EAF7", "#24EAF7" },
-} -- }}}
+if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+	config.colors = {
+		foreground = "#CBE0F0",
+		--one half black
+		background = "#282c34",
+		cursor_fg = "#282c34",
+		-- background = "#011423",
+		-- cursor_fg = "#011423",
+		cursor_bg = "#47FF9C",
+		cursor_border = "#47FF9C",
+		selection_bg = "#033259",
+		selection_fg = "#CBE0F0",
+		ansi = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#0FC5ED", "#a277ff", "#24EAF7", "#24EAF7" },
+		brights = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#A277FF", "#a277ff", "#24EAF7", "#24EAF7" },
+	}
+else
+	config.colors = {
+		foreground = "#CBE0F0",
+		--one half black
+		-- background = "#282c34",
+		-- cursor_fg = "#282c34",
+		background = "#011423",
+		cursor_fg = "#011423",
+		cursor_bg = "#47FF9C",
+		cursor_border = "#47FF9C",
+		selection_bg = "#033259",
+		selection_fg = "#CBE0F0",
+		ansi = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#0FC5ED", "#a277ff", "#24EAF7", "#24EAF7" },
+		brights = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#A277FF", "#a277ff", "#24EAF7", "#24EAF7" },
+	}
+end
+
+-- }}}
 
 -- shortcut setting
 local act = wezterm.action
