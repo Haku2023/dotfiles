@@ -180,25 +180,26 @@ return {
         -- ...
         -- ...
         override = function(c)
+          -- Detect OS
+          local is_mac = vim.fn.has("macunix") == 1 or vim.fn.has("mac") == 1
           local is_wsl = vim.fn.has("wsl") == 1
+          -- Alternative: local is_mac = vim.loop.os_uname().sysname == "Darwin"
+          local overrides = {
+            -- Normal = { bg = "#282c34" },
+            IndentBlanklineChar = { fg = c.base.dimmed4 },
+            Comment = { fg = c.base.dimmed2 },
+            -- colors.comment = "#93DA97"
+            -- colors.comment = "#a4aacb"
+          }
           if is_wsl then
-            return {
-
-              Normal = { bg = "#282c34" },
-              IndentBlanklineChar = { fg = c.base.dimmed4 },
-              Comment = { fg = c.base.dimmed2 },
-              -- colors.comment = "#93DA97"
-              -- colors.comment = "#a4aacb"
-            }
+            -- Mac-specific overrides
+            overrides.Normal = { bg = "#282c34" } -- Example: different background
+            -- Add more Mac-specific highlights here
           else
-            return {
-              -- Normal = { bg = "#282c34" },
-              IndentBlanklineChar = { fg = c.base.dimmed4 },
-              Comment = { fg = c.base.dimmed2 },
-              -- colors.comment = "#93DA97"
-              -- colors.comment = "#a4aacb"
-            }
+            -- Linux-specific overrides
+            -- Add more Linux-specific highlights here
           end
+          return overrides
         end,
         -- ...
       })

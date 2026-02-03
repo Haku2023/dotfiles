@@ -3,7 +3,13 @@ return {
   version = "*",
   config = function()
     require("toggleterm").setup({
-      -- you can omit open_mapping if you prefer manual mappings
+      size = function(term)
+        if term.direction == "horizontal" then
+          return 15
+        elseif term.direction == "vertical" then
+          return vim.o.columns * 0.4
+        end
+      end,
     })
 
     -- NOTE: <C-\\> (double backslash) is the correct key notation in Lua
@@ -42,9 +48,7 @@ return {
       end, opts)
 
       -- jk → leave terminal-mode
-      vim.keymap.set("t", "jk", function()
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-\\><C-n>", true, false, true), "n", false)
-      end, opts)
+      vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
 
       -- window navigation
       -- vim.keymap.set("t", "<C-h>", "<Cmd>wincmd h<CR>", opts)

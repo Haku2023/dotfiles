@@ -92,9 +92,9 @@ keymap.set("n", "<leader>nt", "<cmd>Noice telescope<CR>", { desc = "Telescope No
 keymap.set("n", "<leader>na", "<cmd>NoiceAll<CR>", { desc = "Noice All" })
 
 -- Toggleterm
-keymap.set({ "n", "t" }, "<leader>\\", "<cmd>ToggleTerm direction=float<cr>", { desc = "ToggleTerm float" })
+keymap.set({ "n", "t" }, "<leader>jf", "<cmd>ToggleTerm direction=float<cr>", { desc = "ToggleTerm float" })
 keymap.set({ "n", "t" }, "<leader>jj", "<cmd>ToggleTerm direction=horizontal<cr>", { desc = "ToggleTerm float" })
-keymap.set({ "n", "t" }, "<leader>\\v", "<cmd>ToggleTerm direction=vertical<cr>", { desc = "ToggleTerm float" })
+keymap.set({ "n", "t" }, "<leader>jk", "<cmd>ToggleTerm direction=vertical<cr>", { desc = "ToggleTerm float" })
 
 -- Open CodeCompanion chat
 vim.keymap.set("n", "<leader>a", "<cmd>CodeCompanionChat Toggle<cr>", { desc = "Toggle CodeCompanion chat" })
