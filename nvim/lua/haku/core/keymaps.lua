@@ -11,8 +11,20 @@ keymap.set("x", "s", "<ESC>", { desc = "Exit visual mode with s" })
 keymap.set("i", "<C-f>", "<Right>", { desc = "forward in insertmode" })
 keymap.set("i", "<C-b>", "<Left>", { desc = "backward in insertmode" })
 keymap.set("i", "hh", "<C-w>", { desc = "delete words in insertmode" })
-keymap.set({ "n" }, "<C-t>", "<cmd>set wrap<CR>", { desc = "wrap the lines" })
-keymap.set({ "i" }, "<C-t>", "<ESC>:set wrap<CR>", { desc = "wrap the lines" })
+
+-- keymap.set({ "n" }, "<C-t>", "<cmd>set wrap<CR>", { desc = "wrap the lines" })
+-- keymap.set({ "i" }, "<C-t>", "<ESC>:set wrap<CR>", { desc = "wrap the lines" })
+keymap.set({ "i", "n" }, "<C-t>", function()
+  if vim.g.word_wrap == nil or vim.g.word_wrap == 0 then
+    vim.cmd("set wrap")
+    vim.g.word_wrap = 1
+    print("Set Word Wrap!")
+  else
+    vim.cmd("set nowrap")
+    vim.g.word_wrap = 0
+    print("Unset Word Wrap!")
+  end
+end, { desc = "Toogle word wrap!" })
 -- commandline mode
 keymap.set("c", "<C-A>", "<HOME>")
 keymap.set("c", "<C-F>", "<Right>")

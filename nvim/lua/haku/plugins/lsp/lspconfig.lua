@@ -151,6 +151,24 @@ return {
     -- })
     --
     --
+    vim.lsp.config("texlab", {
+      settings = {
+        texlab = {
+          build = {
+            onSave = false,
+            forwardSearchAfter = false,
+          },
+          diagnostics = {
+            ignoredPatterns = { "^Underfull", "^Overfull" },
+          },
+          chktex = {
+            onEdit = false,
+            onOpenAndSave = false,
+          },
+        },
+      },
+    })
+
     --- https://github.com/microsoft/pyright
     ---
     --- `pyright`, a static type checker and language server for python
