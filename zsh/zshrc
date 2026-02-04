@@ -113,6 +113,7 @@ source $ZSH/oh-my-zsh.sh
 alias zrc="nvim ~/.zshrc"
 alias sou="exec zsh"
 alias nlua="nvim ~/.config/nvim/lua/haku/core/options.lua"
+alias pl="pdflatex"
 # mac
 alias wlua="nvim ~/.config/wezterm/wezterm.lua"
 alias vi="nvim"

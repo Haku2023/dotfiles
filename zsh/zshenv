@@ -15,18 +15,6 @@ else
   export VISUAL='nvim'
 fi
 
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-export HIST_STAMPS="mm-dd-yyyy"
-# Maximum events for internal history
-#
-export HISTFILE="$ZDOTDIR/.zhistory"
-export HISTSIZE=50000
-export SAVEHIST=10000
 
 # add path to windows for explorer
 export PATH=$PATH:/mnt/c/Windows
@@ -49,10 +37,30 @@ fi
 export HOMEBREW_AUTO_UPDATE_SECS=86400   # Update at most once per day
 export HOMEBREW_NO_ENV_HINTS=1
 
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+export HIST_STAMPS="mm-dd-yyyy"
+# Maximum events for internal history
+#
+export HISTFILE="$ZDOTDIR/.zhistory"
+export HISTSIZE=50000
+export SAVEHIST=10000
+
 # set .local/bin in path
 export PATH="$HOME/.local/bin:$PATH"
 
 # Load local secrets (not in repo)
 if [[ -f "$HOME/.zshenv.local" ]]; then
   source "$HOME/.zshenv.local"
+fi
+
+# Latex
+if [[ "$(uname)" == "Linux" ]];then
+  export MANPATH="/usr/local/texlive/2025/texmf-dist/doc/man:$MANPATH"
+  export INFOPATH="/usr/local/texlive/2025/texmf-dist/doc/info:$INFOPATH"
+  export PATH="/usr/local/texlive/2025/bin/x86_64-linux:$PATH"
 fi
