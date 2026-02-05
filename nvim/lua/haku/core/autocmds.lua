@@ -74,3 +74,11 @@ vim.api.nvim_create_autocmd("BufEnter", {
     -- print("Project settings applied: Tabs set to 4 spaces.") -- Optional: for confirmation
   end,
 })
+
+-- auto detect latex
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "*.tex",
+  callback = function()
+    vim.cmd("filetype detect")
+  end,
+})
