@@ -95,5 +95,7 @@ return {
     keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
     keymap.set("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", { desc = "Find keymaps?" })
     keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
+    keymap.set("n", "<leader>fs", builtin.lsp_workspace_symbols, { desc = "Fuzzy find symbols in workspace" })
+    keymap.set("n", "<leader>fS", builtin.lsp_document_symbols, { desc = "Fuzzy find symbols in current buffer" })
   end,
 }
