@@ -213,7 +213,12 @@ return {
 
       -- Search highlights: dark yellow background with white text
       vim.api.nvim_set_hl(0, "Search", { bg = "#A888F8", fg = "#FFFFFF", bold = true })
-      vim.api.nvim_set_hl(0, "IncSearch", { bg = "#806600", fg = "#FFFFFF", bold = true })
+      -- vim.api.nvim_set_hl(0, "IncSearch", { bg = "#806600", fg = "#FFFFFF", bold = true })
+      vim.api.nvim_set_hl(0, "IncSearch", { bg = "#82d600", fg = "#000000", bold = true })
+      vim.api.nvim_set_hl(0, "CurSearch", { bg = "#9ACD32", fg = "#000000", bold = true })
+      -- vim.api.nvim_set_hl(0, "CurSearch", { bg = "#33ee00", fg = "#000000", bold = true })
+
+      -- vim.api.nvim_set_hl(0, "Search", { bg = "#00ff00", fg = "#000000" })
     end,
   },
 }

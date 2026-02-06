@@ -113,8 +113,8 @@ return {
       end
       vim.w.fortran_matches = {}
 
-      table.insert(vim.w.fortran_matches, vim.fn.matchadd("fortranOpenMP", "^s*!$.*", 200))
-      table.insert(vim.w.fortran_matches, vim.fn.matchadd("fortranDirective", "^s*#.*", 200))
+      table.insert(vim.w.fortran_matches, vim.fn.matchadd("fortranOpenMP", "^\\s*!\\$.*", -1))
+      table.insert(vim.w.fortran_matches, vim.fn.matchadd("fortranDirective", "^\\s*#.*", -1))
     end
 
     -- Apply matches when entering a fortran buffer/window
