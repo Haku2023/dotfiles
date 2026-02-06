@@ -147,7 +147,7 @@ return {
     -- Keymaps
     local map = vim.keymap.set
 
-    map("n", "<Leader>q", dap.continue, { desc = "DAP: Continue" })
+    map("n", "<Leader>dq", dap.continue, { desc = "DAP: Continue" })
     map("n", "<Leader>dk", dap.step_over, { desc = "DAP: Step over" })
     map("n", "<Leader>dj", dap.step_into, { desc = "DAP: Step into" })
     map("n", "<Leader>dh", dap.step_out, { desc = "DAP: Step out" })

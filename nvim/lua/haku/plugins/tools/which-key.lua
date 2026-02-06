@@ -21,7 +21,17 @@ return {
     -- refer to the configurations section below
   },
   config = function(_, opts)
-    require("which-key").setup(opts)
+    local wk = require("which-key")
+    wk.setup(opts)
+
+    -- Register groups
+    wk.add({
+      { "<leader>o", group = "Quicker" },
+    })
+    wk.add({
+      { "<leader>d", group = "Dap" },
+    })
+
     -- which-key uses WhichKeyNormal (links to NormalFloat by default)
     -- opacity setting transparent
     vim.api.nvim_set_hl(0, "WhichKeyNormal", { bg = "#1F2335", blend = 0 })

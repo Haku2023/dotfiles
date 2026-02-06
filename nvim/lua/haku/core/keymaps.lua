@@ -124,3 +124,4 @@ keymap.set("n", "<leader>cx", function()
   require("codecompanion").chat({ adapter = "codex" })
 end, { desc = "CodeCompanion with Codex" })
 -- vim.keymap.set("n", "<leader>cc", "<cmd>CodeCompanionChat<cr>", { desc = "Open CodeCompanion chat" })
+--
