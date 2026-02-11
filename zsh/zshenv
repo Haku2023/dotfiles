@@ -19,6 +19,7 @@ fi
 # add path to windows for explorer
 export PATH=$PATH:/mnt/c/Windows
 export EDITOR=nvim
+export TERMINAL=wezterm
 export BROWSER=qutebrowser
 # export multi selection with tab
 export FZF_DEFAULT_OPTS='-m'

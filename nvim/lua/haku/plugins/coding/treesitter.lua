@@ -63,7 +63,7 @@ return {
           init_selection = "<leader>ww",
           node_incremental = "<leader>ww",
           scope_incremental = false,
-          node_decremental = "<bs>",
+          node_decremental = "<leader>wh",
         },
       },
     })

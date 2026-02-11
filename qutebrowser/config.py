@@ -5,6 +5,7 @@
 """
 config file for qutebrowser
 """
+
 import sys
 
 #
@@ -153,6 +154,7 @@ elif sys.platform.startswith("linux"):
     # c.tabs.width = "2%"
     c.fonts.default_size = "15pt"
     c.fonts.web.size.default = 18
+    config.set("content.autoplay", False)
 else:
     c.tabs.position = "left"
     c.tabs.position = "bottom"

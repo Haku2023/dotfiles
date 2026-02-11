@@ -190,10 +190,25 @@ config.window_padding = {
 	bottom = 0,
 }
 -- full screen from start
-local mux = wezterm.mux
+--
 wezterm.on("gui-startup", function(cmd)
+	local mux = wezterm.mux
+	local workspace_name = "banana"
+	-- First, spawn the default "apple" workspace window
 	local tab, pane, window = mux.spawn_window(cmd or {})
-	window:gui_window():toggle_fullscreen()
+	-- Then create "banana" workspace in the background with 2 tabs
+	local _, _, banana_window = mux.spawn_window({
+		workspace = workspace_name,
+		-- add dotfiles in banana workspace
+		cwd = wezterm.home_dir .. "/dotfiles",
+	})
+	banana_window:spawn_tab({
+		cwd = wezterm.home_dir .. "/Haku_Posts",
+	})
+	mux.set_active_workspace(config.default_workspace)
+	if wezterm.target_triple ~= "x86_64-unknown-linux-gnu" then
+		window:gui_window():toggle_fullscreen()
+	end
 end)
 
 -- opacity change / toggle background image

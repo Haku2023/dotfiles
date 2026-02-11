@@ -154,7 +154,7 @@ cdn() {
   cd ${new_file}
 }
 # mkdir,cd it
-cmd() {
+mcd() {
 mkdir $1
 cd $1
 }
