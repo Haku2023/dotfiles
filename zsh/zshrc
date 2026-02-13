@@ -386,9 +386,11 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#d2691e'
 # <<<<<<<<<<<<<<<<# }}}
 
 # haku autocompletion
-autoload -U compinit; compinit
+if [[ -z "$NVIM" ]];then
+  autoload -U compinit; compinit
+  _comp_options+=(globdots)
+fi
 ## autocomplete hidden files
-_comp_options+=(globdots)
 source ~/dotfiles/zsh/external/completion.zsh
 fpath=($ZDOTDIR/external $fpath)
 ## vim mapping for completion
