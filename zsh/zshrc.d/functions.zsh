@@ -3,7 +3,11 @@ if [[ "$(uname)" == "Darwin" ]];then
   wsh () {
     wezterm cli spawn --domain-name "SSH:$1"
   }
-  complete -W "73 117 109" wsh
+  # Use zsh completion
+  _wsh() {
+    _arguments '1:server:(73 117 109)'  # Shows "server" as description
+  }
+  compdef _wsh wsh
 fi
 # Start from insertmode for zsh-vi-mode
 function zvm_config() {

@@ -1,3 +1,11 @@
+# init homebrew, should be init first
+if [[ "$(uname)" == "Darwin" ]];then
+  # eval "$(/usr/local/bin/brew shellenv)"
+  # arm 64
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[  "$(uname)" == "Linux"  ]];then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
 ### ---- FZF (better search) ----
 # <<<{{{
 # Use fd for fzf file finding (faster and respects .gitignore)
@@ -45,17 +53,13 @@ eval "$(zoxide init zsh)"
 # This ensures mcfly-history-widget is properly registered
 eval "$(mcfly init zsh)"
 
-# init homebrew
-if [[ "$(uname)" == "Darwin" ]];then
-  # eval "$(/usr/local/bin/brew shellenv)"
-  # arm 64
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-elif [[  "$(uname)" == "Linux"  ]];then
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-fi
 
 
 # Set mcfly environment variables BEFORE initialization
 # export MCFLY_KEY_SCHEME=vim
 export MCFLY_RESULTS=50
 # NOTE: mcfly init will be called in zvm_after_lazy_keybindings to avoid conflicts with zsh-vi-mode
+#vim
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

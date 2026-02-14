@@ -66,6 +66,15 @@ alias gstl='git stash list'
 alias gstall='git stash --all'
 alias gst='git status'
 alias gstp='git stash pop'
+alias gdup='git diff @{upstream}'
+
+function gd() {
+  if [[ "${1}" =~ ^[1-9]$ ]];then
+    git diff @{${1}}
+  else
+    git diff "$@"
+  fi
+}
 #<<<{{{
 #
 alias gpr='git pull --rebase'

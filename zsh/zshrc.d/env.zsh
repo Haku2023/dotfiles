@@ -31,8 +31,7 @@ export HOMEBREW_NO_ENV_HINTS=1
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
 # Maximum events for internal history
-export HISTFILE="$ZDOTDIR/history.zsh"
-HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/history"
+export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/history"
 export HISTSIZE=50000
 export SAVEHIST=10000
 
@@ -67,11 +66,11 @@ if [[ "$(uname)" == "Linux" ]];then
   path+=(/usr/local/texlive/2025/bin/x86_64-linux)
 elif [[ "$(uname)" == "Darwin" ]];then
   # Path to llvm clange
-  export path+=(/usr/local/opt/llvm/bin)
+  path+=(/usr/local/opt/llvm/bin)
   # Path to wezterm
-  export path+=(/Applications/Wezterm.app/Contents/Macos)
+  path+=(/Applications/Wezterm.app/Contents/Macos)
   # Path to Latex
-  export path+=(/Library/Tex/texbin)
+  path+=(/Library/Tex/texbin)
 fi
 
 
