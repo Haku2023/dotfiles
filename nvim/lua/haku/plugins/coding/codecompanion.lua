@@ -55,6 +55,16 @@ return {
             -- },
           })
         end,
+        gemini_cli = function()
+          return require("codecompanion.adapters").extend("gemini_cli", {
+            defaults = {
+              auth_method = "oauth-personal", -- "oauth-personal"|"gemini-api-key"|"vertex-ai"
+            },
+            env = {
+              -- GEMINI_API_KEY = "cmd:op read op://personal/Gemini_API/credential --no-newline",
+            },
+          })
+        end,
       },
     },
   },

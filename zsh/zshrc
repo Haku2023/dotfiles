@@ -1,18 +1,12 @@
 # Plugins
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 if [[ -f $HOME/.p10k.zsh ]];then
   source $HOME/.p10k.zsh
 fi
 source $HOME/.zsh-plugins/powerlevel10k/powerlevel10k.zsh-theme
-source $HOME/.zsh-plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 source $HOME/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $HOME/.zsh-plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+source $HOME/.zsh-plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
 # Zshrc 
 # autocomplete hidden files
@@ -24,6 +18,7 @@ source "$ZDOTDIR/zshrc.d/aliases.zsh"
 source "$ZDOTDIR/zshrc.d/options.zsh"
 source "$ZDOTDIR/zshrc.d/tools.zsh"
 source "$ZDOTDIR/zshrc.d/functions.zsh"
+
 
 # chocolate
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#d2691e'

@@ -3,7 +3,14 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
-    { "antosha417/nvim-lsp-file-operations", config = true },
+    -- { "antosha417/nvim-lsp-file-operations", config = true },
+    -- 2) Use the PR branch from the fork, but keep the same name so configs keep working
+    {
+      "DrKJeff16/nvim-lsp-file-operations",
+      name = "nvim-lsp-file-operations",
+      branch = "fix/deprecations",
+      -- keep your existing opts/config here if you had any
+    },
     { "folke/neodev.nvim", opts = {} },
   },
   config = function()

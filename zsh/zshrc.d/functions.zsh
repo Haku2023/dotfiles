@@ -14,39 +14,6 @@ function zvm_config() {
   ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 }
 bindkey '^ ' autosuggest-accept
-# function zvm_before_init_commands=()
-zvm_after_init_commands+=(
-#   #for dirhistory
-  "bindkey -s '^K' '^[[1;3A'" "bindkey -M vicmd -s '^K' '^[[1;3A'"
-  "bindkey -s '^U' '^[[1;3C'" "bindkey -M vicmd -s '^U' '^[[1;3C'" 
-  "bindkey -s '^O' '^[[1;3D'" "bindkey -M vicmd -s '^O' '^[[1;3D'"
-  "bindkey '^J' open-nvim" "bindkey -M vicmd '^J' open-nvim"
-  "bindkey '^H' backward-delete-char"
-  "bindkey '^V' paste-from-clipboard"
-  "bindkey '^S' prepend-sudo"
- )
-function zvm_before_lazy_keybindings(){
-}
-function zvm_after_init(){
-  # bindkey -M viins -s '^I' '^[[1;3D'
-  # bindkey -M viins -s '^O' '^[[1;3C'
-  # bindkey  -s '^K' '^[[1;3A'
-  # bindkey -M viins '^V' paste-from-clipboard
-}
-
-function zvm_after_lazy_keybindings() {
-  bindkey -M vicmd '^S' prepend-sudo
-  bindkey -M vicmd 'v' v2iv
-  bindkey -M vicmd 'p' paste-from-clipboard
-  
-  
-  # C-r for mcfly in insert mode (vi insert mode) - AI-powered history search
-  bindkey -M vicmd '^R' mcfly-history-widget
-  
-  # C-r for fzf history in normal mode (vi command mode) - fuzzy search
-  bindkey -M viins '^R' fzf-history-widget
-}
-
 
 # haku useful functions cdn mcd lsn
 # >>>>>>>>>>>>>>>>{{{
@@ -156,6 +123,34 @@ zle -N open-nvim
 zle -N paste-from-clipboard
 zle -N v2iv
 zle -N prepend-sudo
+
+# function zvm_before_init_commands=()
+zvm_after_init_commands+=(
+#   #for dirhistory
+  "bindkey -s '^K' '^[[1;3A'" "bindkey -M vicmd -s '^K' '^[[1;3A'"
+  "bindkey -s '^U' '^[[1;3C'" "bindkey -M vicmd -s '^U' '^[[1;3C'" 
+  "bindkey -s '^O' '^[[1;3D'" "bindkey -M vicmd -s '^O' '^[[1;3D'"
+  "bindkey '^J' open-nvim" "bindkey -M vicmd '^J' open-nvim"
+  "bindkey '^H' backward-delete-char"
+  "bindkey '^V' paste-from-clipboard"
+  "bindkey '^S' prepend-sudo"
+ )
+function zvm_before_lazy_keybindings(){}
+
+
+function zvm_after_lazy_keybindings() {
+  bindkey -M vicmd '^S' prepend-sudo
+  bindkey -M vicmd 'v' v2iv
+  bindkey -M vicmd 'p' paste-from-clipboard
+  
+  
+  # C-r for mcfly in insert mode (vi insert mode) - AI-powered history search
+  bindkey -M vicmd '^R' mcfly-history-widget
+  
+  # C-r for fzf history in normal mode (vi command mode) - fuzzy search
+  bindkey -M viins '^R' fzf-history-widget
+}
+
 # Start in command mode (this is the key part)
 # zle-line-init() { zle -K vicmd; }
 # <<<<<<<<<<<<<<<<# }}}
@@ -427,3 +422,4 @@ done
 
 unset keymap
 #<<<}}}
+
