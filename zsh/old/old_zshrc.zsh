@@ -1,0 +1,622 @@
+# ohmyzsh, powerlevel10k, miniconda
+# >>>>>>>>>>>>>>>{{{
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+
+#
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time Oh My Zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in $ZSH/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+
+# Uncomment the following line to change how often to auto-update (in days).
+# zstyle ':omz:update' frequency 13
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS="true"
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+
+# Start from insertmode for zsh-vi-mode
+function zvm_config() {
+  ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+}
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git zsh-vi-mode zsh-autosuggestions fast-syntax-highlighting  web-search history dirhistory )
+# ctrl space for accept
+bindkey '^ ' autosuggest-accept
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+# export MANPATH="/usr/local/man:$MANPATH"
+
+
+# Set personal aliases, overriding those provided by Oh My Zsh libs,
+# plugins, and themes. Aliases can be placed here, though Oh My Zsh
+# users are encouraged to define aliases within a top-level file in
+# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
+# - $ZSH_CUSTOM/aliases.zsh
+# - $ZSH_CUSTOM/macos.zsh
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# mlias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# <<<<<<<<<<<<<<<}}}
+
+
+# haku alias
+# >>>>>>>>>>>>>>>{{{
+alias zrc="nvim ~/.zshrc"
+alias sou="exec zsh"
+alias nlua="nvim ~/.config/nvim/lua/haku/core/options.lua"
+alias pl="pdflatex"
+# mac
+alias wlua="nvim ~/.config/wezterm/wezterm.lua"
+alias vi="nvim"
+alias ls="eza --icons=always"
+alias lsn="eza --icons=always -l -snew"
+alias vu="vi ~/Documents/Projects/haku_git/haku_tools_linux/useful_linux_commands.md"
+alias vc="vi ~/haku_git/wezterm-nvim_setup/zsh_setup.md"
+alias hwlua="vi ~/haku_git/wezterm-nvim_setup/wezterm.lua"
+alias cd="z"
+# check which port is on listening
+alias hlisten="echo '(head -n 1 && grep LISTEN) <<< sudo lsof -i -P -n ';(head -n 1 && grep LISTEN) <<< \`sudo lsof -i -P -n\`"
+# mac
+if [[ "$(uname)" == "Darwin" ]];then
+alias rm="\grm --preserve-root -I"
+alias haku25_old="cd '/Users/bai.haodong/Documents/Doctor_Life/G-学会/14. English Thesis/graphs'"
+alias haku25="cd '/Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2025_Projects/H-Fresh'; vi "
+alias haku26="cd '/Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects';ls "
+alias rsync_homepage="echo 'rsync -avz --progress ./* \"85:/srv/Taisui_WebSite/Tests/\"';rsync -avz --progress ./* "85:/srv/Taisui_WebSite/Tests/""
+alias rsync_src="rsync -avz --progress '73:/cygdrive/c/Users/baihaodong/Documents/2025Tasks/Thesis_ADE/Solution_T_ADE/src/*' /Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects/H-Fresh/src;echo 'rsync H-Fresh(73) completed!'"
+alias rsync_cip="echo 'rsync -avz --del --progress 73:~/Projects/Yodo_26/CIP/*';rsync -avz --del --progress '73:~/Projects/Yodo_26/CIP/*' /Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects/CIP;echo 'rsync CIP(73) completed!'"
+# alias rsync_cip="echo 'rsync -avz --del --progress 73:~/Projects/Yodo_26/CIP/*'; rsync -avz --progress '73:~/Projects/Yodo_26/CIP/*' /Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects/CIP"
+# life
+alias myLove="open https://meeting.tencent.com/p/9796730765\?pwd\=500012"
+alias japaneseCourse="open https://kyoto-u-edu.zoom.us/j/91423186918\?pwd\=alhtRnhlcUljVi84Z0hncjRZREtjZz09"
+fi
+if [[ "$(uname)" == "Linux" ]];then
+alias rm="rm --preserve-root -I"
+alias chmod="chmod --preserve-root"
+fi
+# <<<<<<<<<<<<<<<}}}
+
+# haku functions
+# >>>>>>>>>>>>>>>>{{{
+# cdn - cd to newest directory, or nth newest with argument
+cdn() {
+  local n=${1:-1}
+  new_file=$(eza -snew -D --icons=never | tail -n${n} | head -n1)
+  cd ${new_file}
+}
+# mkdir,cd it
+mcd() {
+mkdir $1
+cd $1
+}
+# find the latest files in current directory
+# lso(){
+# find . -type f -exec ls -lt {} + | head -$1
+# }
+lsh(){
+  ls -ld -s="modified" **/*(D.om[1,$1])
+}
+# set start and end function to calc time
+haku_start() {
+    start_time=$(date +%s)
+}
+haku_end() {
+    end_time=$(date +%s)
+    mid_time=$(($end_time - $start_time));hours_calc=$((mid_time/3600));mins_calc=$((mid_time%3600/60));seconds_calc=$((mid_time%60))
+    printf "elapsed time is : %d h %d min %d s\n" $hours_calc $mins_calc $seconds_calc
+
+}
+# mac / linux
+if [[ "$(uname)" == "Darwin" ]];then
+paste-from-clipboard() {
+  RBUFFER=${RBUFFER:0:1}$(pbpaste)${RBUFFER:1}
+  zle end-of-line
+  zvm_enter_insert_mode
+}
+elif [[  "$(uname)" == "Linux"  ]];then
+paste-from-clipboard() {
+  RBUFFER=${RBUFFER:0:1}`(xsel -b -o)`${RBUFFER:1}
+  zle end-of-line
+  zvm_enter_insert_mode
+}
+fi
+# Prepend 'sudo' to the current command line with Ctrl+S
+prepend-sudo() {
+  if [[ -z "$BUFFER" ]];then
+    BUFFER="sudo $(fc -ln -1)" 
+    zle end-of-line
+  else
+    BUFFER="sudo ${BUFFER}" 
+    zle end-of-line
+    # zle beginning-of-line
+    # zle -U " sudo "
+    # zle end-of-line
+  fi
+}
+# v to insert v
+v2iv() {
+  if [[ -z "$BUFFER" ]];then
+    BUFFER="v" 
+    zle end-of-line
+    zvm_enter_insert_mode
+  else
+    zvm_enter_visual_mode
+  fi
+}
+
+# Make a widget that sends the escape sequence for Alt+Left Arrow
+alt_left() {
+  # \e is ESC. This simulates pressing Alt+Left
+  zle -U $'\e[1;3D'
+}
+# Make a widget that sends the escape sequence for Alt+Left Arrow
+alt_right() {
+  # \e is ESC. This simulates pressing Alt+Left
+  zle -U $'\e[1;3C'
+}
+# Make a widget that sends the escape sequence for Alt+Left Arrow
+alt_up() {
+  # \e is ESC. This simulates pressing Alt+Left
+  zle -U $'\e[1;3A'
+}
+open-nvim() {
+  nvim
+  zle reset-prompt
+}
+# Force insert mode at each new prompt
+# zle-line-init() {
+#   zle -K viins   # switch to vi insert keymap
+# }
+# zle-line-finish() { zle -K viins }
+
+# Always enter insert mode after Ctrl-C
+# _ins_after_break() {
+#   zle send-break        # do what Ctrl-C normally does
+#   zle -K viins          # then force vi-insert keymap for the new line
+#}
+# zle -N _ins_after_break
+# zle -N zle-line-init
+# zle -N zle-line-finish
+# zle -N alt_left
+# zle -N alt_right
+# zle -N alt_up
+zle -N open-nvim
+zle -N paste-from-clipboard
+zle -N v2iv
+zle -N prepend-sudo
+# Start in command mode (this is the key part)
+# zle-line-init() { zle -K vicmd; }
+# <<<<<<<<<<<<<<<<# }}}
+
+# haku others
+# >>>>>>>>>>>>>>>>{{{
+# use vim in cmd# 
+#bindkey -v
+# bindkey -M viins 'kk' vi-cmd-mode
+# bindkey -M viins 'jj' vi-cmd-mode
+#bindkey '^B' backward-char
+#bindkey '^F' forward-char
+#bindkey -M vicmd '^C' _ins_after_break
+#bindkey -M viins '^C' _ins_after_break   # optional: same behavior if you hit ^C in insert
+# to use ls -- ^a / rm -- ^a
+setopt extended_glob
+
+# function zvm_before_init_commands=()
+ zvm_after_init_commands+=(
+#   #for dirhistory
+  "bindkey -s '^K' '^[[1;3A'" "bindkey -M vicmd -s '^K' '^[[1;3A'"
+  "bindkey -s '^U' '^[[1;3C'" "bindkey -M vicmd -s '^U' '^[[1;3C'" 
+  "bindkey -s '^O' '^[[1;3D'" "bindkey -M vicmd -s '^O' '^[[1;3D'"
+  "bindkey '^J' open-nvim" "bindkey -M vicmd '^J' open-nvim"
+  "bindkey '^H' backward-delete-char"
+  "bindkey '^V' paste-from-clipboard"
+  "bindkey '^S' prepend-sudo"
+ )
+function zvm_before_lazy_keybindings(){
+}
+function zvm_after_init(){
+  # bindkey -M viins -s '^I' '^[[1;3D'
+  # bindkey -M viins -s '^O' '^[[1;3C'
+  # bindkey  -s '^K' '^[[1;3A'
+  # bindkey -M viins '^V' paste-from-clipboard
+}
+function zvm_after_lazy_keybindings() {
+  bindkey -M vicmd '^S' prepend-sudo
+  bindkey -M vicmd 'v' v2iv
+  bindkey -M vicmd 'p' paste-from-clipboard
+  
+  # Initialize mcfly AFTER zsh-vi-mode to prevent binding conflicts
+  # This ensures mcfly-history-widget is properly registered
+  eval "$(mcfly init zsh)"
+  
+  # C-r for mcfly in insert mode (vi insert mode) - AI-powered history search
+  bindkey -M vicmd '^R' mcfly-history-widget
+  
+  # C-r for fzf history in normal mode (vi command mode) - fuzzy search
+  bindkey -M viins '^R' fzf-history-widget
+}
+
+# Start in command mode
+# zle -N zle-line-init
+
+# init homebrew
+if [[ "$(uname)" == "Darwin" ]];then
+  # eval "$(/usr/local/bin/brew shellenv)"
+  # arm 64
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[  "$(uname)" == "Linux"  ]];then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+# init fzf by source, file places should refer to the fzf
+# method 1
+# alias fzf-init="source /home/linuxbrew/.linuxbrew/Cellar/fzf/0.62.0/shell/completion.zsh;source /home/linuxbrew/.linuxbrew/Cellar/fzf/0.62.0/shell/key-bindings.zsh"
+# method 2
+# Initialize fzf (fzf widgets will be bound after zsh-vi-mode loads)
+
+
+### ---- FZF (better search) ----
+# <<<{{{
+# Use fd for fzf file finding (faster and respects .gitignore)
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+
+# Configure fzf default options
+export FZF_DEFAULT_OPTS="
+  --height 60%
+  --layout=reverse
+  --border
+  --inline-info
+  --preview-window=right:50%:border-left
+  --bind 'ctrl-/:toggle-preview'
+  --bind 'ctrl-j:down,ctrl-k:up'"
+
+# Configure fzf preview for Ctrl-T (file search)
+export FZF_CTRL_T_OPTS="
+  --preview 'bat --style=numbers --color=always --line-range :500 {}' 
+  --preview-window right:60%:border-left
+  --bind 'ctrl-/:toggle-preview'
+  --header 'CTRL-/ to toggle preview'"
+
+# Configure fzf preview for Alt-C (directory search)
+export FZF_ALT_C_OPTS="
+  --preview 'eza --tree --level=2 --color=always --icons {} | head -200'
+  --preview-window right:60%:border-left
+  --bind 'ctrl-/:toggle-preview'
+  --header 'CTRL-/ to toggle preview'"
+
+# Configure fzf preview for Ctrl-R history search
+export FZF_CTRL_R_OPTS="
+  --preview 'echo {}' 
+  --preview-window up:3:wrap:hidden
+  --bind 'ctrl-/:toggle-preview'
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+  --color header:italic
+  --header 'Press CTRL-/ to toggle preview, CTRL-Y to copy'"
+eval "$(fzf --zsh)"
+# <<<}}}
+
+### ---- Zoxide (better cd) ----
+eval "$(zoxide init zsh)"
+
+# Set mcfly environment variables BEFORE initialization
+# export MCFLY_KEY_SCHEME=vim
+export MCFLY_RESULTS=50
+# NOTE: mcfly init will be called in zvm_after_lazy_keybindings to avoid conflicts with zsh-vi-mode
+### set conda, linux? need
+# eval "$(conda shell.zsh activate)"
+# conda config --show / conda config --set auto_activate true
+
+# set autosuggest highlight
+#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=208'
+# chocolate
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#d2691e'
+# <<<<<<<<<<<<<<<<# }}}
+
+# haku autocompletion
+autoload -U compinit; compinit
+## autocomplete hidden files
+_comp_options+=(globdots)
+source ~/dotfiles/zsh/external/completion.zsh
+fpath=($ZDOTDIR/external $fpath)
+## vim mapping for completion
+zmodload zsh/complist
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+
+# mac air setting
+# >>>>>>>>>>>>>>>{{{
+if [[ "$(uname)" == "Darwin" ]];then
+wsh () {
+  wezterm cli spawn --domain-name "SSH:$1"
+}
+complete -W "73 117 109" wsh
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Path to llvm clange
+export PATH="/usr/local/opt/llvm/bin:$PATH"
+
+# Path to wezterm
+export PATH="$PATH:/Applications/Wezterm.app/Contents/Macos"
+
+# Path to Latex
+export PATH="$PATH:/Library/Tex/texbin"
+
+# haku alias # mac air setting
+alias thesis='cd "/Users/bai.haodong/Documents/大学院ー博士/G-学会"'
+alias c="cd ~/Documents/"
+alias oCalendar="open -a Calendar"
+alias oFf="open -a Freeform"
+alias oFirefox='open -a Firefox'
+alias oNotes="open -a Notes"
+alias oMail="open -a Mail"
+alias oMaps="open -a Maps"
+alias oSs='open -a "System Settings"'
+alias oSafari='open -a Safari'
+
+# unzip for css
+alias csunzip="unzip ~/Downloads/\$(ls -t ~/Downloads | head -n1) -d ~/Documents/Code_Cluster/Html-Css-Javascript/Web_Development_Project ; open -a 'Visual Studio Code'"
+# This file gives the useful shortcuts for applications used in GUI
+fi
+# <<<<<<<<<<<<<<<}}}
+
+# deprecated
+# >>>>>>>>>>>>>>>{{{
+# alias hnlua="vi ~/haku_git/haku_tools_linux/zsh_setup/config/nvim/init.lua"
+#
+# # Function  
+# # go to the paper 2013 
+# H-Fresh(){
+# open /Users/bai.haodong/Documents/大学院ー博士/＊博士課題について/3.\ 論文/H-Fresh
+# }
+# # go to the folder 2013
+# 2013(){
+# open /Users/bai.haodong/Documents/大学院ー博士/＊博士課題について/3.\ 論文/Experiment/2013_Journal\ of\ offshore\ mechanics\ and\ Arctic\ engineering_Experimental\ Investigation\ of\ Tsunami\ Bore\ Forces\ on\ Vertical\ Walls.pdf
+# }
+# # o -1 -2 -3
+# o(){
+# case $1 in 
+#     -1)
+#     printf "%s\n" "$(alias oCalendar)" "$(alias oFf)" "$(alias oNotes)" "$(alias oMail)" "$(alias oMaps)" "$(alias oSs)" "$(alias oSafari)" "$(alias oFirefox)"
+#     ;;
+#     -2)
+#     printf '%s\n' 'word=Microsoft Word' 'ppt=Microsoft Powerpoint' 'preview=Mac Preview' 'keynote=Mac Keynote' 'mrd=Microsoft Remote Desktop'
+#     ;;
+#     -3)
+#     printf '%s\n' 'work on/off = start/finish mail'
+#     ;;
+#     *)
+#     echo "o: unknown key $1"
+#     return 1
+#     ;;
+# esac
+# }
+# complete -W "-1 -2 -3" o
+#
+# # Apple scripts
+# create_focus_browser(){
+#     local -A browser_dict=([chrome]="Google Chrome" [safari]="Safari")
+#     local app_name="${browser_dict[$1]}"
+#     local func_name=$1
+#     local -A script_dict=([chrome]="set active tab index of window w to t" [safari]="set current tab of window w to tab t of window w")
+#
+#     eval "$func_name(){
+#         case \$1 in
+#             kyotoportal)
+#                 local arg=student.iimc.kyoto
+#             ;;
+#                 mail163)
+#                 local arg='mail.163.com'
+#             ;;
+#                 gpt)
+#                 local arg='chat.openai.com'
+#             ;;
+#                 dict)
+#                 local arg='dict.hjenglish.com'
+#             ;;
+#                 Gdrive)
+#                 local arg='drive.google.com'
+#             ;;
+#                 kaiyou)
+#                 local arg='committees.jsce.or.jp'
+#             ;;
+#                 kaigan)
+#                 local arg='coastal.jp'
+#             ;;   
+#                 *)
+#                 echo "${app_name}: unknown key \$1"
+#                 return 1
+#             ;;
+#             esac
+#         osascript <<EOF
+# tell application \"$app_name\"
+#     activate
+#     repeat with w from 1 to count windows
+#         set theTabs to tabs of window w
+#         repeat with t from 1 to count theTabs
+#             if URL of tab t of window w contains \"\$arg\" then
+#                 ${script_dict[$1]}
+#                 return
+#             end if
+#         end repeat
+#     end repeat
+# end tell
+# EOF
+#         
+# }"
+# complete -W "kyotoportal mail163 gpt dict Gdrive kaiyou kaigan" $func_name
+# }
+#
+#
+#
+# # Mail work funtion
+# work (){
+# case $1 in 
+# on)
+#     local arg=勤務開始報告
+# ;;
+# off)
+#     local arg=勤務終了報告
+# ;;
+# *)
+#     echo "work: unknow key $1"
+#     return
+# ;;
+# esac
+# ~/appleScripts/mailWork_v2.sh $arg}
+# complete -W "on off" work
+#
+#
+#
+#
+# # for create focus browser
+# create_focus_browser chrome
+# create_focus_browser safari
+#
+# #--------------------------------#
+# # Windows Remote Desktop Function
+# mrd() {
+#     ~/appleScripts/windows_click.sh $1 "Microsoft Remote Desktop"}
+# ## completion
+# mrds(){
+#     ip_addresses=$(~/appleScripts/windows_find.sh "Microsoft Remote Desktop")
+#     items=()
+#     # Split the output into an array
+#     items=(${(@s:|:)ip_addresses})
+#     items+=("Connection Center")
+#     for i in "${items[@]}";do
+#         echo $i
+#     done
+# }
+# complete -F mrds mrd
+# #--------------------------------#
+# #--------------------------------#
+# # Preview Function
+# preview() {
+#     ~/appleScripts/windows_click.sh $1 "Preview"}
+# ## completion
+# preview_s(){
+#     ip_addresses=$(~/appleScripts/windows_find.sh "Preview")
+#     items=()
+#     # Split the output into an array
+#     items=(${(@s:|:)ip_addresses})
+#     for i in "${items[@]}";do
+#         echo $i
+#     done
+# }
+# complete -F preview_s preview
+# #--------------------------------#
+# #--------------------------------#
+# # Word Function
+# word() {
+#     ~/appleScripts/windows_click.sh $1 "Microsoft Word"}
+# ## completion
+# word_s(){
+#     ip_addresses=$(~/appleScripts/windows_find.sh "Microsoft Word")
+#     items=()
+#     # Split the output into an array
+#     items=(${(@s:|:)ip_addresses})
+#     for i in "${items[@]}";do
+#         echo $i
+#     done
+# }
+# complete -F word_s word
+# #--------------------------------#
+# #--------------------------------#
+# # Keynote Function
+# keynote() {
+#     ~/appleScripts/windows_click.sh $1 "Keynote"}
+# ## completion
+# keynote_s(){
+#     ip_addresses=$(~/appleScripts/windows_find.sh "Keynote")
+#     items=()
+#     # Split the output into an array
+#     items=(${(@s:|:)ip_addresses})
+#     for i in "${items[@]}";do
+#         echo $i
+#     done
+# }
+# complete -F keynote_s keynote
+# #--------------------------------#
+#
+# # add CC PATH
+# #export "PATH=/usr/local/opt/llvm/bin/clang:$PATH"
+# #ln -s /usr/local/opt/llvm/bin/clang /usr/local/bin/clang
+#
+# alias ssh_wsl="echo \"On CMD/PS adm: \n1.Reset Interface: \nnetsh interface portproxy reset \n2.Connect Interface: \nnetsh interface portproxy add v4tov4 listenaddress=10.244.7.73 listenport=22 connectaddress=172.26.189.101 connectport=22\n3.Show Interface: \nnetsh interface portproxy show all \""
+# <<<<<<<<<<<<<<<}}}
+
+

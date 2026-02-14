@@ -1,67 +1,14 @@
-# Linux / Macos >>>
-# 
-# Path to your Oh My Zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
-# You may need to manually set your language environment
-export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-  export VISUAL='vim'
-else
-  export EDITOR='nvim'
-  export VISUAL='nvim'
-fi
-
-
-# add path to windows for explorer
-export PATH=$PATH:/mnt/c/Windows
-export EDITOR=nvim
-export TERMINAL=wezterm
-export BROWSER=qutebrowser
-# export multi selection with tab
-export FZF_DEFAULT_OPTS='-m'
-export DOTFILES="${HOME}/dotfiles"
+# Top Level Folders
 export XDG_CONFIG_HOME="${HOME}/.config"
 export XDG_DATA_HOME="${HOME}/.local/share"
 export XDG_CACHE_HOME="${HOME}/.cache"
 export XDG_STATE_HOME="${HOME}/.local/state"
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-# Compilation flags for mac to get the arch compatibale 
-if [[ "$(uname)" == "Darwin" ]];then
-  export ARCHFLAGS="-arch $(uname -m)"
-fi
-#
-# brew update frequency
-export HOMEBREW_AUTO_UPDATE_SECS=86400   # Update at most once per day
-export HOMEBREW_NO_ENV_HINTS=1
 
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-export HIST_STAMPS="mm-dd-yyyy"
-# Maximum events for internal history
-#
-export HISTFILE="$ZDOTDIR/.zhistory"
-export HISTSIZE=50000
-export SAVEHIST=10000
-
-# set .local/bin in path
-export PATH="$HOME/.local/bin:$PATH"
+# Create XDG directories if they don't exist
+mkdir -p "$XDG_CONFIG_HOME" "$XDG_DATA_HOME" "$XDG_CACHE_HOME" "$XDG_STATE_HOME" "$ZDOTDIR"
 
 # Load local secrets (not in repo)
 if [[ -f "$HOME/.zshenv.local" ]]; then
   source "$HOME/.zshenv.local"
-fi
-
-# Latex
-if [[ "$(uname)" == "Linux" ]];then
-  export MANPATH="/usr/local/texlive/2025/texmf-dist/doc/man:$MANPATH"
-  export INFOPATH="/usr/local/texlive/2025/texmf-dist/doc/info:$INFOPATH"
-  export PATH="/usr/local/texlive/2025/bin/x86_64-linux:$PATH"
 fi

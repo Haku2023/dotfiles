@@ -82,3 +82,11 @@ vim.api.nvim_create_autocmd("BufWritePost", {
     vim.cmd("filetype detect")
   end,
 })
+
+-- Fix C/C++: prevent ':' from triggering auto-indent (fixes std:: de-indenting)
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "c", "cpp" },
+  callback = function()
+    vim.opt_local.indentkeys:remove(":")
+  end,
+})
