@@ -1,5 +1,5 @@
 {
-  "description": "Wezterm : command tab → option tab",
+  "description": "Wezterm (haku)",
   "manipulators": [
     {
       "conditions": [
@@ -19,6 +19,32 @@
         {
           "key_code": "tab",
           "modifiers": ["option"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.github.wez.wezterm$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "input_sources": [{ "language": "ja" }, { "language": "zh-Hans" }],
+          "type": "input_source_if"
+        }
+      ],
+      "from": {
+        "key_code": "h",
+        "modifiers": {
+          "mandatory": ["left_control"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "delete_or_backspace",
+          "modifiers": []
         }
       ],
       "type": "basic"

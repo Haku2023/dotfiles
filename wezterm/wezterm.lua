@@ -23,7 +23,8 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 elseif wezterm.target_triple == "aarch64-apple-darwin" then
 	wezterm.log_info("OS: Mac")
 	-- font setting
-	config.font = wezterm.font("MesloLGS NF", { weight = "Medium", stretch = "Normal", style = "Normal" })
+	-- config.font = wezterm.font("MesloLGS NF", { weight = "Medium", stretch = "Normal", style = "Normal" })
+	config.font = wezterm.font("JetBrains Mono NL", { weight = "Regular", stretch = "Normal", style = "Normal" })
 	config.font_size = 21
 	Gotop = "/usr/local/bin/gotop"
 	HOME = os.getenv("HOME")
@@ -32,8 +33,8 @@ elseif wezterm.target_triple == "aarch64-apple-darwin" then
 	Background = {
 		{
 			source = {
-				-- File = HOME .. "/Pictures/WallPaper/cybercity-keepforward.jpg",
-				File = HOME .. "/Pictures/WallPaper/fuji-maples.jpg",
+				File = HOME .. "/Pictures/WallPaper/cybercity-keepforward.jpg",
+				-- File = HOME .. "/Pictures/WallPaper/fuji-maples.jpg",
 			},
 			hsb = { brightness = 0.2 },
 			opacity = 1.0,
@@ -301,6 +302,7 @@ else
 		-- background = "#282c34",
 		-- cursor_fg = "#282c34",
 		background = "#011423",
+		-- background = "#000000",
 		cursor_fg = "#011423",
 		cursor_bg = "#47FF9C",
 		cursor_border = "#47FF9C",

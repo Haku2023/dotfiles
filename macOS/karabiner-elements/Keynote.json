@@ -2725,14 +2725,15 @@
         }
       ],
       "from": {
-        "key_code": "left_option",
+        "key_code": "left_command",
         "modifiers": {
           "mandatory": [],
           "optional": []
         }
       },
 
-      "to_if_held_down": [{ "key_code": "left_option" }],
+      "to": [{ "key_code": "left_command", "lazy": true }],
+      "to_if_held_down": [{ "key_code": "left_command" }],
       "to_if_alone": [
         {
           "key_code": "7",

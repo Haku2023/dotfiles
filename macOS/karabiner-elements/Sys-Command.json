@@ -1,5 +1,5 @@
 {
-  "description": "System command Remap(haku). j,k → touch main/subm screen",
+  "description": "System command Remap(haku). j,k → touch main/subm screen; left_option alone → Eisu/Kana, right_command → Chinese/En",
   "manipulators": [
     {
       "conditions": [
@@ -44,6 +44,94 @@
         }
       ],
       "type": "basic"
+    },
+    {
+      "type": "basic",
+      "from": {
+        "key_code": "left_option",
+        "modifiers": { "optional": ["any"] }
+      },
+      "to": [{ "key_code": "left_option", "lazy": true }],
+      "to_if_alone": [{ "key_code": "japanese_eisuu" }],
+      "to_if_held_down": [{ "key_code": "left_option" }],
+      "conditions": [
+        {
+          "input_sources": [{ "language": "ja" }, { "language": "zh-Hans" }],
+          "type": "input_source_if"
+        }
+      ],
+      "parameters": {
+        "basic.to_if_held_down_threshold_milliseconds": 100
+      }
+    },
+    {
+      "type": "basic",
+      "from": {
+        "key_code": "left_option",
+        "modifiers": { "optional": ["any"] }
+      },
+      "to": [{ "key_code": "left_option", "lazy": true }],
+      "to_if_alone": [{ "key_code": "japanese_kana" }],
+      "to_if_held_down": [{ "key_code": "left_option" }],
+      "conditions": [
+        {
+          "input_sources": [{ "language": "en" }],
+          "type": "input_source_if"
+        }
+      ],
+      "parameters": {
+        "basic.to_if_held_down_threshold_milliseconds": 100
+      }
+    },
+    {
+      "type": "basic",
+      "from": {
+        "key_code": "right_command",
+        "modifiers": { "optional": ["any"] }
+      },
+      "to": [{ "key_code": "right_command", "lazy": true }],
+      "to_if_alone": [
+        {
+          "select_input_source": {
+            "language": "en"
+          }
+        }
+      ],
+      "to_if_held_down": [{ "key_code": "right_command" }],
+      "conditions": [
+        {
+          "input_sources": [{ "language": "ja" }, { "language": "zh-Hans" }],
+          "type": "input_source_if"
+        }
+      ],
+      "parameters": {
+        "basic.to_if_held_down_threshold_milliseconds": 100
+      }
+    },
+    {
+      "type": "basic",
+      "from": {
+        "key_code": "right_command",
+        "modifiers": { "optional": ["any"] }
+      },
+      "to": [{ "key_code": "right_command", "lazy": true }],
+      "to_if_alone": [
+        {
+          "select_input_source": {
+            "language": "zh-Hans"
+          }
+        }
+      ],
+      "to_if_held_down": [{ "key_code": "right_command" }],
+      "conditions": [
+        {
+          "input_sources": [{ "language": "en" }],
+          "type": "input_source_if"
+        }
+      ],
+      "parameters": {
+        "basic.to_if_held_down_threshold_milliseconds": 100
+      }
     }
   ]
 }
