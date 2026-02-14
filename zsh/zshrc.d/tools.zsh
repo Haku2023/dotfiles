@@ -59,7 +59,3 @@ eval "$(mcfly init zsh)"
 # export MCFLY_KEY_SCHEME=vim
 export MCFLY_RESULTS=50
 # NOTE: mcfly init will be called in zvm_after_lazy_keybindings to avoid conflicts with zsh-vi-mode
-#vim
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
