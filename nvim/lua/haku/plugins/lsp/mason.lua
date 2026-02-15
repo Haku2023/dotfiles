@@ -43,6 +43,7 @@ return {
         "bashls",
         "clangd",
         "texlab",
+        "neocmake",
       },
       -- auto-install configured servers (with lspconfig)
       automatic_installation = true, -- not the same as ensure_installed
@@ -60,6 +61,7 @@ return {
         "shellcheck",
         "clang-format",
         "cpplint",
+        "cmakelang",
       },
     })
   end,

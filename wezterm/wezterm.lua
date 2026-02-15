@@ -56,7 +56,8 @@ elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
 	Gotop = "gotop"
 	config.window_background_opacity = 0.50
 	-- font setting
-	config.font = wezterm.font("MesloLGS NF", { weight = "Medium", stretch = "Normal", style = "Normal" })
+	config.font = wezterm.font("JetBrains Mono NL", { weight = "Regular", stretch = "Normal", style = "Normal" })
+	-- config.font = wezterm.font("MesloLGS NF", { weight = "Medium", stretch = "Normal", style = "Normal" })
 end -- }}}
 -- config.font = wezterm.font("MesloLGS NF")
 

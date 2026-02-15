@@ -12,6 +12,7 @@ if [[ ! -d "$DOTFILES_DIR" ]]; then
 fi
 
 echo "Creating directories..."
+mkdir -p "${CONFIG_DIR}"
 mkdir -p "${CONFIG_DIR}/zsh-plugins"
 mkdir -p "${CONFIG_DIR}/zsh"
 
@@ -40,11 +41,33 @@ link_file() {
 }
 
 # Create symlinks
-echo "Creating symlinks..."
+print "Creating symlinks..."
+
+print "=> create zsh symbols"
+
 link_file "${DOTFILES_DIR}/zsh/zshenv" "${HOME}/.zshenv"
 link_file "${DOTFILES_DIR}/zsh/zshrc" "${CONFIG_DIR}/zsh/.zshrc"
 link_file "${DOTFILES_DIR}/zsh/zprofile" "${CONFIG_DIR}/zsh/.zprofile"
 link_file "${DOTFILES_DIR}/zsh/external" "${CONFIG_DIR}/zsh/external"
 link_file "${DOTFILES_DIR}/zsh/zshrc.d" "${CONFIG_DIR}/zsh/zshrc.d"
+
+print "=> create nvim symbols"
+
+link_file "${DOTFILES_DIR}/nvim" "${CONFIG_DIR}/nvim"
+
+print "=> create wezterm symbols"
+link_file "${DOTFILES_DIR}/wezterm" "${CONFIG_DIR}/wezterm"
+
+print "=> create qutebrowser symbols"
+if [[ "$(uname)" == "Linux" ]]; then
+link_file "${DOTFILES_DIR}/qutebrowser" "${CONFIG_DIR}/qutebrowser"
+elif [[ "$(uname)" == "Darwin" ]]; then
+link_file "${DOTFILES_DIR}/qutebrowser" "$HOME/.qutebrowser"
+fi
+
+if [[ "$(uname)" == "Linux" ]]; then
+  print "=> create hyprland symbols"
+  link_file "${DOTFILES_DIR}/hypr" "${CONFIG_DIR}/hypr"
+fi
 
 echo "Installation complete!"

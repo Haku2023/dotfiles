@@ -55,6 +55,7 @@ return {
         "c",
         "cpp",
         "latex",
+        "cmake",
       },
       incremental_selection = {
         enable = true,
