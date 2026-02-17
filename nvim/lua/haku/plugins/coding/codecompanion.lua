@@ -50,9 +50,9 @@ return {
             env = {
               -- BETTER: set this via environment variable instead of hardcoding
             },
-            -- defaults = {
-            --   model = "haiku",
-            -- },
+            defaults = {
+              model = "Default",
+            },
           })
         end,
         gemini_cli = function()
