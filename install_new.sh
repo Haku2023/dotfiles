@@ -7,7 +7,7 @@ CONFIG_DIR="${HOME}/.config"
 
 # Verify dotfiles directory exists
 if [[ ! -d "$DOTFILES_DIR" ]]; then
-    echo "Error: $DOTFILES_DIR not found" >&2
+    echo "x $DOTFILES_DIR not found" >&2
     exit 1
 fi
 
@@ -22,7 +22,7 @@ link_file() {
     local dest="$2"
     
     if [[ ! -e "$src" ]]; then
-        echo "Warning: Source $src doesn't exist, skipping" >&2
+        echo "△ Source $src doesn't exist, skipping" >&2
         return 1
     fi
     
@@ -43,7 +43,7 @@ link_file() {
 # Create symlinks
 print "Creating symlinks..."
 
-print "=> create zsh symbols"
+print "⇒ create zsh symbols"
 
 link_file "${DOTFILES_DIR}/zsh/zshenv" "${HOME}/.zshenv"
 link_file "${DOTFILES_DIR}/zsh/zshrc" "${CONFIG_DIR}/zsh/.zshrc"
@@ -51,22 +51,27 @@ link_file "${DOTFILES_DIR}/zsh/zprofile" "${CONFIG_DIR}/zsh/.zprofile"
 link_file "${DOTFILES_DIR}/zsh/external" "${CONFIG_DIR}/zsh/external"
 link_file "${DOTFILES_DIR}/zsh/zshrc.d" "${CONFIG_DIR}/zsh/zshrc.d"
 
-print "=> create nvim symbols"
+print "⇒ create nvim symbols"
 
 link_file "${DOTFILES_DIR}/nvim" "${CONFIG_DIR}/nvim"
 
-print "=> create wezterm symbols"
-link_file "${DOTFILES_DIR}/wezterm" "${CONFIG_DIR}/wezterm"
+print "⇒ create wezterm symbols"
 
-print "=> create qutebrowser symbols"
+if [[ -z "$WSL_DISTRO_NAME"  ]] ;then
+  link_file "${DOTFILES_DIR}/wezterm" "${CONFIG_DIR}/wezterm"
+else
+  print "△ in windows WSL, wezterm config is stored in /mnt/c/Users/username/.wezterm.lua, skipping, Link manually"
+fi
+
+print "⇒ create qutebrowser symbols"
 if [[ "$(uname)" == "Linux" ]]; then
-link_file "${DOTFILES_DIR}/qutebrowser" "${CONFIG_DIR}/qutebrowser"
+  link_file "${DOTFILES_DIR}/qutebrowser" "${CONFIG_DIR}/qutebrowser"
 elif [[ "$(uname)" == "Darwin" ]]; then
-link_file "${DOTFILES_DIR}/qutebrowser" "$HOME/.qutebrowser"
+  link_file "${DOTFILES_DIR}/qutebrowser" "$HOME/.qutebrowser"
 fi
 
 if [[ "$(uname)" == "Linux" ]]; then
-  print "=> create hyprland symbols"
+  print "⇒ create hyprland symbols"
   link_file "${DOTFILES_DIR}/hypr" "${CONFIG_DIR}/hypr"
 fi
 
