@@ -41,8 +41,8 @@ return {
       },
       mappings = {
         toggle = "<leader>m",
-        next = "<leader>l",
-        prev = "<leader>L",
+        -- next = "<leader>l",
+        -- prev = "<leader>L",
         delete_buf = "<leader>kl",
       },
     })
@@ -61,5 +61,8 @@ return {
       end
       vim.fn.sign_place(id, group, sign_name, bufnr, { lnum = line, priority = priority })
     end
+
+    vim.keymap.set("n", "<leader>l", "m'<cmd>lua require('marks').next()<CR>", { desc = "Next mark" })
+    vim.keymap.set("n", "<leader>L", "m'<cmd>lua require('marks').prev()<CR>", { desc = "Prev mark" })
   end,
 }
