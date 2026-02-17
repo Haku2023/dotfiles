@@ -242,7 +242,8 @@ end) -- }}}
 -- pane setting
 config.unzoom_on_switch_pane = false
 -- wezterm.GLOBAL.pane_pindex = {}
--- swap pane haku{{{
+-- alt+e,store pane to _G.pane_pindex, switch them
+-- old swap pane haku{{{
 wezterm.on("swap-pane", function(window, pane)
 	_G.pane_pindex = _G.pane_pindex or {}
 	local tab = window:active_tab()
@@ -271,6 +272,31 @@ wezterm.on("swap-pane", function(window, pane)
 				window:set_right_status("pindex in active:" .. tostring(_G.pane_pindex))
 				_G.pane_pindex[itab] = p.index
 				window:perform_action(wezterm.action.SetPaneZoomState(false), pane)
+				return
+			end
+		end
+	end
+end) -- }}}
+
+-- alt+e, change to other
+-- new swap pane haku{{{
+wezterm.on("swap-pane-new", function(window, pane)
+	local tab = window:active_tab()
+	local n_panes = #tab:panes()
+	local pane_id = pane:pane_id()
+
+	-- if 1, create new pane, full current
+	if n_panes == 1 then
+		local new_pane = pane:split({ Direction = "Right" })
+		window:perform_action(wezterm.action.SetPaneZoomState(true), new_pane)
+	else
+		for _, new_pane in ipairs(tab:panes()) do
+			local new_pane_id = new_pane:pane_id()
+			window:set_right_status("current pane id:" .. pane_id)
+			if pane_id ~= new_pane_id then
+				window:perform_action(wezterm.action.SetPaneZoomState(false), pane)
+				new_pane:activate()
+				window:perform_action(wezterm.action.SetPaneZoomState(true), new_pane)
 				return
 			end
 		end
@@ -347,7 +373,7 @@ config.keys = { -- {{{
 	-- Pane max
 	{ key = "f", mods = "ALT", action = wezterm.action.TogglePaneZoomState },
 	-- Swap Pane
-	{ key = "e", mods = "ALT", action = act.EmitEvent("swap-pane") },
+	{ key = "e", mods = "ALT", action = act.EmitEvent("swap-pane-new") },
 	-- Test
 	{ key = "r", mods = "ALT", action = act.EmitEvent("show_status") },
 	-- quick selectmode
@@ -449,8 +475,15 @@ if string.find(wezterm.target_triple, "linux") or string.find(wezterm.target_tri
 end
 
 -- haku test use <A-r>
-wezterm.on("show_status", function(window, _)
-	window:set_right_status("This is test for <A-r> show status")
+wezterm.on("show_status", function(window, pane)
+	local tab = window:active_tab()
+	-- local panes = pane.split(dir)
+	local new_pane = pane:split({ Direction = "Right" })
+	-- pane:split({ Direction = "Right", top_level = true })
+	window:perform_action(wezterm.action.SetPaneZoomState(true), new_pane)
+	-- new_pane:activate()
+	-- window:set_right_status("This is test for <A-r> show status")
+	-- window:set_right_status("number of panes in current tab:" .. #tab:panes())
 	-- window:set_right_status(Background and "BG:ON" or "BG:OFF")
 	-- use C-S-L to show the debug info
 	local overrides = window:get_config_overrides() or {}
