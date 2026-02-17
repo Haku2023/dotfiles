@@ -14,6 +14,8 @@ keymap.set("i", "hh", "<C-w>", { desc = "delete words in insertmode" })
 -- indent, unindent
 keymap.set({ "n", "x" }, "<leader>,,", "<<", { desc = "Indent" })
 keymap.set({ "n", "x" }, "<leader>..", ">>", { desc = "Unindent" })
+-- reload buffer
+keymap.set({ "n", "x" }, "<leader>cc", "<cmd>checktime<CR>", { desc = "reload buffer" })
 
 -- keymap.set({ "n" }, "<C-t>", "<cmd>set wrap<CR>", { desc = "wrap the lines" })
 -- keymap.set({ "i" }, "<C-t>", "<ESC>:set wrap<CR>", { desc = "wrap the lines" })

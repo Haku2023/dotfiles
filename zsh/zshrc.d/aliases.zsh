@@ -50,6 +50,8 @@ if [[ "$(uname)" == "Darwin" ]];then
   # life
   alias myLove="open https://meeting.tencent.com/p/9796730765\?pwd\=500012"
   alias japaneseCourse="open https://kyoto-u-edu.zoom.us/j/91423186918\?pwd\=alhtRnhlcUljVi84Z0hncjRZREtjZz09"
+elif [[ -n "$WSL_DISTRO_NAME"  ]] ;then
+  alias haku26="cd /mnt/c/cygwin64/home/baihaodong/Projects/Yodo_26/"
 elif [[ "$(uname)" == "Linux" ]];then
   alias rm="rm --preserve-root -I"
   alias chmod="chmod --preserve-root"
