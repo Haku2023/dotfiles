@@ -10,6 +10,22 @@ return {
         ["vim.lsp.util.stylize_markdown"] = true,
         ["cmp.entry.get_documentation"] = true,
       },
+      hover = {
+        opts = {
+          win_options = {
+            conceallevel = 0,
+            concealcursor = "",
+          },
+        },
+      },
+      signature = {
+        opts = {
+          win_options = {
+            conceallevel = 0,
+            concealcursor = "",
+          },
+        },
+      },
     },
     routes = {
       {
