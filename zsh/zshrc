@@ -6,6 +6,11 @@ fi
 source $HOME/.zsh-plugins/powerlevel10k/powerlevel10k.zsh-theme
 source $HOME/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $HOME/.zsh-plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+
+# Start from insertmode for zsh-vi-mode, needed before source zsh-vi-mode
+function zvm_config() {
+  ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+}
 source $HOME/.zsh-plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
 # Zshrc 

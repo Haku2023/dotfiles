@@ -9,10 +9,6 @@ if [[ "$(uname)" == "Darwin" ]];then
   }
   compdef _wsh wsh
 fi
-# Start from insertmode for zsh-vi-mode
-function zvm_config() {
-  ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
-}
 bindkey '^ ' autosuggest-accept
 
 # haku useful functions cdn mcd lsn
