@@ -546,9 +546,7 @@
       },
       "to": [
         {
-          "software_function": {
-            "open_application": { "file_path": "/Applications/qutebrowser.app" }
-          }
+          "shell_command": "open -a qutebrowser"
         }
       ],
       "type": "basic"

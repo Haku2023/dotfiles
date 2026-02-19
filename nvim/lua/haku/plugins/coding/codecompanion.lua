@@ -37,6 +37,9 @@ return {
     adapters = {
 
       acp = {
+        opts = {
+          show_presets = false,
+        },
         codex = function()
           return require("codecompanion.adapters").extend("codex", {
             defaults = {
@@ -47,6 +50,11 @@ return {
         end,
         claude_code = function()
           return require("codecompanion.adapters").extend("claude_code", {
+            commands = {
+              default = {
+                "claude-agent-acp",
+              },
+            },
             env = {
               -- BETTER: set this via environment variable instead of hardcoding
             },
@@ -65,6 +73,11 @@ return {
             },
           })
         end,
+      },
+      http = {
+        opts = {
+          show_presets = false,
+        },
       },
     },
   },
