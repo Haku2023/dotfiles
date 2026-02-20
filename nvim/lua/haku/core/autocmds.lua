@@ -90,3 +90,14 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.indentkeys:remove(":")
   end,
 })
+
+-- Close CodeCompanion chat jobs before quitting to avoid E948/E676 errors
+vim.api.nvim_create_autocmd("VimLeavePre", {
+  callback = function()
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+      if vim.bo[buf].filetype == "codecompanion" then
+        pcall(vim.api.nvim_buf_delete, buf, { force = true })
+      end
+    end
+  end,
+})
