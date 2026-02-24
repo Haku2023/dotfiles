@@ -8,6 +8,24 @@ if [[ "$(uname)" == "Darwin" ]];then
     _arguments '1:server:(73 117 109)'  # Shows "server" as description
   }
   compdef _wsh wsh
+elif [[ -n "$WSL_DISTRO_NAME"  ]] ;then
+  haku26() {
+    case "$1" in
+      "73")
+      /mnt/c/cygwin64/home/baihaodong/Projects/Yodo_26/
+      ;;
+      "69")
+      /mnt/c/Users/baihd/source/repos/H-FRESH_2026/
+      ;;
+      *)
+      print "Please Specify the work station"
+      ;;
+    esac
+  }
+  _haku26() {
+    _arguments '1:work_station:(69 73)'
+  }
+  compdef _haku26 haku26
 fi
 bindkey '^ ' autosuggest-accept
 
