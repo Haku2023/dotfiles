@@ -10,7 +10,7 @@ return {
       require("nvim-treesitter.install").compilers = { "zig" }
     end
     -- import nvim-treesitter plugin
-    local treesitter = require("nvim-treesitter.configs")
+    local treesitter = require("nvim-treesitter")
 
     -- configure treesitter
     -- enable autotagging (w/ nvim-ts-autotag plugin)
