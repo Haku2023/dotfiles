@@ -367,7 +367,15 @@
           "lazy": true
         }
       ],
-      "to_if_alone": [{ "key_code": "escape" }],
+      "to_if_alone": [
+        { "key_code": "escape" },
+        {
+          "set_notification_message": {
+            "id": "my_message",
+            "text": ""
+          }
+        }
+      ],
       "type": "basic"
     },
     {
@@ -546,7 +554,7 @@
       },
       "to": [
         {
-          "shell_command": "open -a qutebrowser"
+          "shell_command": "open -a qutebrowser && osascript -e 'tell application \"qutebrowser\" to activate'"
         }
       ],
       "type": "basic"
