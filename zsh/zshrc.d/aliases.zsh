@@ -42,10 +42,7 @@ if [[ "$(uname)" == "Darwin" ]];then
   alias rm="\grm --preserve-root -I"
   alias haku25_old="cd '/Users/bai.haodong/Documents/Doctor_Life/G-学会/14. English Thesis/graphs'"
   alias haku25="cd '/Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2025_Projects/H-Fresh'; vi "
-  alias haku26="cd '/Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects';ls "
-  alias rsync_homepage="echo 'rsync -avz --progress ./* \"85:/srv/Taisui_WebSite/Tests/\"';rsync -avz --progress ./* "85:/srv/Taisui_WebSite/Tests/""
-  alias rsync_src="rsync -avz --progress '73:/cygdrive/c/Users/baihaodong/Documents/2025Tasks/Thesis_ADE/Solution_T_ADE/src/*' /Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects/H-Fresh/src;echo 'rsync H-Fresh(73) completed!'"
-  alias rsync_cip="echo 'rsync -avz --del --progress 73:~/Projects/Yodo_26/CIP/*';rsync -avz --del --progress '73:~/Projects/Yodo_26/CIP/*' /Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects/CIP;echo 'rsync CIP(73) completed!'"
+  # alias haku26="cd '/Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects';ls "
   # alias rsync_cip="echo 'rsync -avz --del --progress 73:~/Projects/Yodo_26/CIP/*'; rsync -avz --progress '73:~/Projects/Yodo_26/CIP/*' /Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects/CIP"
   # life
   alias myLove="open https://meeting.tencent.com/p/9796730765\?pwd\=500012"

@@ -1,5 +1,9 @@
 
 if [[ "$(uname)" == "Darwin" ]];then
+
+  haku26 () {
+  cd '/Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects' && ls
+  }
   wsh () {
     wezterm cli spawn --domain-name "SSH:$1"
   }
@@ -8,8 +12,43 @@ if [[ "$(uname)" == "Darwin" ]];then
     _arguments '1:server:(73 117 109)'  # Shows "server" as description
   }
   compdef _wsh wsh
-elif [[ -n "$WSL_DISTRO_NAME"  ]] ;then
-  haku26() {
+  # haku rsync
+  rhaku() {
+      case "$1" in
+      "water_data_73")
+        print "Syncing water data from station 73..."
+        print 'Command: rsync -avz --progress 73:/cygdrive/c/cygwin64/home/baihaodong/Projects/Yodo_26/Water_26_haku/Data/* /Users/bai.haodong/Documents/Doctor_Life/G-学会/14.Water_2026/data/cfd'
+        rsync -avz --progress "73:/cygdrive/c/cygwin64/home/baihaodong/Projects/Yodo_26/Water_26_haku/Data/*" /Users/bai.haodong/Documents/Doctor_Life/G-学会/14.Water_2026/data/cfd && print "Sync complete!" || print "Sync failed!"
+        ;;
+      "haku_src_73")
+        print "Syncing haku src from station 73..."
+        print 'Command: rsync -avz --progress 73:/cygdrive/c/Users/baihaodong/Documents/2025Tasks/Thesis_ADE/Solution_T_ADE/src/* /Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2025_Projects/H-Fresh/src'
+        rsync -avz --progress "73:/cygdrive/c/Users/baihaodong/Documents/2025Tasks/Thesis_ADE/Solution_T_ADE/src/*" /Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2025_Projects/H-Fresh/src && print "Sync complete!" || print "Sync failed!"
+        ;;
+      "taisui_homepage_85")
+        print "Syncing Taisui homepage from station 85..."
+        print 'Command: rsync -avz --progress  /Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects/Taisui_Home_Page_26 85:/srv/Taisui_WebSite/HomePage/'
+        rsync -avz --progress /Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects/Taisui_Home_Page_26/* "85:/srv/Taisui_WebSite/HomePage/" && print "Sync complete!" || print "Sync failed!"
+
+        ;;
+      "cip_73")
+        print "Syncing CIP from station 73..."
+        print 'Command: rsync -avz --del --progress 73:~/Projects/Yodo_26/CIP/* /Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects/CIP'
+        rsync -avz --del --progress "73:~/Projects/Yodo_26/CIP/*" /Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects/CIP && print "Sync complete!" || print "Sync failed!"
+        ;;
+      *)
+        print "Please specify a valid sync target: water_data, haku_src, taisui_homepage, cip"
+        ;;
+    esac
+  }
+  _rhaku() {
+    _arguments '1:sync_target:(water_data_73 haku_src_73 taisui_homepage_85 cip_73)'
+  }
+  compdef _rhaku rhaku
+
+elif [[ -n "$WSL_DISTRO_NAME"  ]];then
+  unset haku26
+  haku26 () {
     case "$1" in
       "73")
       /mnt/c/cygwin64/home/baihaodong/Projects/Yodo_26/
@@ -22,7 +61,7 @@ elif [[ -n "$WSL_DISTRO_NAME"  ]] ;then
       ;;
     esac
   }
-  _haku26() {
+  _haku26 () {
     _arguments '1:work_station:(69 73)'
   }
   compdef _haku26 haku26
