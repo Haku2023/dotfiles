@@ -57,10 +57,14 @@ link_file "${DOTFILES_DIR}/nvim" "${CONFIG_DIR}/nvim"
 
 print "⇒ create wezterm symbols"
 
-if [[ -z "$WSL_DISTRO_NAME"  ]] ;then
-  link_file "${DOTFILES_DIR}/wezterm" "${CONFIG_DIR}/wezterm"
-else
+if [[ "$(uname)" == "Linux" ]]; then
+if [[ -n "${WSL_DISTRO_NAME:-}"  ]] ;then
   print "△ in windows WSL, wezterm config is stored in /mnt/c/Users/username/.wezterm.lua, skipping, Link manually"
+else
+  link_file "${DOTFILES_DIR}/wezterm/wezterm.lua" "${HOME}/.wezterm.lua"
+fi
+elif [[ "$(uname)" == "Darwin" ]]; then
+  link_file "${DOTFILES_DIR}/wezterm" "${CONFIG_DIR}/wezterm"
 fi
 
 print "⇒ create qutebrowser symbols"

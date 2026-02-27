@@ -136,6 +136,7 @@ return {
     end
     dap.listeners.before.launch.dapui_config = function()
       ui.open()
+      dap_virtual_text.enable()
     end
     dap.listeners.before.event_terminated.dapui_config = function()
       ui.close()
@@ -157,7 +158,10 @@ return {
     end, { desc = "DAP: Set conditional breakpoint" })
     map("n", "<Leader>dr", dap.repl.open, { desc = "DAP: Open REPL" })
     map("n", "<Leader>dl", dap.run_last, { desc = "DAP: Run last" })
-    map("n", "<Leader>du", ui.toggle, { desc = "DAP UI: Toggle" })
+    map("n", "<Leader>du", function()
+      ui.toggle()
+      dap_virtual_text.toggle()
+    end, { desc = "DAP UI: Toggle" })
 
     map("n", "<Leader>ds", dap.terminate, { desc = "DAP: Stop" })
     map("n", "<Leader>dr", dap.restart, { desc = "DAP: Restart" })
