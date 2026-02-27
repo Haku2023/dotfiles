@@ -54,3 +54,7 @@
 (type_name) @label.fortran
 (end_block_construct_statement) @keyword
 
+[
+ "end"
+ ] @keyword.function.fortran
+
