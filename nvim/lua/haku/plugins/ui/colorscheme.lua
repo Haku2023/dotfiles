@@ -204,7 +204,8 @@ return {
         -- ...
       })
       vim.cmd("colorscheme monokai-pro-octagon")
-      -- vim.api.nvim_set_hl(0, "@keyword.function.fortran", { fg = "#A888F8", bold = true })
+      vim.api.nvim_set_hl(0, "@function.fortran", { link = "@label.fortran" })
+      vim.api.nvim_set_hl(0, "@keyword.type.fortran", { link = "@label.fortran" })
       vim.api.nvim_set_hl(0, "@keyword.function.fortran", { fg = "#EE6188", bold = true })
       vim.api.nvim_set_hl(0, "@module.fortran", { fg = "#A888F8", bold = true })
       vim.api.nvim_set_hl(0, "@function.builtin.fortran", { fg = "#EE6188" })

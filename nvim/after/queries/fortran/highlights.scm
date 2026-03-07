@@ -50,11 +50,14 @@
 
 (block_label) @label.fortran
 (block_label_start_expression) @label.fortran
-(name) @label.fortran
+; (name) @label.fortran
+(module_name) @keyword
 (type_name) @label.fortran
 (end_block_construct_statement) @keyword
 
-[
- "end"
- ] @keyword.function.fortran
-
+(end_subroutine_statement) @keyword
+(end_function_statement) @keyword
+(end_program_statement) @label.fortran
+(end_module_statement) @label.fortran
+(end_submodule_statement) @label.fortran
+["program"] @label.fortran
