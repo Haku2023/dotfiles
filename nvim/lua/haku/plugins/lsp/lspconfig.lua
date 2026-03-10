@@ -198,10 +198,25 @@ return {
       end
     end
 
+    local function get_python_path()
+      local conda = os.getenv("CONDA_PREFIX")
+      if conda and vim.fn.executable(conda .. "/bin/python") == 1 then
+        return conda .. "/bin/python"
+      end
+      local venv = os.getenv("VIRTUAL_ENV")
+      if venv and vim.fn.executable(venv .. "/bin/python") == 1 then
+        return venv .. "/bin/python"
+      end
+      return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
+    end
+
     ---@type vim.lsp.Config
     vim.lsp.config("pyright", {
       cmd = { "pyright-langserver", "--stdio" },
       filetypes = { "python" },
+      before_init = function(_, config)
+        config.settings.python.pythonPath = get_python_path()
+      end,
       root_markers = {
         "pyrightconfig.json",
         "pyproject.toml",

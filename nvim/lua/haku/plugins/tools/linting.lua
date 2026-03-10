@@ -11,6 +11,24 @@ return {
       fortran = { "fortitude" },
     }
 
+    -- Use the active conda/venv Python so pylint sees the env's packages
+    local function get_python_path()
+      local conda = os.getenv("CONDA_PREFIX")
+      if conda and vim.fn.executable(conda .. "/bin/python") == 1 then
+        return conda .. "/bin/python"
+      end
+      local venv = os.getenv("VIRTUAL_ENV")
+      if venv and vim.fn.executable(venv .. "/bin/python") == 1 then
+        return venv .. "/bin/python"
+      end
+      return vim.fn.exepath("python3") or "python"
+    end
+
+    lint.linters.pylint = vim.tbl_deep_extend("force", lint.linters.pylint, {
+      cmd = get_python_path(),
+      args = vim.list_extend({ "-m", "pylint" }, (lint.linters.pylint.args or {})),
+    })
+
     local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
     local function file_in_cwd(file_name)
