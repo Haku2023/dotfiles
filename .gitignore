@@ -3,3 +3,4 @@
 /qutebrowser/qsettings/QtProject.conf
 
 /nvim/lazy-lock.json
+.nvimlog

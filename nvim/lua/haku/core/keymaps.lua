@@ -110,6 +110,8 @@ keymap.set("n", "<leader>na", "<cmd>NoiceAll<CR>", { desc = "Noice All" })
 keymap.set({ "n", "t" }, "<leader>jf", "<cmd>ToggleTerm direction=float<cr>", { desc = "ToggleTerm float" })
 keymap.set({ "n", "t" }, "<leader>jj", "<cmd>ToggleTerm direction=horizontal<cr>", { desc = "ToggleTerm float" })
 keymap.set({ "n", "t" }, "<leader>jk", "<cmd>ToggleTerm direction=vertical<cr>", { desc = "ToggleTerm float" })
+vim.keymap.set("n", "<leader>jh", "<Cmd>2ToggleTerm direction=vertical<CR>", { desc = "Terminal #2" })
+vim.keymap.set("n", "<leader>jv", "<Cmd>2ToggleTerm direction=horizontal<CR>", { desc = "Terminal #2" })
 
 -- Open CodeCompanion chat
 vim.keymap.set("n", "<leader>a", "<cmd>CodeCompanionChat Toggle<cr>", { desc = "Toggle CodeCompanion chat" })

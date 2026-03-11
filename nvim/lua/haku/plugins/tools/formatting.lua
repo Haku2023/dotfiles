@@ -3,6 +3,10 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   config = function()
     local conform = require("conform")
+    local function prettier_eol_args(_, ctx)
+      local eol = vim.bo[ctx.buf].fileformat == "dos" and "crlf" or "lf"
+      return { "--end-of-line", eol }
+    end
 
     conform.setup({
       formatters_by_ft = {
@@ -31,6 +35,7 @@ return {
         end
 
         return {
+          -- lsp_format = "never",
           lsp_fallback = true,
           async = false,
           timeout_ms = 3000,
@@ -43,10 +48,14 @@ return {
       -- },
     })
 
+    conform.formatters.prettier = {
+      -- append_args = prettier_eol_args,
+    }
     conform.formatters.fprettify = { append_args = { "--indent", "4" } }
 
     vim.keymap.set({ "n", "v" }, "<leader>kp", function()
       conform.format({
+        -- lsp_format = "fallback",
         lsp_fallback = true,
         async = false,
         timeout_ms = 1000,
