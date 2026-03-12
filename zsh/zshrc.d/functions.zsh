@@ -107,7 +107,7 @@ paste-from-clipboard() {
 }
 elif [[  "$(uname)" == "Linux"  ]];then
 paste-from-clipboard() {
-  RBUFFER=${RBUFFER:0:1}`(xsel -b -o)`${RBUFFER:1}
+  RBUFFER=${RBUFFER:0:1}$(wl-paste --no-newline 2>/dev/null || xsel -b -o)${RBUFFER:1}
   zle end-of-line
   zvm_enter_insert_mode
 }
