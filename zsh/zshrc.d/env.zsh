@@ -1,5 +1,3 @@
-# turn off flow control
-stty -ixon
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -32,17 +30,6 @@ fi
 export HOMEBREW_AUTO_UPDATE_SECS=86400   # Update at most once per day
 export HOMEBREW_NO_ENV_HINTS=1
 
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# Maximum events for internal history
-export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/history"
-export HISTSIZE=50000
-export SAVEHIST=10000
-
 # export multi selection with tab
 export FZF_DEFAULT_OPTS='-m'
 
@@ -69,6 +56,8 @@ fi
 export MANPATH="/usr/local/man:$MANPATH"
 # Latex
 if [[ "$(uname)" == "Linux" ]];then
+  # turn off flow control
+  stty -ixon
   export MANPATH="/usr/local/texlive/2025/texmf-dist/doc/man:$MANPATH"
   export INFOPATH="/usr/local/texlive/2025/texmf-dist/doc/info:$INFOPATH"
   path+=(/usr/local/texlive/2025/bin/x86_64-linux)
@@ -108,3 +97,4 @@ unset __conda_setup
 # <<< conda initialize <<<}}}
 #
 # k
+
