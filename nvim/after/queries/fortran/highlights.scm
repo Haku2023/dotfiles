@@ -6,6 +6,7 @@
   (#set! priority 150))
 
 [
+  "select"
   "allocate"
   "case"
   "only"
@@ -48,6 +49,7 @@
   "=>"
 ] @operator.pointer (#set! "priority" 200)
 
+; Fortran
 (block_label) @label.fortran
 (block_label_start_expression) @label.fortran
 ; (name) @label.fortran
@@ -57,7 +59,14 @@
 
 (end_subroutine_statement) @keyword
 (end_function_statement) @keyword
+(end_select_statement) @keyword
+(end_interface_statement) @keyword
+(end_if_statement) @keyword
+(end_do_loop_statement) @keyword
+
 (end_program_statement) @label.fortran
 (end_module_statement) @label.fortran
 (end_submodule_statement) @label.fortran
 ["program"] @label.fortran
+
+

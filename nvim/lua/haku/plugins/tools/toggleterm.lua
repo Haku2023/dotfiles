@@ -10,6 +10,15 @@ return {
           return vim.o.columns * 0.4
         end
       end,
+      -- When the terminal closes, restore layout only if a *non-terminal*
+      -- window was maximized, so subsequent <leader>sm works correctly.
+      on_close = function(term)
+        if vim.g.maximizer_set and vim.g.maximizer_winid ~= term.window then
+          vim.cmd("MaximizerToggle")
+        elseif vim.g.maximizer_set and vim.g.maximizer_winid == term.window then
+          vim.g.maximizer_set = false
+        end
+      end,
     })
 
     -- NOTE: <C-\\> (double backslash) is the correct key notation in Lua

@@ -55,6 +55,7 @@ return {
             end)
           end
         end,
+        file_ignore_patterns = { "^%.git/" },
         path_display = { "smart" },
         mappings = {
           i = {
@@ -87,7 +88,7 @@ return {
     end, { desc = "Fuzzy find in buffers" })
     keymap.set("n", "<leader>fb", builtin.current_buffer_fuzzy_find, { desc = "Fuzzy find in current buffer" })
     keymap.set("n", "<leader>ff", function()
-      builtin.find_files({ hidden = true })
+      builtin.find_files({ hidden = true, no_ignore = false })
     end, { desc = "Fuzzy find files in cwd" })
     keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Find string in cwd" })
     keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "Fuzzy find recent files" })

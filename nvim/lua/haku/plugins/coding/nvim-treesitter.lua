@@ -131,6 +131,7 @@ return {
       nml_match("Number", "\\<\\d\\+\\.\\d\\+[eE][+-]\\?\\d\\+\\>", -1)
       nml_match("Number", "\\<\\d\\+\\.\\d\\+[dD][+-]\\?\\d\\+\\>", -1)
       nml_match("Number", "\\<\\d\\+[dD][+-]\\?\\d\\+\\>", -1)
+      nml_match("Boolean", "\\c\\.\\(true\\|false\\)\\.", 5)
       nml_match("Operator", "=", -1)
       nml_match("Operator", ",", -1)
     end

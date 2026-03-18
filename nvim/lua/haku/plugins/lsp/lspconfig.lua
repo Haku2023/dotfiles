@@ -101,6 +101,13 @@ return {
       end,
     })
 
+    vim.lsp.config("fortls", {
+      cmd = { "fortls" },
+      filetypes = { "fortran" },
+      root_markers = { ".fortls", ".git" },
+    })
+    vim.lsp.enable("fortls")
+
     vim.lsp.config("graphql", {
       filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
     })
