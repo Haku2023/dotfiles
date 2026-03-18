@@ -7,7 +7,8 @@
           "bundle_identifiers": [
             "^com.github.wez.wezterm$",
             "^com.apple.systempreferences$",
-            "^com.microsoft.VSCode$"
+            "^com.microsoft.VSCode$",
+            "^com.google.Chrome.app.cmkncekebbebpfilplodngbpllndjkfo$"
           ],
           "type": "frontmost_application_unless"
         }
@@ -114,7 +115,8 @@
             "^com.apple.iWork.Keynote$",
             "^com.apple.Preview$",
             "^com.apple.finder$",
-            "^com.microsoft.rdc.macos$"
+            "^com.microsoft.rdc.macos$",
+            "^com.google.Chrome.app.cmkncekebbebpfilplodngbpllndjkfo$"
           ],
           "type": "frontmost_application_unless"
         }
@@ -352,7 +354,8 @@
             "^com.apple.iWork.Keynote$",
             "^com.apple.finder$",
             "^com.apple.Preview$",
-            "^com.microsoft.rdc.macos$"
+            "^com.microsoft.rdc.macos$",
+            "^com.google.Chrome.app.cmkncekebbebpfilplodngbpllndjkfo$"
           ],
           "type": "frontmost_application_unless"
         }
