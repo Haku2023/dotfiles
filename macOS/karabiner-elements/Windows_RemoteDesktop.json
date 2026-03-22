@@ -1,5 +1,5 @@
 {
-  "description": "Remote Desktop(haku) Command :Control -> 2 in 1;  tab → command tab; Control : 1. w → connection center 2. m → window fill; 3. , . → go left/right desktop ",
+  "description": "Windows Remote Desktop(haku) Command :Control -> 2 in 1;  tab → command tab; Control : 1. w → connection center 2. m → window fill; 3. , . → go left/right desktop ",
   "manipulators": [
     {
       "conditions": [

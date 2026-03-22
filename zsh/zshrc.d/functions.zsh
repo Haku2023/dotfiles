@@ -27,8 +27,8 @@ if [[ "$(uname)" == "Darwin" ]];then
         ;;
       "taisui_homepage_85")
         print "Syncing Taisui homepage from station 85..."
-        print 'Command: rsync -avz --progress  /Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects/Taisui_Home_Page_26 85:/srv/Taisui_WebSite/HomePage/'
-        rsync -avz --progress /Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects/Taisui_Home_Page_26/* "85:/srv/Taisui_WebSite/HomePage/" && print "Sync complete!" || print "Sync failed!"
+        print 'Command: rsync -avz --progress --exclude=assets/data/chikei_data /Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects/Taisui_Home_Page_26 85:/srv/Taisui_WebSite/HomePage/'
+        rsync -avz --progress --exclude=assets/data/chikei_data /Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects/Taisui_Home_Page_26/* "85:/srv/Taisui_WebSite/HomePage/" && print "Sync complete!" || print "Sync failed!"
 
         ;;
       "cip_73")
