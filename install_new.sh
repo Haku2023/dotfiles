@@ -47,7 +47,7 @@ print "⇒ create zsh symbols"
 
 link_file "${DOTFILES_DIR}/zsh/zshenv" "${HOME}/.zshenv"
 link_file "${DOTFILES_DIR}/zsh/zshrc" "${CONFIG_DIR}/zsh/.zshrc"
-link_file "${DOTFILES_DIR}/zsh/zprofile" "${CONFIG_DIR}/zsh/.zprofile"
+# link_file "${DOTFILES_DIR}/zsh/zprofile" "${CONFIG_DIR}/zsh/.zprofile"
 link_file "${DOTFILES_DIR}/zsh/external" "${CONFIG_DIR}/zsh/external"
 link_file "${DOTFILES_DIR}/zsh/zshrc.d" "${CONFIG_DIR}/zsh/zshrc.d"
 
@@ -77,6 +77,11 @@ fi
 if [[ "$(uname)" == "Linux" ]]; then
   print "⇒ create hyprland symbols"
   link_file "${DOTFILES_DIR}/hypr" "${CONFIG_DIR}/hypr"
+elif [[ "$(uname)" == "Darwin" ]]; then
+  print "⇒ create aerospace,yabai,skhd symbols"
+  link_file "${DOTFILES_DIR}/aerospace" "${CONFIG_DIR}/aerospace"
+  link_file "${DOTFILES_DIR}/yabai" "${CONFIG_DIR}/yabai"
+  link_file "${DOTFILES_DIR}/skhd" "${CONFIG_DIR}/skhd"
 fi
 
 echo "Installation complete!"

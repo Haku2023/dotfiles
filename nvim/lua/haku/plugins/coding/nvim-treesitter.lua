@@ -16,6 +16,7 @@ return {
       "javascript",
       "typescript",
       "tsx",
+      "toml",
       "yaml",
       "html",
       "css",
@@ -40,13 +41,17 @@ return {
 
     -- use bash parser for zsh files
     vim.treesitter.language.register("bash", "zsh")
-
+    vim.treesitter.language.register("bash", "sh")
     vim.treesitter.language.register("html", "htmldjango")
 
     -- Don't use tree-sitter for namelist files (causes errors with & syntax)
     -- vim.treesitter.language.register("fortran", "namelist")
 
     vim.filetype.add({
+      filename = {
+        ["skhdrc"] = "sh",
+        ["yabairc"] = "sh",
+      },
       extension = {
         ejs = "html",
         fypp = "fortran",

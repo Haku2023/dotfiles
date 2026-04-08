@@ -82,3 +82,6 @@ vim.o.secure = true
 
 --[[ opt.pumblend = 0
 opt.winblend = 0 ]]
+
+-- set nvim python place
+vim.g.python3_host_prog = vim.env.HOME .. "/Tools/miniconda3/bin/python3"

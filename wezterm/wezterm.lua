@@ -29,14 +29,14 @@ elseif wezterm.target_triple == "aarch64-apple-darwin" then
 	Gotop = "/usr/local/bin/gotop"
 	HOME = os.getenv("HOME")
 	-- HOME = wezterm.home_dir
-	config.window_background_opacity = 0.80
+	config.window_background_opacity = 1.00
 	Background = {
 		{
 			source = {
-				File = HOME .. "/Pictures/WallPaper/cybercity-keepforward.jpg",
+				-- File = HOME .. "/Pictures/WallPaper/cybercity-keepforward.jpg",
 				-- File = HOME .. "/Pictures/WallPaper/fuji-maples.jpg",
 			},
-			hsb = { brightness = 0.2 },
+			-- hsb = { brightness = 0.2 },
 			opacity = 1.0,
 			attachment = "Fixed",
 		},

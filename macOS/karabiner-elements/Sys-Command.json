@@ -1,5 +1,5 @@
 {
-  "description": "System command Remap(haku). j,k → touch main/subm screen; left_option alone → Eisu/Kana, right_command → Chinese/En",
+  "description": "System Cmd v3(by haku)",
   "manipulators": [
     {
       "conditions": [

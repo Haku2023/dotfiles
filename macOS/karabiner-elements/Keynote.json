@@ -926,33 +926,6 @@
       "from": {
         "key_code": "l",
         "modifiers": {
-          "mandatory": ["option"],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "l",
-          "modifiers": ["command"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
-          "type": "frontmost_application_if"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_if",
-          "value": 0
-        }
-      ],
-      "from": {
-        "key_code": "l",
-        "modifiers": {
           "mandatory": ["option", "shift"],
           "optional": []
         }

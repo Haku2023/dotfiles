@@ -1,5 +1,5 @@
 {
-  "description": "System Controls (by haku). 1. c, v, x, z, h → Copy, Paste, Cut, Undo, delete; 2. n,p,b,f,a,e → Down, Up, Left, Right, Home, End;  4. left_control → (left_control,esc); 4.2 left_control double pressed -> esc 5. w → switch to 73; 6. 1,2,3,4,5 → switch desktop; 7. q,Q → show wezter,qutebrowser;",
+  "description": "System Ctrl v3(by haku)",
   "manipulators": [
     {
       "conditions": [
@@ -384,121 +384,6 @@
     {
       "conditions": [
         {
-          "bundle_identifiers": [],
-          "type": "frontmost_application_unless"
-        }
-      ],
-      "from": {
-        "key_code": "1",
-        "modifiers": {
-          "mandatory": ["control"],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "1",
-          "modifiers": ["control", "shift"]
-        },
-        {
-          "software_function": {
-            "open_application": { "bundle_identifier": "com.apple.Finder" }
-          }
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": [],
-          "type": "frontmost_application_unless"
-        }
-      ],
-      "from": {
-        "key_code": "2",
-        "modifiers": {
-          "mandatory": ["control"],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "2",
-          "modifiers": ["control", "shift"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": [],
-          "type": "frontmost_application_unless"
-        }
-      ],
-      "from": {
-        "key_code": "3",
-        "modifiers": {
-          "mandatory": ["control"],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "3",
-          "modifiers": ["control", "shift"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": [],
-          "type": "frontmost_application_unless"
-        }
-      ],
-      "from": {
-        "key_code": "4",
-        "modifiers": {
-          "mandatory": ["control"],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "4",
-          "modifiers": ["control", "shift"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": [],
-          "type": "frontmost_application_unless"
-        }
-      ],
-      "from": {
-        "key_code": "5",
-        "modifiers": {
-          "mandatory": ["control"],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "5",
-          "modifiers": ["control", "shift"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
           "bundle_identifiers": ["^com.github.wez.wezterm$"],
           "type": "frontmost_application_unless"
         }
@@ -512,9 +397,7 @@
       },
       "to": [
         {
-          "software_function": {
-            "open_application": { "file_path": "/Applications/Wezterm.app" }
-          }
+          "shell_command": "osascript -e 'tell application \"wezterm\" to activate' && sleep 0.3 && open -a wezterm"
         }
       ],
       "type": "basic"
