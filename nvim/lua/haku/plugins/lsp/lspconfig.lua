@@ -143,6 +143,9 @@ return {
       },
     })
 
+    -- hide progress messages from lsp servers "✓pyright"
+    vim.lsp.handlers["$/progress"] = function() end
+
     -- vim.lsp.config("clangd", {
     --   on_attach = function(client, bufnr)
     --     client.server_capabilities.signatureHelpProvider = false

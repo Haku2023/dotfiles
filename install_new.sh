@@ -47,7 +47,6 @@ print "⇒ create zsh symbols"
 
 link_file "${DOTFILES_DIR}/zsh/zshenv" "${HOME}/.zshenv"
 link_file "${DOTFILES_DIR}/zsh/zshrc" "${CONFIG_DIR}/zsh/.zshrc"
-# link_file "${DOTFILES_DIR}/zsh/zprofile" "${CONFIG_DIR}/zsh/.zprofile"
 link_file "${DOTFILES_DIR}/zsh/external" "${CONFIG_DIR}/zsh/external"
 link_file "${DOTFILES_DIR}/zsh/zshrc.d" "${CONFIG_DIR}/zsh/zshrc.d"
 

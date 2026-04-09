@@ -348,6 +348,7 @@ config.keys = { -- {{{
 
 	-- Disable L,d,u
 	-- { key = "L", mods = "CTRL|SHIFT", action = "DisableDefaultAssignment" }, -- disables the debug overlay
+	{ key = "Enter", mods = "CTRL", action = act.Nop },
 	{ key = "d", mods = "CTRL", action = "DisableDefaultAssignment" }, -- disables the debug overlay
 	{ key = "u", mods = "CTRL", action = "DisableDefaultAssignment" }, -- disables the debug overlay
 	{ key = "p", mods = "CTRL|SHIFT", action = "DisableDefaultAssignment" }, -- disables
