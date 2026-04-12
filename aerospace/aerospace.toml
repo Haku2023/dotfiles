@@ -114,10 +114,10 @@ on-mode-changed = []
     alt-shift-quote = 'layout accordion horizontal vertical'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#focus
-    alt-h = 'focus left'
-    alt-j = 'focus down'
-    alt-k = 'focus up'
-    alt-l = 'focus right'
+    cmd-h = 'focus left'
+    cmd-j = 'focus down'
+    cmd-k = 'focus up'
+    cmd-l = 'focus right'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move
     alt-shift-h = 'move left'
@@ -168,7 +168,7 @@ on-mode-changed = []
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.service.binding]
-    shift-esc = ['reload-config', 'mode main']
+    esc = ['reload-config', 'mode main']
     backspace = ['close-all-windows-but-current', 'mode main']
 
     # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
@@ -200,3 +200,9 @@ on-mode-changed = []
 [[on-window-detected]]
     if.app-id = 'com.microsoft.Word'
     run = ['move-node-to-workspace 2','fullscreen']
+[[on-window-detected]]
+    if.app-id = 'org.pqrs.Karabiner-Elements.Settings'
+    run = ['move-node-to-workspace K']
+[[on-window-detected]]
+    if.app-id='org.pqrs.Karabiner-EventViewer'
+    run = ['move-node-to-workspace K']

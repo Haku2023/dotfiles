@@ -36,7 +36,7 @@
 > "description": "System Option Remap(haku). Option : 1. f,b,h to ←,→,delete; 2. a → select all; 3. d → look up, w → close window, q → hide window; 4. tab → command tab; 5. m , . → window fill, left right,; 6. C - A - j,k,m => Left/Right Workspace/message; 7. Control+Option+q → lock; 8. Space → Spotlight; 9. C-m,A-C-C,A-C-I,A-C-O,A-C-S,A-C-U -> mail,calendar,setting,activity,Google,Karabiner",
 
 ## Sys-Cmd
-> "description": "System command Remap(haku). j,k → touch main/subm screen; left_option alone → Eisu/Kana, right_command → Chinese/En",
+> "description": "System command Remap(haku).  left_option alone → Eisu/Kana, right_command → Chinese/En",
 
 ## Sys-Ctrl
 > "description": "System Controls (by haku). 1. c, v, x, z, h → Copy, Paste, Cut, Undo, delete; 2. n,p,b,f,a,e → Down, Up, Left, Right, Home, End;  4. left_control → (left_control,esc); 4.2 left_control double pressed -> esc 5. w → switch to 73; 6. 1,2,3,4,5 → switch desktop; 7. q,Q → show wezter,qutebrowser;",
