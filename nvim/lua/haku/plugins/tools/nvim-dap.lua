@@ -23,10 +23,6 @@ return {
         function(config)
           require("mason-nvim-dap").default_setup(config)
         end,
-        python = function(config)
-          config.configurations = {}
-          require("mason-nvim-dap").default_setup(config)
-        end,
       },
     })
 
@@ -36,100 +32,122 @@ return {
     local debugger_path = is_mac and "/usr/bin/lldb" or "/usr/bin/gdb"
 
     -- Configurations
-    dap.configurations = {
-      c = {
-        {
-          name = "Launch file",
-          type = "cppdbg",
-          request = "launch",
-          program = function()
-            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-          end,
-          cwd = "${workspaceFolder}",
-          stopAtEntry = false,
-          MIMode = debugger_mode,
-          miDebuggerPath = debugger_path,
-        },
-        {
-          name = "Attach to lldbserver :1234",
-          type = "cppdbg",
-          request = "launch",
-          MIMode = "lldb",
-          miDebuggerServerAddress = "localhost:1234",
-          miDebuggerPath = "/usr/bin/lldb",
-          cwd = "${workspaceFolder}",
-          program = function()
-            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-          end,
-        },
+    dap.configurations.c = {
+      {
+        name = "Launch file",
+        type = "cppdbg",
+        request = "launch",
+        program = function()
+          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+        end,
+        cwd = "${workspaceFolder}",
+        stopAtEntry = false,
+        MIMode = debugger_mode,
+        miDebuggerPath = debugger_path,
       },
-      cpp = {
-        {
-          name = "Launch file",
-          type = "cppdbg",
-          request = "launch",
-          program = function()
-            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-          end,
-          cwd = "${workspaceFolder}",
-          stopAtEntry = false,
-          MIMode = debugger_mode,
-          miDebuggerPath = debugger_path,
-        },
-        {
-          name = "Attach to lldbserver :1234",
-          type = "cppdbg",
-          request = "launch",
-          MIMode = "lldb",
-          miDebuggerServerAddress = "localhost:1234",
-          miDebuggerPath = "/usr/bin/lldb",
-          cwd = "${workspaceFolder}",
-          program = function()
-            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-          end,
-        },
+      {
+        name = "Attach to lldbserver :1234",
+        type = "cppdbg",
+        request = "launch",
+        MIMode = "lldb",
+        miDebuggerServerAddress = "localhost:1234",
+        miDebuggerPath = "/usr/bin/lldb",
+        cwd = "${workspaceFolder}",
+        program = function()
+          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+        end,
       },
-      -- python comment,since use mason default config
-      --/Users/bai.haodong/.local/share/nvim/lazy/mason-nvim-dap.nvim/lua/mason-nvim-dap/mappings/configurations.lua
-      -- fold <<<{{{
-      -- python = {
-      --   {
-      --     -- The first three options are required by nvim-dap
-      --     type = "python", -- the type here established the link to the adapter definition: `dap.adapters.python`
-      --     request = "launch",
-      --     name = "Launch file",
-      --
-      --     -- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
-      --
-      --     program = function()
-      --       return vim.fn.expand("%:p")
-      --     end, -- Launch the current buffer file without prompting.
-      --     pythonPath = function()
-      --       -- debugpy supports launching an application with a different interpreter then the one used to launch debugpy itself.
-      --       -- The code below looks for a `venv` or `.venv` folder in the current directly and uses the python within.
-      --       -- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
-      --       local conda = os.getenv("CONDA_PREFIX")
-      --       if conda and vim.fn.executable(conda .. "/bin/python") == 1 then
-      --         return conda .. "/bin/python"
-      --       end
-      --       -- fallback to project venvs
-      --       -- local cwd = vim.fn.getcwd()
-      --       -- if vim.fn.executable(cwd .. "/venv/bin/python") == 1 then
-      --       --   return cwd .. "/venv/bin/python"
-      --       -- elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
-      --       --   return cwd .. "/.venv/bin/python"
-      --       -- else
-      --       --   return "/usr/bin/python"
-      --       -- end
-      --     end,
-      --   },
-      -- },
-      --  fold <<<}}}
     }
+    dap.configurations.cpp = {
+      {
+        name = "Launch file",
+        type = "cppdbg",
+        request = "launch",
+        program = function()
+          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+        end,
+        cwd = "${workspaceFolder}",
+        stopAtEntry = false,
+        MIMode = debugger_mode,
+        miDebuggerPath = debugger_path,
+      },
+      {
+        name = "Attach to lldbserver :1234",
+        type = "cppdbg",
+        request = "launch",
+        MIMode = "lldb",
+        miDebuggerServerAddress = "localhost:1234",
+        miDebuggerPath = "/usr/bin/lldb",
+        cwd = "${workspaceFolder}",
+        program = function()
+          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+        end,
+      },
+    }
+    -- python comment,since use mason default config
+    --/Users/bai.haodong/.local/share/nvim/lazy/mason-nvim-dap.nvim/lua/mason-nvim-dap/mappings/configurations.lua
+    -- fold <<<{{{
+    -- python = {
+    --   {
+    --     -- The first three options are required by nvim-dap
+    --     type = "python", -- the type here established the link to the adapter definition: `dap.adapters.python`
+    --     request = "launch",
+    --     name = "Launch file",
+    --
+    --     -- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
+    --
+    --     program = function()
+    --       return vim.fn.expand("%:p")
+    --     end, -- Launch the current buffer file without prompting.
+    --     pythonPath = function()
+    --       -- debugpy supports launching an application with a different interpreter then the one used to launch debugpy itself.
+    --       -- The code below looks for a `venv` or `.venv` folder in the current directly and uses the python within.
+    --       -- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
+    --       local conda = os.getenv("CONDA_PREFIX")
+    --       if conda and vim.fn.executable(conda .. "/bin/python") == 1 then
+    --         return conda .. "/bin/python"
+    --       end
+    --       -- fallback to project venvs
+    --       -- local cwd = vim.fn.getcwd()
+    --       -- if vim.fn.executable(cwd .. "/venv/bin/python") == 1 then
+    --       --   return cwd .. "/venv/bin/python"
+    --       -- elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
+    --       --   return cwd .. "/.venv/bin/python"
+    --       -- else
+    --       --   return "/usr/bin/python"
+    --       -- end
+    --     end,
+    --   },
+    -- },
+    --  fold <<<}}}
 
     -- Dap UI
 
-    ui.setup()
+    ui.setup({
+      layouts = {
+        {
+          elements = {
+            { id = "scopes", size = 0.50 },
+            { id = "breakpoints", size = 0.20 },
+            { id = "stacks", size = 0.15 },
+            { id = "watches", size = 0.15 },
+          },
+          size = 40,
+          position = "left",
+        },
+        {
+          elements = {
+            { id = "console", size = 1.0 },
+          },
+          size = 20,
+          position = "right",
+        },
+      },
+      controls = {
+        enabled = true,
+        element = "console",
+      },
+    })
 
     dap.listeners.before.attach.dapui_config = function()
       ui.open()

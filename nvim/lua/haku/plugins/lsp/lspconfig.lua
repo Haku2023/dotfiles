@@ -209,9 +209,17 @@ return {
     end
 
     local function get_python_path()
+      local conda_root = vim.env.HOME .. "/Tools/miniconda3"
       local conda = os.getenv("CONDA_PREFIX")
       if conda and vim.fn.executable(conda .. "/bin/python") == 1 then
         return conda .. "/bin/python"
+      end
+      local conda_env = os.getenv("CONDA_DEFAULT_ENV")
+      if conda_env and conda_env ~= "base" then
+        local env_python = conda_root .. "/envs/" .. conda_env .. "/bin/python"
+        if vim.fn.executable(env_python) == 1 then
+          return env_python
+        end
       end
       local venv = os.getenv("VIRTUAL_ENV")
       if venv and vim.fn.executable(venv .. "/bin/python") == 1 then

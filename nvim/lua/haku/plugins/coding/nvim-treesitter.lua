@@ -43,6 +43,7 @@ return {
     vim.treesitter.language.register("bash", "zsh")
     vim.treesitter.language.register("bash", "sh")
     vim.treesitter.language.register("html", "htmldjango")
+    vim.treesitter.language.register("cpp", "c++")
 
     -- Don't use tree-sitter for namelist files (causes errors with & syntax)
     -- vim.treesitter.language.register("fortran", "namelist")

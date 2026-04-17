@@ -12,7 +12,7 @@ return {
 
     -- Set commentstring for namelist files
     vim.api.nvim_create_autocmd("FileType", {
-      pattern = "namelist",
+      pattern = { "namelist", "ROMSin" },
       callback = function()
         vim.bo.commentstring = "! %s"
       end,
