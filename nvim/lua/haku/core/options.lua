@@ -74,6 +74,9 @@ opt.undodir = vim.fn.expand("~/.config/nvim-undo")
 opt.undolevels = 10000
 opt.undoreload = 10000
 
+-- nvim update instantly especially for 2 in 1 ctrl
+opt.ttimeoutlen = 10
+
 -- extra config
 vim.o.exrc = true
 vim.o.secure = true

@@ -3,6 +3,21 @@ plugins=(git zsh-vi-mode zsh-autosuggestions fast-syntax-highlighting  web-searc
 
 ## new settings
 >`mkdir ~/.zsh-plugins`
+
+### summary
+```zsh
+# Manually installation
+git clone https://github.com/jeffreytse/zsh-vi-mode.git $HOME/.zsh-plugins/zsh-vi-mode
+git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.zsh-plugins/zsh-autosuggestions
+git clone https://github.com/zdharma-continuum/fast-syntax-highlighting $HOME/.zsh-plugins/fast-syntax-highlighting
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.zsh-plugins/powerlevel10k
+# Add Source to .zshrc
+source $HOME/.zsh-plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+source $HOME/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $HOME/.zsh-plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+source $HOME/.zsh-plugins/powerlevel10k/powerlevel10k.zsh-theme
+```
+
 1. zsh-vi-mode
 ```zsh
 # Arch Linux

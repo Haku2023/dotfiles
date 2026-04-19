@@ -353,6 +353,7 @@ config.keys = { -- {{{
 	{ key = "u", mods = "CTRL", action = "DisableDefaultAssignment" }, -- disables the debug overlay
 	{ key = "p", mods = "CTRL|SHIFT", action = "DisableDefaultAssignment" }, -- disables
 	{ key = "n", mods = "CTRL|SHIFT", action = "DisableDefaultAssignment" }, -- disables
+	{ key = "x", mods = "ALT", action = "ActivateCopyMode" },
 	-- { key = "w", mods = "CTRL", action = "DisableDefaultAssignment" }, -- disables the debug overlay
 	-- { key = "q", mods = "CTRL|SHIFT", action = "DisableDefaultAssignment" }, -- disables the debug overlay
 	-- Alt(Opt)+Shift+F toggle full screen

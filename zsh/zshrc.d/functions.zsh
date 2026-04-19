@@ -179,6 +179,7 @@ zle -N prepend-sudo
 
 # function zvm_before_init_commands=()
 zvm_after_init_commands+=(
+  "KEYTIMEOUT=1"
 #   #for dirhistory
   "bindkey -s '^K' '^[[1;3A'" "bindkey -M vicmd -s '^K' '^[[1;3A'"
   "bindkey -s '^U' '^[[1;3C'" "bindkey -M vicmd -s '^U' '^[[1;3C'" 

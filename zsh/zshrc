@@ -10,6 +10,7 @@ source $HOME/.zsh-plugins/fast-syntax-highlighting/fast-syntax-highlighting.plug
 # Start from insertmode for zsh-vi-mode, needed before source zsh-vi-mode
 function zvm_config() {
   ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+  ZVM_KEYTIMEOUT=0.01
 }
 source $HOME/.zsh-plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 

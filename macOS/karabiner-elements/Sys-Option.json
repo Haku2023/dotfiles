@@ -274,50 +274,6 @@
         }
       ],
       "from": {
-        "key_code": "j",
-        "modifiers": {
-          "mandatory": ["option", "control"],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "left_arrow",
-          "modifiers": ["control"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": [],
-          "type": "frontmost_application_unless"
-        }
-      ],
-      "from": {
-        "key_code": "k",
-        "modifiers": {
-          "mandatory": ["option", "control"],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "right_arrow",
-          "modifiers": ["control"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": [],
-          "type": "frontmost_application_unless"
-        }
-      ],
-      "from": {
         "key_code": "q",
         "modifiers": {
           "mandatory": ["option", "control"],

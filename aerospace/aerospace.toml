@@ -139,6 +139,7 @@ on-mode-changed = []
     ctrl-7 = 'workspace 7'
     ctrl-8 = 'workspace 8'
     ctrl-9 = 'workspace 9'
+    # ctrl-g = 'workspace G'
     # ctrl-q = 'workspace Q'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
@@ -152,13 +153,14 @@ on-mode-changed = []
     alt-shift-8 = 'move-node-to-workspace 8'
     alt-shift-9 = 'move-node-to-workspace 9'
     alt-shift-q = 'move-node-to-workspace Q'
+    alt-shift-g = 'move-node-to-workspace G'
 
     alt-shift-f = 'fullscreen'
     alt-shift-r = 'flatten-workspace-tree' # reset layout
     alt-shift-t = 'layout floating tiling' # Toggle between floating and tiling layout
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
-    alt-tab = 'workspace-back-and-forth'
+    # alt-tab = 'workspace-back-and-forth'
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
     alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
@@ -181,16 +183,13 @@ on-mode-changed = []
 
 [[on-window-detected]]
     if.app-id= 'com.github.wez.wezterm'
-    run = ['layout floating','move-node-to-workspace Q']
+    run = ['layout floating','move-node-to-workspace A']
 [[on-window-detected]]
     if.app-id = 'org.mozilla.firefox'
-    run = ['layout floating','move-node-to-workspace Q']
-[[on-window-detected]]
-    if.app-id = 'com.apple.finder'
-    run = ['move-node-to-workspace 1']
+    run = ['layout floating','move-node-to-workspace A']
 [[on-window-detected]]
     if.app-id = 'org.qutebrowser.qutebrowser'
-    run = ['move-node-to-workspace B','fullscreen']
+    run = ['move-node-to-workspace Q','fullscreen']
 [[on-window-detected]]
     if.app-id = 'com.apple.mail'
     run = ['move-node-to-workspace M','fullscreen']
@@ -206,3 +205,12 @@ on-mode-changed = []
 [[on-window-detected]]
     if.app-id='org.pqrs.Karabiner-EventViewer'
     run = ['move-node-to-workspace K']
+[[on-window-detected]]
+    if.app-id='com.google.Chrome.app.cmkncekebbebpfilplodngbpllndjkfo'
+    run = ['move-node-to-workspace G']
+[[on-window-detected]]
+    if.app-id = 'com.apple.finder'
+    run = ['layout tiling']
+[[on-window-detected]]
+    if.app-id='com.microsoft.rdc.macos'
+    run = ['move-node-to-workspace W']

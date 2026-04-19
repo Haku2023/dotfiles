@@ -8,7 +8,8 @@
             "^com.github.wez.wezterm$",
             "^com.apple.systempreferences$",
             "^com.microsoft.VSCode$",
-            "^com.google.Chrome.app.cmkncekebbebpfilplodngbpllndjkfo$"
+            "^com.google.Chrome.app.cmkncekebbebpfilplodngbpllndjkfo$",
+            "^com.microsoft.rdc.macos$"
           ],
           "type": "frontmost_application_unless"
         }
@@ -448,16 +449,8 @@
     {
       "conditions": [
         {
-          "bundle_identifiers": [
-            "^com.microsoft.rdc.macos$",
-            "^com.github.wez.wezterm$"
-          ],
+          "bundle_identifiers": ["^org.mozilla.firefox$"],
           "type": "frontmost_application_unless"
-        },
-        {
-          "name": "keynote_vim",
-          "type": "variable_unless",
-          "value": 2
         }
       ],
       "from": {
@@ -469,11 +462,28 @@
       },
       "to": [
         {
-          "software_function": {
-            "open_application": {
-              "file_path": "/Applications/Microsoft Remote Desktop.app"
-            }
-          }
+          "shell_command": "osascript -e 'tell application \"Firefox\" to activate' && sleep 0.3 && open -a firefox"
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.microsoft.rdc.macos$"],
+          "type": "frontmost_application_unless"
+        }
+      ],
+      "from": {
+        "key_code": "w",
+        "modifiers": {
+          "mandatory": ["control", "shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "shell_command": "osascript -e 'tell application \"Windows App\" to activate' && sleep 0.3 && open -a \"Windows App\""
         }
       ],
       "type": "basic"

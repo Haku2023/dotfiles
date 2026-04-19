@@ -44,3 +44,6 @@
 
 ## Mail
 > "description": "Mail-New-Vim (by haku): Basic Nav: j,k,u,d,g/G,l → down,up,bottom,top,filter; Flag: 1,2,3,4,5,6 ; <C-l> insert bulleted list 1. z,x,t → show/hide sidebar, toolbar, tab; 2. / → search, spacebar, p,n,s → quick look attach, scroll content down and up, save attachment  ; 3. -/= → zomm out/in; ; Option: 1. 1,2,3,4,5,0 → KU,google,126,flag,all,sent;2. n → message; 3. r/R/f → reply/reply all/forward; Mode Change: <A-enter> → send; <A-j> -> toggle mode; <A-space> -> to insert; Control: 1. '/shift ' → quote increase/decrease; 2. u,i,o → underline/italic/bold; ",
+
+## RDC
+  "description": "Windows Remote Desktop(haku) Command :Control -> 2 in 1;  tab → command tab; Control : 1. w → connection center 2. m → window fill; 3. , . → go left/right desktop ",

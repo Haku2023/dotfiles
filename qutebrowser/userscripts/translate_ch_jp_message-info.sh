@@ -3,7 +3,7 @@
 
 WORD="${QUTE_SELECTED_TEXT:-$QUTE_WORD}"
 #for macos it may not find the sdcv and sed
-export PATH="$PATH:/usr/local/bin:/usr/bin"
+# export PATH="$PATH:/usr/local/bin:/usr/bin:/opt/homebrew/bin"
 
 if [ -n "$WORD" ]; then
     # Define the dictionaries you want to use
@@ -11,19 +11,24 @@ if [ -n "$WORD" ]; then
     CHINESE_DICT="朗道英汉字典5.0"
     JAPANESE_EN_JA_DICT="jmdict-en-ja"
 
+    # The dictionaries should be installed at $(XDG_DATA_HOME)/stardict/dic
+    # Download dictionaries url: https://web.archive.org/web/20140917085534/http://abloz.com/huzheng/stardict-dic/
+    # Notice the sdcv command path
+    #
     # Construct the sdcv command to use specific dictionaries
     # We'll use both the Chinese and the Japanese (EN-JA) dictionary
     # Important: Quote dictionary names to handle spaces or special characters
-    SDCV_CMD="sdcv -u \"$CHINESE_DICT\" -u \"$JAPANESE_EN_JA_DICT\" \"$WORD\""
+    SDCV_CMD="/opt/homebrew/bin/sdcv -u \"$CHINESE_DICT\" -u \"$JAPANESE_EN_JA_DICT\" \"$WORD\""
 
     # Run sdcv and capture output
     DEFINITION=$(eval "$SDCV_CMD" )
 
     # haku_chek="$(command -v sdcv )"
+    # haku_chek="$(command -v /opt/homebrew/bin/sdcv )"
 
     # Check if a definition was found
     if [ -z "$DEFINITION" ]; then
-        MESSAGE="No definition found for '$WORD' in selected dictionaries."
+        MESSAGE="No definition 2 found for '$WORD' in selected dictionaries."
         echo "message-warning '$MESSAGE'" > "$QUTE_FIFO"
         # echo "message-warning '$haku_chek'" > "$QUTE_FIFO"
     else

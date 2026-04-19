@@ -39,7 +39,7 @@ return {
       "cmake",
     })
 
-    -- use bash parser for zsh files
+    -- use <bash> parser for <zsh> files
     vim.treesitter.language.register("bash", "zsh")
     vim.treesitter.language.register("bash", "sh")
     vim.treesitter.language.register("html", "htmldjango")
@@ -52,6 +52,7 @@ return {
       filename = {
         ["skhdrc"] = "sh",
         ["yabairc"] = "sh",
+        [".fortls"] = "json",
       },
       extension = {
         ejs = "html",
