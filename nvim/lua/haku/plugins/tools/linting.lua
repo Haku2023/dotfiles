@@ -1,5 +1,6 @@
 return {
   "mfussenegger/nvim-lint",
+  -- "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
   config = function()
     -- Suppress the deprecation warning from nvim-lint until it's updated
@@ -8,8 +9,20 @@ return {
 
     lint.linters_by_ft = {
       python = { "pylint" },
-      fortran = { "fortitude" },
+      -- fortran = { "fortitude" },
     }
+
+    -- move to lspconfig
+    -- configure fortitute
+    -- require("lspconfig").fortitude.setup({
+    --   init_options = {
+    --     settings = {
+    --       check = {
+    --         -- ignore = { "E001" },
+    --       },
+    --     },
+    --   },
+    -- })
 
     -- Use the active conda/venv Python so pylint sees the env's packages
     local function get_python_path()
