@@ -64,5 +64,26 @@ return {
       desc = "Give current buffer diagnostic to loclist",
       mode = "n",
     },
+    {
+      "<leader>oo",
+      function()
+        local bufnr = vim.api.nvim_get_current_buf()
+        local lnum = vim.api.nvim_win_get_cursor(0)[1]
+        local line = vim.api.nvim_get_current_line()
+
+        vim.fn.setloclist(0, {
+          {
+            bufnr = bufnr,
+            lnum = lnum,
+            col = 1,
+            text = vim.trim(line),
+          },
+        }, "a")
+
+        -- require("quicker").toggle({ loclist = true })
+      end,
+      desc = "Add current line to loclist",
+      mode = "n",
+    },
   },
 }
