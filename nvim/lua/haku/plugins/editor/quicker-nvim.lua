@@ -46,7 +46,7 @@ return {
       desc = "Toggle quickfix",
     },
     {
-      "<leader>ol",
+      "<C-;>",
       function()
         require("quicker").toggle({ loclist = true })
       end,

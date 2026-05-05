@@ -355,8 +355,7 @@
             "^com.apple.iWork.Keynote$",
             "^com.apple.finder$",
             "^com.apple.Preview$",
-            "^com.microsoft.rdc.macos$",
-            "^com.google.Chrome.app.cmkncekebbebpfilplodngbpllndjkfo$"
+            "^com.microsoft.rdc.macos$"
           ],
           "type": "frontmost_application_unless"
         }
@@ -385,7 +384,10 @@
     {
       "conditions": [
         {
-          "bundle_identifiers": ["^com.github.wez.wezterm$"],
+          "bundle_identifiers": [
+            "^com.github.wez.wezterm$",
+            "com.microsoft.rdc.macos"
+          ],
           "type": "frontmost_application_unless"
         }
       ],
@@ -433,9 +435,9 @@
         }
       ],
       "from": {
-        "key_code": "q",
+        "key_code": "w",
         "modifiers": {
-          "mandatory": ["control", "shift"],
+          "mandatory": ["control"],
           "optional": []
         }
       },
@@ -454,9 +456,9 @@
         }
       ],
       "from": {
-        "key_code": "w",
+        "key_code": "q",
         "modifiers": {
-          "mandatory": ["control"],
+          "mandatory": ["control", "shift"],
           "optional": []
         }
       },

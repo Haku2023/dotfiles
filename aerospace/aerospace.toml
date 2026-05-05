@@ -213,4 +213,4 @@ on-mode-changed = []
     run = ['layout tiling']
 [[on-window-detected]]
     if.app-id='com.microsoft.rdc.macos'
-    run = ['move-node-to-workspace W']
+    run = ['move-node-to-workspace W','fullscreen']

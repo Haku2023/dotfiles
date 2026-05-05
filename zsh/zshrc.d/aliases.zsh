@@ -57,6 +57,7 @@ fi
 # git
 #basic
 alias gl='git pull'
+alias glg='git log --oneline --graph --decorate'
 alias gp='git push'
 alias ga='git add'
 alias gaa='git add --all'

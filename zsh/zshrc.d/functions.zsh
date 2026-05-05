@@ -188,6 +188,10 @@ zvm_after_init_commands+=(
   "bindkey '^H' backward-delete-char"
   "bindkey '^V' paste-from-clipboard"
   "bindkey '^S' prepend-sudo"
+  # C-r for mcfly in insert mode (vi insert mode) - AI-powered history search
+  "bindkey -M vicmd '^R' mcfly-history-widget"
+  # C-r for fzf history in normal mode (vi command mode) - fuzzy search
+  "bindkey -M viins '^R' fzf-history-widget"
  )
 function zvm_before_lazy_keybindings(){}
 
@@ -198,11 +202,6 @@ function zvm_after_lazy_keybindings() {
   bindkey -M vicmd 'p' paste-from-clipboard
   
   
-  # C-r for mcfly in insert mode (vi insert mode) - AI-powered history search
-  bindkey -M vicmd '^R' mcfly-history-widget
-  
-  # C-r for fzf history in normal mode (vi command mode) - fuzzy search
-  bindkey -M viins '^R' fzf-history-widget
 }
 
 # Start in command mode (this is the key part)

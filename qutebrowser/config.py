@@ -173,6 +173,7 @@ c.content.javascript.log_message.excludes = {
         Content Security Policy directive: *"
     ],
     "userscript:_qute_js": ["*TrustedHTML*"],
+    "userscript:_qute_js": ["*read properties*"],
 }
 
 
