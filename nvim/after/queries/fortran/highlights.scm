@@ -63,6 +63,7 @@
 (end_interface_statement) @keyword
 (end_if_statement) @keyword
 (end_do_loop_statement) @keyword
+(end_associate_statement) @keyword
 
 (end_program_statement) @label.fortran
 (end_module_statement) @label.fortran
