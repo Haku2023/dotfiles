@@ -57,7 +57,7 @@ export MANPATH="/usr/local/man:$MANPATH"
 # Latex
 if [[ "$(uname)" == "Linux" && -z "$WSL_DISTRO_NAME"  ]];then
   # turn off flow control
-  stty -ixon
+  # stty -ixon
   export MANPATH="/usr/local/texlive/2025/texmf-dist/doc/man:$MANPATH"
   export INFOPATH="/usr/local/texlive/2025/texmf-dist/doc/info:$INFOPATH"
   path+=(/usr/local/texlive/2025/bin/x86_64-linux)

@@ -99,7 +99,7 @@ vim.keymap.set("n", "<leader>ss", function()
   local view = vim.fn.winsaveview()
   vim.cmd([[keepjumps keeppatterns silent! %s/\r//g]])
   vim.fn.winrestview(view)
-end, { desc = "Strip ^M" })
+end, { desc = "Trim/Strip ^M" })
 
 keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" })
 keymap.set("n", "<leader>tw", "<cmd>tabclose<CR>", { desc = "Close current tab" })

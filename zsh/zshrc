@@ -25,6 +25,11 @@ source "$ZDOTDIR/zshrc.d/options.zsh"
 source "$ZDOTDIR/zshrc.d/tools.zsh"
 source "$ZDOTDIR/zshrc.d/functions.zsh"
 
+# Load local secrets (not in repo)
+if [[ -f "$HOME/.zshenv.local" ]]; then
+  source "$HOME/.zshenv.local"
+fi
+
 
 # chocolate
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#d2691e'
