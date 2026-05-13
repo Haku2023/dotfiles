@@ -51,7 +51,11 @@ return {
         claude_code = function()
           return require("codecompanion.adapters").extend("claude_code", {
             commands = {
+              -- review mode: uses ~/.claude-nvim (no defaultMode), so each edit
+              -- is proposed for approval. Terminal `claude` keeps using ~/.claude.
               default = {
+                "env",
+                "CLAUDE_CONFIG_DIR=" .. vim.fn.expand("~/.claude-nvim"),
                 "claude-agent-acp",
               },
             },

@@ -224,6 +224,18 @@ wezterm.on("toggle-background-image", function(window, _)
 	end
 	window:set_config_overrides(overrides)
 end)
+-- toggle background opacity
+wezterm.on("toggle-background-opacity", function(window, _)
+	local overrides = window:get_config_overrides() or {}
+	local tag = overrides.window_background_opacity
+	local current_opacity = tag or config.window_background_opacity
+	if current_opacity ~= 0.7 then
+		overrides.window_background_opacity = 0.7
+	else
+		overrides.window_background_opacity = 1.0
+	end
+	window:set_config_overrides(overrides)
+end)
 wezterm.on("down-opacity", function(window, _)
 	local overrides = window:get_config_overrides() or {}
 	local tag = overrides.window_background_opacity
@@ -384,14 +396,17 @@ config.keys = { -- {{{
 	{ key = "v", mods = "ALT", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 	{ key = "s", mods = "ALT", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
 	-- Optional: Close current pane
-	{ key = "w", mods = "ALT", action = wezterm.action.CloseCurrentPane({ confirm = true }) },
+	-- { key = "w", mods = "ALT", action = wezterm.action.CloseCurrentPane({ confirm = true }) },
+	{ key = "w", mods = "ALT", action = wezterm.action.CloseCurrentTab({ confirm = true }) },
+	{ key = "w", mods = "ALT|SHIFT", action = wezterm.action.CloseCurrentTab({ confirm = false }) },
 	-- Scroll lines using alt
 	{ key = "n", mods = "ALT", action = wezterm.action.ScrollByLine(5) },
 	{ key = "p", mods = "ALT", action = wezterm.action.ScrollByLine(-5) },
 	-- change opacity
 	{ key = "-", mods = "ALT", action = act.EmitEvent("down-opacity") },
 	{ key = "=", mods = "ALT", action = act.EmitEvent("up-opacity") },
-	{ key = "0", mods = "ALT", action = act.EmitEvent("toggle-background-image") },
+	{ key = "0", mods = "ALT", action = act.EmitEvent("toggle-background-opacity") },
+	-- { key = "0", mods = "ALT", action = act.EmitEvent("toggle-background-image") },
 	-- workspace
 	{ key = ",", mods = "ALT", action = act.SwitchWorkspaceRelative(-1) },
 	{ key = ".", mods = "ALT", action = act.SwitchWorkspaceRelative(1) },
