@@ -68,6 +68,15 @@ elif [[ -n "$WSL_DISTRO_NAME"  ]];then
 fi
 bindkey '^ ' autosuggest-accept
 
+# batch zcp,zln
+autoload -Uz zmv
+zcp() {
+  zmv -vC "$@"
+}
+zln() {
+  zmv -vL "$@"
+}
+
 # haku useful functions cdn mcd lsn
 # >>>>>>>>>>>>>>>>{{{
 # cdn - cd to newest directory, or nth newest with argument
@@ -75,6 +84,19 @@ cdn() {
   local n=${1:-1}
   new_file=$(eza -snew -D --icons=never | tail -n${n} | head -n1)
   cd ${new_file}
+}
+lsn(){
+  local n=${1:-10}
+  eza -snew -l --icons=always --color=always | tail -n${n}
+}
+lsnf(){
+  local n=${1:-10}
+  eza -snew -l --icons=always --color=always --only-files | tail -n${n}
+}
+vin() {
+  local n=${1:-1}
+  new_file=$(eza -snew  --icons=never --only-files| tail -n${n} | head -n1)
+  vi ${new_file}
 }
 # mkdir,cd it
 mcd() {

@@ -7,6 +7,7 @@ fi
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
+
 # Preferred editor for local(vim) and remote(nvim) sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
@@ -32,8 +33,6 @@ export HOMEBREW_NO_ENV_HINTS=1
 
 # export multi selection with tab
 export FZF_DEFAULT_OPTS='-m'
-
-
 
 # Make path array unique (removes duplicates automatically)
 typeset -U path
