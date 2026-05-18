@@ -313,7 +313,21 @@ wezterm.on("swap-pane-new", function(window, pane)
 			end
 		end
 	end
-end) -- }}}
+end)
+-- jump to specific pane
+local function jump_to_tab(n)
+	return wezterm.action_callback(function(window, pane)
+		local tabs = window:mux_window():tabs_with_info()
+		table.sort(tabs, function(a, b)
+			return a.tab:tab_id() < b.tab:tab_id()
+		end)
+		local entry = tabs[n]
+		if entry then
+			entry.tab:activate()
+		end
+	end)
+end
+-- }}}
 
 -- color scheme setting
 config.color_scheme = "Dracula (Official)"
@@ -406,6 +420,10 @@ config.keys = { -- {{{
 	{ key = "-", mods = "ALT", action = act.EmitEvent("down-opacity") },
 	{ key = "=", mods = "ALT", action = act.EmitEvent("up-opacity") },
 	{ key = "0", mods = "ALT", action = act.EmitEvent("toggle-background-opacity") },
+	{ key = "1", mods = "ALT", action = jump_to_tab(1) },
+	{ key = "2", mods = "ALT", action = jump_to_tab(2) },
+	{ key = "3", mods = "ALT", action = jump_to_tab(3) },
+	{ key = "4", mods = "ALT", action = jump_to_tab(4) },
 	-- { key = "0", mods = "ALT", action = act.EmitEvent("toggle-background-image") },
 	-- workspace
 	{ key = ",", mods = "ALT", action = act.SwitchWorkspaceRelative(-1) },

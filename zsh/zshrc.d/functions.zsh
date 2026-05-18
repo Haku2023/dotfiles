@@ -65,6 +65,17 @@ elif [[ -n "$WSL_DISTRO_NAME"  ]];then
     _arguments '1:work_station:(69 73)'
   }
   compdef _haku26 haku26
+
+  # _haku() {
+  #   local -a g1 g2 g3
+  #   g1=(-roms  -py -stations -out)
+  #   g2=(-SPH)
+  #   g3=(-work-cdrive -ts)
+  #   _describe -t opts1 'roms' g1
+  #   _describe -t opts2 'DualSPHysics' g2
+  #   _describe -t opts3 'work' g3
+  # }
+  # compdef _haku haku
 fi
 bindkey '^ ' autosuggest-accept
 
