@@ -27,7 +27,8 @@ end
 
 opt.relativenumber = true
 opt.number = true
-opt.fileformats = { "unix", "dos" }
+-- opt.fileformats = { "unix", "dos" }
+opt.fileformats = { "dos", "unix" }
 
 -- tabs & indentation
 opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
@@ -88,3 +89,5 @@ opt.winblend = 0 ]]
 
 -- set nvim python place
 vim.g.python3_host_prog = vim.env.HOME .. "/Tools/miniconda3/bin/python3"
+
+opt.fileencodings = "utf-8,cp932,sjis,euc-jp,iso-2022-jp"

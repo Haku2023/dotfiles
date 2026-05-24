@@ -11,7 +11,7 @@ keymap.set("x", "s", "<ESC>", { desc = "Exit visual mode with s" })
 keymap.set("i", "<C-f>", "<Right>", { desc = "forward in insertmode" })
 keymap.set("i", "<C-b>", "<Left>", { desc = "backward in insertmode" })
 keymap.set("i", "hh", "<C-w>", { desc = "delete words in insertmode" })
-keymap.set({ "n", "x" }, "<leader>cc", "<cmd>checktime<CR>", { desc = "reload buffer" })
+keymap.set({ "n", "x" }, "<leader>cc", "<cmd>e<CR>", { desc = "reload buffer" })
 keymap.set({ "n", "x" }, "<leader>,", "<<", { desc = "Indent" })
 keymap.set({ "n", "x" }, "<leader>.", ">>", { desc = "Unindent" })
 
