@@ -33,6 +33,8 @@ keymap.set("c", "<C-A>", "<HOME>")
 keymap.set("c", "<C-F>", "<Right>")
 keymap.set("c", "<C-B>", "<Left>")
 keymap.set("c", "<C-D>", "<C-W>")
+keymap.set("c", "<C-v>", "<C-R>+")
+keymap.set("c", "<C-k>", "<C-\\>e(strpart(getcmdline(), 0, getcmdpos()-1))<CR>")
 
 -- system settings
 keymap.set("n", "<leader>sf", "<Cmd>luafile %<CR>", { desc = "Source current lua file" })
@@ -72,7 +74,16 @@ keymap.set("n", "<leader>kd", "<Cmd>delmarks a-z A-Z 0-9<CR>", { desc = "Clear A
 --inspect
 keymap.set("n", "<leader>i", "<Cmd>Inspect<CR>", { desc = "Inspect in Treesitter" })
 -- show full path
-keymap.set("n", "<C-g>", "<Cmd>echo expand('%:p')<CR>", { desc = "show full path" })
+-- keymap.set("n", "<C-g>", "<Cmd>echo expand('%:p')<CR>", { desc = "show full path" })
+keymap.set("n", "<C-g>", function()
+  vim.notify(vim.fn.expand("%:p"), vim.log.levels.INFO, { title = "Full path" })
+end, { desc = "show full path" })
+keymap.set("n", "<leader>gf", function()
+  vim.notify(vim.fn.expand("%:t"), vim.log.levels.INFO, { title = "File name" })
+end, { desc = "show file name" })
+keymap.set("n", "<leader>gd", function()
+  vim.notify(vim.fn.expand("%:p:h"), vim.log.levels.INFO, { title = "Dir name" })
+end, { desc = "show dir name" })
 -- Lazy and Mason
 keymap.set("n", "<leader>;l", "<Cmd>Lazy<CR>", { desc = "open lazy" })
 keymap.set("n", "<leader>;m", "<Cmd>Mason<CR>", { desc = "open mason" })
