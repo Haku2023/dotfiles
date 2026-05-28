@@ -135,4 +135,7 @@ keymap.set("n", "<leader>cx", function()
   require("codecompanion").chat({ adapter = "codex" })
 end, { desc = "CodeCompanion with Codex" })
 -- vim.keymap.set("n", "<leader>cc", "<cmd>CodeCompanionChat<cr>", { desc = "Open CodeCompanion chat" })
---
+
+-- remap * and # to search for the word under the cursor without moving the cursor
+vim.keymap.set("n", "*", "mz*`z", { desc = "Search word, stay put" })
+vim.keymap.set("n", "#", "mz#`z", { desc = "Search word backward, stay put" })

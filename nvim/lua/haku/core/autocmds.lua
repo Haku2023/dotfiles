@@ -1,6 +1,17 @@
 -- telescope preview show linenumber
 vim.cmd("autocmd User TelescopePreviewerLoaded setlocal number")
 
+-- ROMS-style projects use .h files that contain Fortran (consumed via CPP #include),
+-- not C headers. Neovim's default filetype detection assigns 'c' to .h, which routes
+-- LSP traffic to clangd instead of fortls. Force filetype=fortran for these paths so
+-- fortls attaches and gd/hover/diagnostics work.
+vim.filetype.add({
+  pattern = {
+    [".*/Master/.*%.h"] = "fortran",
+    [".*/ROMS/.*%.h"] = "fortran",
+  },
+})
+
 -- Auto-align OpenMP directives in Fortran files
 local fortranOmpAugroup = vim.api.nvim_create_augroup("FortranOmpAlign", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePre", {
