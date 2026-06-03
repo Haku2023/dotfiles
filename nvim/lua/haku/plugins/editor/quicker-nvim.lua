@@ -39,11 +39,30 @@ return {
   },
   keys = {
     {
-      "<leader>q",
+      "<leader>ql",
       function()
         require("quicker").toggle()
       end,
       desc = "Toggle quickfix",
+    },
+    {
+      "<leader>qq",
+      function()
+        local bufnr = vim.api.nvim_get_current_buf()
+        local lnum = vim.api.nvim_win_get_cursor(0)[1]
+        local line = vim.api.nvim_get_current_line()
+
+        vim.fn.setqflist({
+          {
+            bufnr = bufnr,
+            lnum = lnum,
+            col = 1,
+            text = vim.trim(line),
+          },
+        }, "a") -- "a" appends to the existing quickfix list
+      end,
+      desc = "Add current line to quickfix",
+      mode = "n",
     },
     {
       "<leader>ol",

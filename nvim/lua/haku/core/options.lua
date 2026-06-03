@@ -27,8 +27,8 @@ end
 
 opt.relativenumber = true
 opt.number = true
--- opt.fileformats = { "unix", "dos" }
-opt.fileformats = { "dos", "unix" }
+opt.fileformats = { "unix", "dos" }
+-- opt.fileformats = { "dos", "unix" }
 
 -- tabs & indentation
 opt.tabstop = 2 -- 2 spaces for tabs (prettier default)

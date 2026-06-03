@@ -98,6 +98,8 @@ return {
     keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
     keymap.set("n", "<leader>fs", builtin.lsp_workspace_symbols, { desc = "Fuzzy find symbols in workspace" })
     keymap.set("n", "<leader>fS", builtin.lsp_document_symbols, { desc = "Fuzzy find symbols in current buffer" })
+    keymap.set("n", "<leader>fq", builtin.quickfix, { desc = "Telescope quickfix" })
+    keymap.set("n", "<leader>fl", builtin.loclist, { desc = "Telescope loclist" })
 
     -- Telescope selection
     vim.api.nvim_set_hl(0, "TelescopeSelection", { link = "Visual" })
