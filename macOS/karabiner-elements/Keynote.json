@@ -664,7 +664,7 @@
       "from": {
         "key_code": "z",
         "modifiers": {
-          "mandatory": ["option"],
+          "mandatory": ["command"],
           "optional": []
         }
       },
@@ -734,7 +734,7 @@
       "from": {
         "key_code": "z",
         "modifiers": {
-          "mandatory": ["option", "shift"],
+          "mandatory": ["command", "shift"],
           "optional": []
         }
       },
@@ -2492,7 +2492,7 @@
         }
       ],
       "from": {
-        "key_code": "s",
+        "key_code": "p",
         "modifiers": { "mandatory": ["option", "shift"] }
       },
       "to": [
@@ -2542,7 +2542,7 @@
         }
       ],
       "from": {
-        "key_code": "s",
+        "key_code": "p",
         "modifiers": { "mandatory": ["option", "shift"] }
       },
       "to": [
@@ -2745,7 +2745,7 @@
       "from": {
         "key_code": "z",
         "modifiers": {
-          "mandatory": ["shift"],
+          "mandatory": ["option", "shift"],
           "optional": []
         }
       },
@@ -2772,13 +2772,67 @@
       "from": {
         "key_code": "z",
         "modifiers": {
-          "mandatory": [],
+          "mandatory": ["option"],
           "optional": []
         }
       },
       "to": [
         {
           "key_code": "0",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "keynote_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "z",
+        "modifiers": {
+          "mandatory": [],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "period",
+          "modifiers": ["command", "shift"]
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^com.apple.iWork.Keynote$"],
+          "type": "frontmost_application_if"
+        },
+        {
+          "name": "keynote_vim",
+          "type": "variable_if",
+          "value": 0
+        }
+      ],
+      "from": {
+        "key_code": "z",
+        "modifiers": {
+          "mandatory": ["shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "key_code": "comma",
           "modifiers": ["command", "shift"]
         }
       ],

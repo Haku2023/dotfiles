@@ -21,7 +21,7 @@
         "key_code": "f",
         "modifiers": {
           "mandatory": ["option"],
-          "optional": ["any"]
+          "optional": []
         }
       },
       "to": [

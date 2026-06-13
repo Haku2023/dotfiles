@@ -536,7 +536,7 @@
       },
       "to": [
         {
-          "key_code": "n",
+          "key_code": "s",
           "modifiers": ["control", "shift"]
         }
       ],
@@ -672,7 +672,7 @@
       "to": [
         {
           "key_code": "l",
-          "modifiers": ["control", "shift"]
+          "modifiers": ["control", "shift", "option"]
         }
       ],
       "type": "basic"
@@ -1097,14 +1097,14 @@
       "from": {
         "key_code": "spacebar",
         "modifiers": {
-          "mandatory": [],
+          "mandatory": ["control"],
           "optional": []
         }
       },
       "to": [
         {
-          "key_code": "comma",
-          "modifiers": ["control"]
+          "key_code": "open_bracket",
+          "modifiers": ["command", "option"]
         }
       ],
       "type": "basic"
@@ -1124,14 +1124,14 @@
       "from": {
         "key_code": "spacebar",
         "modifiers": {
-          "mandatory": ["shift"],
+          "mandatory": ["control", "shift"],
           "optional": []
         }
       },
       "to": [
         {
-          "key_code": "period",
-          "modifiers": ["control"]
+          "key_code": "close_bracket",
+          "modifiers": ["command", "option"]
         }
       ],
       "type": "basic"
@@ -1227,14 +1227,14 @@
       "from": {
         "key_code": "tab",
         "modifiers": {
-          "mandatory": [],
+          "mandatory": ["control"],
           "optional": []
         }
       },
       "to": [
         {
           "key_code": "slash",
-          "modifiers": ["control"]
+          "modifiers": ["command"]
         }
       ],
       "type": "basic"

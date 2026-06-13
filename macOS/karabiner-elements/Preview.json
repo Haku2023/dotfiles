@@ -303,8 +303,8 @@
       "from": { "key_code": "u" },
       "to": [
         {
-          "key_code": "k",
-          "modifiers": ["control"]
+          "key_code": "up_arrow",
+          "modifiers": ["shift"]
         }
       ],
       "type": "basic"
@@ -324,8 +324,8 @@
       "from": { "key_code": "d" },
       "to": [
         {
-          "key_code": "j",
-          "modifiers": ["control"]
+          "key_code": "down_arrow",
+          "modifiers": ["shift"]
         }
       ],
       "type": "basic"
@@ -387,8 +387,8 @@
       "from": { "key_code": "z" },
       "to": [
         {
-          "key_code": "h",
-          "modifiers": ["control", "shift"]
+          "key_code": "equal_sign",
+          "modifiers": ["command"]
         }
       ],
       "type": "basic"
@@ -411,8 +411,8 @@
       },
       "to": [
         {
-          "key_code": "l",
-          "modifiers": ["control", "shift"]
+          "key_code": "hyphen",
+          "modifiers": ["command"]
         }
       ],
       "type": "basic"

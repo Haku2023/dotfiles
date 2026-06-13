@@ -24,7 +24,7 @@ return {
         graphql = { "prettier" },
         liquid = { "prettier" },
         lua = { "stylua" },
-        python = { "black" },
+        python = { "ruff_format" },
         c = { "clang-format" },
         cpp = { "clang-format" },
       },

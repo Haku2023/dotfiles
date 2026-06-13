@@ -98,7 +98,8 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "c", "cpp" },
   callback = function()
-    vim.opt_local.indentkeys:remove(":")
+    vim.opt_local.cinkeys:remove(":")
+    -- vim.opt_local.indentkeys:remove(":")
   end,
 })
 
