@@ -74,7 +74,7 @@
       "to_if_alone": [
         {
           "select_input_source": {
-            "language": "zh-Hans"
+            "input_source_id": "com.apple.inputmethod.SCIM.ITABC"
           }
         }
       ],

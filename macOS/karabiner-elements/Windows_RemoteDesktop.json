@@ -104,6 +104,27 @@
         }
       ],
       "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["com.microsoft.rdc.macos"],
+          "type": "frontmost_application_if"
+        }
+      ],
+      "from": {
+        "key_code": "q",
+        "modifiers": {
+          "mandatory": ["option", "shift"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "shell_command": "osascript -e 'tell application \"wezterm\" to activate' && sleep 0.3 && open -a wezterm"
+        }
+      ],
+      "type": "basic"
     }
   ]
 }

@@ -31,7 +31,34 @@ return {
     local debugger_mode = is_mac and "lldb" or "gdb"
     local debugger_path = is_mac and "/usr/bin/lldb" or "/usr/bin/gdb"
 
+    -- fortran
+    dap.adapters.codelldb = {
+      type = "server",
+      port = "${port}",
+      executable = {
+        command = vim.fn.stdpath("data") .. "/mason/bin/codelldb",
+        args = { "--port", "${port}" },
+      },
+    }
+
     -- Configurations
+    dap.configurations.fortran = {
+      {
+        name = "Debug Fortran with LLDB",
+        type = "codelldb",
+        request = "launch",
+        program = function()
+          return vim.fn.input("Executable: ", vim.fn.getcwd() .. "/", "file")
+        end,
+        cwd = "${workspaceFolder}",
+        stopOnEntry = false,
+        -- LLDB has no Fortran expression frontend, so its native evaluator throws
+        -- "TypeSystem for language fortran95 doesn't exist" for watch/hover.
+        -- Use codelldb's own ("simple") evaluator, which reads variables directly.
+        expressions = "simple",
+      },
+    }
+
     dap.configurations.c = {
       {
         name = "Launch file",
@@ -61,7 +88,8 @@ return {
     dap.configurations.cpp = {
       {
         name = "Launch file",
-        type = "cppdbg",
+        -- type = "cppdbg",
+        type = "codelldb",
         request = "launch",
         program = function()
           return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")

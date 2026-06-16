@@ -1,12 +1,14 @@
 vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
 
 local keymap = vim.keymap -- for conciseness
 
 -- keymap.set("i", "jj", "<ESC>", { desc = "Exit insert mode with kk" })
-keymap.set("i", "jk", "<ESC>:w<CR>", { desc = "Exit insert mode and save with jk" })
+-- keymap.set("i", "jk", "<ESC>:w<CR>", { desc = "Exit insert mode and save with jk" })
 keymap.set({ "n", "x" }, "wq", "<cmd>wq<CR>", { desc = "Save and quit" })
 keymap.set({ "n", "x" }, "qq", "<cmd>q!<CR>", { desc = "quit without save" })
 keymap.set({ "n", "x" }, "wa", "<cmd>wqa<CR>", { desc = "Save all and quit" })
+keymap.set({ "n", "x" }, "<leader>qa", "<cmd>qa!<CR>", { desc = "quit all" })
 keymap.set("x", "s", "<ESC>", { desc = "Exit visual mode with s" })
 keymap.set("i", "<C-f>", "<Right>", { desc = "forward in insertmode" })
 keymap.set("i", "<C-b>", "<Left>", { desc = "backward in insertmode" })
@@ -15,6 +17,11 @@ keymap.set({ "n", "x" }, "<leader>cc", "<cmd>e<CR>", { desc = "reload buffer" })
 keymap.set({ "n", "x" }, "<leader>,", "<<", { desc = "Indent" })
 keymap.set({ "n", "x" }, "<leader>.", ">>", { desc = "Unindent" })
 
+-- window resize
+keymap.set("n", "<leader>wl", "2<C-w><", { desc = "Resize window left" })
+keymap.set("n", "<leader>wh", "2<C-w>>", { desc = "Resize window right" })
+keymap.set("n", "<leader>wk", "2<C-w>+", { desc = "Resize window up" })
+keymap.set("n", "<leader>wj", "2<C-w>-", { desc = "Resize window down" })
 -- keymap.set({ "n" }, "<C-t>", "<cmd>set wrap<CR>", { desc = "wrap the lines" })
 -- keymap.set({ "i" }, "<C-t>", "<ESC>:set wrap<CR>", { desc = "wrap the lines" })
 keymap.set({ "i", "n" }, "<C-t>", function()

@@ -408,28 +408,6 @@
     {
       "conditions": [
         {
-          "bundle_identifiers": ["^com.github.wez.wezterm$"],
-          "type": "frontmost_application_if"
-        }
-      ],
-      "from": {
-        "key_code": "q",
-        "modifiers": {
-          "mandatory": ["control"],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "h",
-          "modifiers": ["command"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
           "bundle_identifiers": [],
           "type": "frontmost_application_unless"
         }
