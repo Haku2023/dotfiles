@@ -17,10 +17,13 @@ return {
     dap_virtual_text.setup()
 
     mason_dap.setup({
-      ensure_installed = { "cppdbg", "python" },
+      ensure_installed = { "cppdbg", "codelldb", "python" },
       automatic_installation = true,
       handlers = {
         function(config)
+          if config.name == "codelldb" or config.name == "cppdbg" then
+            return
+          end
           require("mason-nvim-dap").default_setup(config)
         end,
       },
@@ -30,6 +33,43 @@ return {
     local is_mac = vim.fn.has("mac") == 1 or vim.fn.has("macunix") == 1
     local debugger_mode = is_mac and "lldb" or "gdb"
     local debugger_path = is_mac and "/usr/bin/lldb" or "/usr/bin/gdb"
+
+    local function project_config_for(lang)
+      local project_dap = vim.fn.getcwd() .. "/.nvim/dap.lua"
+      local file = vim.fn.expand("%:.")
+
+      if vim.fn.filereadable(project_dap) == 1 then
+        local ok, config = pcall(dofile, project_dap)
+
+        if ok and config[lang] and config[lang][file] then
+          return config[lang][file]
+        end
+      end
+
+      return {}
+    end
+
+    local function build_then_get_program(lang)
+      local cfg = project_config_for(lang)
+
+      if cfg.build then
+        if cfg.program then
+          vim.fn.mkdir(vim.fn.fnamemodify(cfg.program, ":h"), "p")
+        end
+
+        local result = vim.fn.system(cfg.build)
+
+        if vim.v.shell_error ~= 0 then
+          error("Build failed:\n" .. result)
+        end
+      end
+
+      if not cfg.program then
+        error("No program configured for " .. vim.fn.expand("%:."))
+      end
+
+      return vim.fn.getcwd() .. "/" .. cfg.program
+    end
 
     -- fortran
     dap.adapters.codelldb = {
@@ -61,93 +101,89 @@ return {
 
     dap.configurations.c = {
       {
-        name = "Launch file",
-        type = "cppdbg",
-        request = "launch",
-        program = function()
-          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-        end,
-        cwd = "${workspaceFolder}",
-        stopAtEntry = false,
-        MIMode = debugger_mode,
-        miDebuggerPath = debugger_path,
-      },
-      {
-        name = "Attach to lldbserver :1234",
-        type = "cppdbg",
-        request = "launch",
-        MIMode = "lldb",
-        miDebuggerServerAddress = "localhost:1234",
-        miDebuggerPath = "/usr/bin/lldb",
-        cwd = "${workspaceFolder}",
-        program = function()
-          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-        end,
-      },
-    }
-    dap.configurations.cpp = {
-      {
-        name = "Launch file",
+        name = "Build and debug project C file",
         -- type = "cppdbg",
         type = "codelldb",
         request = "launch",
+        cwd = "${workspaceFolder}",
         program = function()
-          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+          return build_then_get_program("c")
         end,
-        cwd = "${workspaceFolder}",
-        stopAtEntry = false,
-        MIMode = debugger_mode,
-        miDebuggerPath = debugger_path,
+        args = function()
+          return project_config_for("c").args or {}
+        end,
       },
+    }
+
+    -- {
+    --   name = "Launch file",
+    --   type = "cppdbg",
+    --   request = "launch",
+    --   program = function()
+    --     return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+    --   end,
+    --   cwd = "${workspaceFolder}",
+    --   stopAtEntry = false,
+    --   MIMode = debugger_mode,
+    --   miDebuggerPath = debugger_path,
+    -- },
+    -- {
+    --   name = "Attach to lldbserver :1234",
+    --   type = "cppdbg",
+    --   request = "launch",
+    --   MIMode = "lldb",
+    --   miDebuggerServerAddress = "localhost:1234",
+    --   miDebuggerPath = "/usr/bin/lldb",
+    --   cwd = "${workspaceFolder}",
+    --   program = function()
+    --     return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+    --   end,
+    -- },
+    -- }
+    dap.configurations.cpp = {
       {
-        name = "Attach to lldbserver :1234",
-        type = "cppdbg",
+        name = "Build and debug project C++ file",
+        type = "codelldb",
         request = "launch",
-        MIMode = "lldb",
-        miDebuggerServerAddress = "localhost:1234",
-        miDebuggerPath = "/usr/bin/lldb",
         cwd = "${workspaceFolder}",
         program = function()
-          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+          return build_then_get_program("cpp")
+        end,
+        args = function()
+          return project_config_for("cpp").args or {}
         end,
       },
     }
     -- python comment,since use mason default config
     --/Users/bai.haodong/.local/share/nvim/lazy/mason-nvim-dap.nvim/lua/mason-nvim-dap/mappings/configurations.lua
-    -- fold <<<{{{
-    -- python = {
-    --   {
-    --     -- The first three options are required by nvim-dap
-    --     type = "python", -- the type here established the link to the adapter definition: `dap.adapters.python`
-    --     request = "launch",
-    --     name = "Launch file",
     --
-    --     -- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
-    --
-    --     program = function()
-    --       return vim.fn.expand("%:p")
-    --     end, -- Launch the current buffer file without prompting.
-    --     pythonPath = function()
-    --       -- debugpy supports launching an application with a different interpreter then the one used to launch debugpy itself.
-    --       -- The code below looks for a `venv` or `.venv` folder in the current directly and uses the python within.
-    --       -- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
-    --       local conda = os.getenv("CONDA_PREFIX")
-    --       if conda and vim.fn.executable(conda .. "/bin/python") == 1 then
-    --         return conda .. "/bin/python"
-    --       end
-    --       -- fallback to project venvs
-    --       -- local cwd = vim.fn.getcwd()
-    --       -- if vim.fn.executable(cwd .. "/venv/bin/python") == 1 then
-    --       --   return cwd .. "/venv/bin/python"
-    --       -- elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
-    --       --   return cwd .. "/.venv/bin/python"
-    --       -- else
-    --       --   return "/usr/bin/python"
-    --       -- end
-    --     end,
-    --   },
-    -- },
-    --  fold <<<}}}
+    local venv_path = os.getenv("VIRTUAL_ENV") or os.getenv("CONDA_PREFIX")
+    dap.configurations.python = {
+      {
+        -- The first three options are required by nvim-dap
+        type = "python", -- the type here established the link to the adapter definition: `dap.adapters.python`
+        request = "launch",
+        name = "Python: Launch file",
+        program = "${file}", -- This configuration will launch the current file if used.
+        -- venv on Windows uses Scripts instead of bin
+        pythonPath = venv_path
+            and ((vim.fn.has("win32") == 1 and venv_path .. "/Scripts/python") or venv_path .. "/bin/python")
+          or nil,
+        console = "integratedTerminal",
+        args = function()
+          local cfg = project_config_for("python")
+          return cfg.args or {}
+          -- local project_dap = vim.fn.getcwd() .. "/.nvim/dap.lua"
+          --
+          -- if vim.fn.filereadable(project_dap) == 1 then
+          --   local ok, config = pcall(dofile, project_dap)
+          --   if ok and config.args then
+          --     return config.args
+          --   end
+          -- end
+        end,
+      },
+    }
 
     -- Dap UI
 
@@ -155,19 +191,19 @@ return {
       layouts = {
         {
           elements = {
-            { id = "scopes", size = 0.50 },
-            { id = "breakpoints", size = 0.20 },
+            { id = "console", size = 0.35 },
+            { id = "scopes", size = 0.15 },
+            { id = "breakpoints", size = 0.35 },
             { id = "stacks", size = 0.15 },
-            { id = "watches", size = 0.15 },
           },
-          size = 40,
+          size = 30,
           position = "left",
         },
         {
           elements = {
-            { id = "console", size = 1.0 },
+            { id = "watches", size = 1.0 },
           },
-          size = 20,
+          size = 35,
           position = "right",
         },
       },
@@ -175,6 +211,186 @@ return {
         enabled = true,
         element = "console",
       },
+      element_mappings = {
+        watches = {
+          edit = {},
+          remove = {},
+        },
+      },
+    })
+
+    local function watch_index_under_cursor()
+      local line = vim.api.nvim_get_current_line()
+      local watches = ui.elements.watches.get()
+      local best_index
+      local best_length = 0
+
+      for index, watch in ipairs(watches) do
+        if line:find(watch.expression, 1, true) and #watch.expression > best_length then
+          best_index = index
+          best_length = #watch.expression
+        end
+      end
+
+      return best_index
+    end
+
+    local function select_watch(prompt, callback)
+      local watches = ui.elements.watches.get()
+
+      if #watches == 0 then
+        vim.notify("No watches", vim.log.levels.INFO)
+        return
+      end
+
+      vim.ui.select(watches, {
+        prompt = prompt,
+        format_item = function(item)
+          return item.expression
+        end,
+      }, function(item, index)
+        if item and index then
+          callback(index, item)
+        end
+      end)
+    end
+
+    local function edit_watch()
+      local index = watch_index_under_cursor()
+
+      local function edit(index_, watch)
+        vim.ui.input({
+          prompt = "Watch: ",
+          default = watch.expression,
+        }, function(expr)
+          if expr and expr ~= "" then
+            ui.elements.watches.edit(index_, expr)
+          end
+        end)
+      end
+
+      if index then
+        edit(index, ui.elements.watches.get()[index])
+      else
+        select_watch("Edit watch:", edit)
+      end
+    end
+
+    local function remove_watch()
+      local index = watch_index_under_cursor()
+
+      if index then
+        ui.elements.watches.remove(index)
+      else
+        select_watch("Remove watch:", function(index_)
+          ui.elements.watches.remove(index_)
+        end)
+      end
+    end
+
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "dapui_watches",
+      callback = function(event)
+        vim.keymap.set("n", "e", edit_watch, {
+          buffer = event.buf,
+          desc = "DAP: Edit watch",
+          nowait = true,
+        })
+        vim.keymap.set("n", "d", remove_watch, {
+          buffer = event.buf,
+          desc = "DAP: Remove watch",
+          nowait = true,
+        })
+      end,
+    })
+
+    local breakpoints = require("dap.breakpoints")
+    local breakpoint_store = vim.fn.stdpath("data") .. "/dap-breakpoints.json"
+    local breakpoint_filetypes = {
+      c = true,
+      cpp = true,
+      fortran = true,
+      python = true,
+    }
+
+    local function save_breakpoints()
+      local persisted = {}
+
+      for bufnr, buf_breakpoints in pairs(breakpoints.get()) do
+        local path = vim.api.nvim_buf_get_name(bufnr)
+        local filetype = vim.bo[bufnr].filetype
+
+        if path ~= "" and breakpoint_filetypes[filetype] then
+          persisted[path] = {}
+
+          for _, breakpoint in ipairs(buf_breakpoints) do
+            table.insert(persisted[path], {
+              line = breakpoint.line,
+              condition = breakpoint.condition,
+              hitCondition = breakpoint.hitCondition,
+              logMessage = breakpoint.logMessage,
+            })
+          end
+        end
+      end
+
+      vim.fn.mkdir(vim.fn.fnamemodify(breakpoint_store, ":h"), "p")
+      vim.fn.writefile({ vim.fn.json_encode(persisted) }, breakpoint_store)
+    end
+
+    local function load_breakpoints()
+      if vim.fn.filereadable(breakpoint_store) ~= 1 then
+        return
+      end
+
+      local ok, persisted = pcall(function()
+        return vim.fn.json_decode(table.concat(vim.fn.readfile(breakpoint_store), "\n"))
+      end)
+
+      if not ok or type(persisted) ~= "table" then
+        return
+      end
+
+      -- Loading these buffers can hit E325 ATTENTION if a file already has a
+      -- swap file (open in another nvim instance, or a stale .swp). Disable
+      -- swapfiles and suppress the ATTENTION prompt so restore never blocks,
+      -- and pcall the whole thing so one bad file can't break the config.
+      local save_shortmess = vim.o.shortmess
+      local save_swapfile = vim.o.swapfile
+      vim.opt.shortmess:append("A")
+      vim.o.swapfile = false
+
+      local load_ok, load_err = pcall(function()
+        for path, buf_breakpoints in pairs(persisted) do
+          if vim.fn.filereadable(path) == 1 and type(buf_breakpoints) == "table" then
+            local bufnr = vim.fn.bufadd(path)
+            vim.fn.bufload(bufnr)
+
+            for _, breakpoint in ipairs(buf_breakpoints) do
+              if breakpoint.line then
+                breakpoints.set({
+                  condition = breakpoint.condition,
+                  hitCondition = breakpoint.hitCondition,
+                  logMessage = breakpoint.logMessage,
+                }, bufnr, breakpoint.line)
+              end
+            end
+          end
+        end
+      end)
+
+      vim.o.swapfile = save_swapfile
+      vim.o.shortmess = save_shortmess
+
+      if not load_ok then
+        vim.notify("DAP: failed to restore breakpoints: " .. tostring(load_err), vim.log.levels.WARN)
+      end
+    end
+
+    load_breakpoints()
+
+    vim.api.nvim_create_autocmd("VimLeavePre", {
+      callback = save_breakpoints,
     })
 
     dap.listeners.before.attach.dapui_config = function()

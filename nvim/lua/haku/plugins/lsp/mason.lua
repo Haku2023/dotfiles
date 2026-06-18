@@ -54,8 +54,8 @@ return {
         "prettier", -- prettier formatter
         "stylua", -- lua formatter
         -- "isort", -- python formatter
+        -- "pylint",
         "ruff", -- python formatter/linter (replaces black)
-        "pylint",
         "eslint_d",
         "fprettify",
         "shellcheck",

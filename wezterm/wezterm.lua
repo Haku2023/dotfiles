@@ -428,8 +428,8 @@ config.keys = { -- {{{
 	{ key = "w", mods = "ALT", action = wezterm.action.CloseCurrentTab({ confirm = true }) },
 	{ key = "w", mods = "ALT|SHIFT", action = wezterm.action.CloseCurrentTab({ confirm = false }) },
 	-- Scroll lines using alt
-	{ key = "n", mods = "ALT", action = wezterm.action.ScrollByLine(5) },
-	{ key = "p", mods = "ALT", action = wezterm.action.ScrollByLine(-5) },
+	-- { key = "n", mods = "ALT", action = wezterm.action.ScrollByLine(5) },
+	-- { key = "p", mods = "ALT", action = wezterm.action.ScrollByLine(-5) },
 	-- change opacity
 	{ key = "-", mods = "ALT", action = act.EmitEvent("down-opacity") },
 	{ key = "=", mods = "ALT", action = act.EmitEvent("up-opacity") },

@@ -71,6 +71,21 @@ return {
       end,
     })
 
+    -- Window-local matchadd() highlighting (below) must be decided from the
+    -- buffer actually shown in the *current window* -- NOT from the event
+    -- buffer. FileType/BufEnter also fire for buffers that aren't in the edit
+    -- window (e.g. Telescope's prompt and preview buffers), which would
+    -- otherwise clear the matches belonging to the real fortran window.
+    -- Returns the current window's filetype, or nil for floating windows
+    -- (Telescope) so their buffers never touch the edit window's matches.
+    local function active_ft()
+      local win = vim.api.nvim_get_current_win()
+      if vim.api.nvim_win_get_config(win).relative ~= "" then
+        return nil
+      end
+      return vim.bo[vim.api.nvim_win_get_buf(win)].filetype
+    end
+
     -- Custom highlights for Fortran directives and OpenMP
     -- fold <<<{{{
     local fortran_groups = { fortranOpenMP = true, fortranDirective = true }
@@ -103,7 +118,10 @@ return {
     -- Apply matches when entering a fortran buffer/window, clean up otherwise
     vim.api.nvim_create_autocmd({ "FileType", "BufEnter", "BufWinEnter", "WinEnter" }, {
       callback = function()
-        if vim.bo.filetype == "fortran" then
+        local ft = active_ft()
+        if ft == nil then
+          return -- floating window (Telescope): leave the edit window's matches alone
+        elseif ft == "fortran" then
           add_fortran_matches()
         else
           clear_fortran_matches()
@@ -152,7 +170,10 @@ return {
     -- Apply matches when entering a namelist buffer/window, clean up otherwise
     vim.api.nvim_create_autocmd({ "FileType", "BufEnter", "WinEnter" }, {
       callback = function()
-        if vim.bo.filetype == "ROMSin" then
+        local ft = active_ft()
+        if ft == nil then
+          return -- floating window (Telescope): leave the edit window's matches alone
+        elseif ft == "ROMSin" then
           add_romsin_matches()
         else
           clear_romsin_matches()
@@ -205,7 +226,10 @@ return {
     -- Apply matches when entering a namelist buffer/window, clean up otherwise
     vim.api.nvim_create_autocmd({ "FileType", "BufEnter", "WinEnter" }, {
       callback = function()
-        if vim.bo.filetype == "namelist" then
+        local ft = active_ft()
+        if ft == nil then
+          return -- floating window (Telescope): leave the edit window's matches alone
+        elseif ft == "namelist" then
           add_namelist_matches()
         else
           clear_namelist_matches()

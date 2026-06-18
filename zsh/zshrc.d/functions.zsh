@@ -185,8 +185,10 @@ alt_up() {
   zle -U $'\e[1;3A'
 }
 open-nvim() {
-  nvim
-  zle reset-prompt
+  # nvim
+  # zle reset-prompt
+  BUFFER='nvim'
+  zle accept-line
 }
 # Force insert mode at each new prompt
 # zle-line-init() {
@@ -218,6 +220,7 @@ zvm_after_init_commands+=(
   "bindkey -s '^U' '^[[1;3C'" "bindkey -M vicmd -s '^U' '^[[1;3C'" 
   "bindkey -s '^O' '^[[1;3D'" "bindkey -M vicmd -s '^O' '^[[1;3D'"
   "bindkey '^J' open-nvim" "bindkey -M vicmd '^J' open-nvim"
+  # "bindkey '\en'  open-nvim" "bindkey -M vicmd '\en' open-nvim"        # Alt-n
   "bindkey '^H' backward-delete-char"
   "bindkey '^V' paste-from-clipboard"
   "bindkey '^S' prepend-sudo"

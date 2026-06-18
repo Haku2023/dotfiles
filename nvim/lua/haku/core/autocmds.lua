@@ -1,5 +1,10 @@
 -- telescope preview show linenumber
-vim.cmd("autocmd User TelescopePreviewerLoaded setlocal number")
+local telescopePreviewAugroup = vim.api.nvim_create_augroup("TelescopePreview", { clear = true })
+vim.api.nvim_create_autocmd("User", {
+  pattern = "TelescopePreviewerLoaded",
+  group = telescopePreviewAugroup,
+  command = "setlocal number",
+})
 
 -- ROMS-style projects use .h files that contain Fortran (consumed via CPP #include),
 -- not C headers. Neovim's default filetype detection assigns 'c' to .h, which routes
@@ -87,16 +92,20 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 
 -- auto detect latex
+local latexFiletypeAugroup = vim.api.nvim_create_augroup("LatexFiletypeDetect", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePost", {
   pattern = "*.tex",
+  group = latexFiletypeAugroup,
   callback = function()
     vim.cmd("filetype detect")
   end,
 })
 
 -- Fix C/C++: prevent ':' from triggering auto-indent (fixes std:: de-indenting)
+local cppIndentAugroup = vim.api.nvim_create_augroup("CppIndentFix", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "c", "cpp" },
+  group = cppIndentAugroup,
   callback = function()
     vim.opt_local.cinkeys:remove(":")
     -- vim.opt_local.indentkeys:remove(":")
@@ -104,7 +113,9 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Close CodeCompanion chat jobs before quitting to avoid E948/E676 errors
+local codeCompanionCleanupAugroup = vim.api.nvim_create_augroup("CodeCompanionCleanup", { clear = true })
 vim.api.nvim_create_autocmd("VimLeavePre", {
+  group = codeCompanionCleanupAugroup,
   callback = function()
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
       if vim.bo[buf].filetype == "codecompanion" then

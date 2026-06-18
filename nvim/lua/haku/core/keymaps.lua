@@ -7,8 +7,15 @@ local keymap = vim.keymap -- for conciseness
 -- keymap.set("i", "jk", "<ESC>:w<CR>", { desc = "Exit insert mode and save with jk" })
 keymap.set({ "n", "x" }, "wq", "<cmd>wq<CR>", { desc = "Save and quit" })
 keymap.set({ "n", "x" }, "qq", "<cmd>q!<CR>", { desc = "quit without save" })
-keymap.set({ "n", "x" }, "wa", "<cmd>wqa<CR>", { desc = "Save all and quit" })
-keymap.set({ "n", "x" }, "<leader>qa", "<cmd>qa!<CR>", { desc = "quit all" })
+local save_session_and_quit = function(input)
+  return function()
+    pcall(vim.cmd, "AutoSession save")
+    vim.cmd(input)
+  end
+end
+keymap.set({ "n", "x" }, "wa", save_session_and_quit("wqa!"), { desc = "Save all and quit" })
+keymap.set({ "n", "x" }, "qa", save_session_and_quit("qa!"), { desc = "Save session and quit all" })
+keymap.set({ "n", "x" }, "<leader>qa", save_session_and_quit("qa!"), { desc = "Save session and quit all" })
 keymap.set("x", "s", "<ESC>", { desc = "Exit visual mode with s" })
 keymap.set("i", "<C-f>", "<Right>", { desc = "forward in insertmode" })
 keymap.set("i", "<C-b>", "<Left>", { desc = "backward in insertmode" })
@@ -45,6 +52,20 @@ keymap.set("c", "<C-k>", "<C-\\>e(strpart(getcmdline(), 0, getcmdpos()-1))<CR>")
 
 -- system settings
 keymap.set("n", "<leader>sf", "<Cmd>luafile %<CR>", { desc = "Source current lua file" })
+keymap.set("n", "<leader>sr", function()
+  for module, _ in pairs(package.loaded) do
+    if module == "haku" or module:match("^haku%.") then
+      package.loaded[module] = nil
+    end
+  end
+
+  require("haku.core")
+  require("lazy.manage.reloader").reload({
+    { file = vim.fn.stdpath("config"), what = "manual reload" },
+  })
+
+  vim.notify("Reloaded Neovim config", vim.log.levels.INFO, { title = "Neovim" })
+end, { desc = "Reload Neovim config" })
 keymap.set("n", "[z", "zk", { desc = "Jump to next fold" })
 keymap.set("n", "]z", "zj", { desc = "jump to previous fold" })
 

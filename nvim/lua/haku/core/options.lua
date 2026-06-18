@@ -11,19 +11,19 @@ local opt = vim.opt
 local original_notify = vim.notify
 
 -- Define the exact text of the warning you want to silence
-local warning_to_silence = "The `require('lspconfig')` \"framework\" is deprecated"
-
--- Redefine vim.notify with our custom filtering logic
-vim.notify = function(msg, ...)
-  -- Check if the message is a string and if it contains the specific warning text.
-  -- The `find` function with `plain = true` (the last argument) does a simple text search.
-  if type(msg) == "string" and string.find(msg, warning_to_silence, 1, true) then
-    return -- Do nothing, effectively silencing this specific notification.
-  end
-
-  -- For any other message, call the original vim.notify function with all its original arguments.
-  return original_notify(msg, ...)
-end
+-- local warning_to_silence = "The `require('lspconfig')` \"framework\" is deprecated"
+--
+-- -- Redefine vim.notify with our custom filtering logic
+-- vim.notify = function(msg, ...)
+--   -- Check if the message is a string and if it contains the specific warning text.
+--   -- The `find` function with `plain = true` (the last argument) does a simple text search.
+--   if type(msg) == "string" and string.find(msg, warning_to_silence, 1, true) then
+--     return -- Do nothing, effectively silencing this specific notification.
+--   end
+--
+--   -- For any other message, call the original vim.notify function with all its original arguments.
+--   return original_notify(msg, ...)
+-- end
 
 opt.relativenumber = true
 opt.number = true
