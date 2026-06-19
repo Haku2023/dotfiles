@@ -189,21 +189,28 @@ return {
 
     ui.setup({
       layouts = {
+        -- layout 1: scopes/stacks. Left sidebar, closed by default (see
+        -- listeners below); toggle it with <Leader>dt.
         {
           elements = {
-            { id = "console", size = 0.35 },
-            { id = "scopes", size = 0.15 },
-            { id = "breakpoints", size = 0.35 },
-            { id = "stacks", size = 0.15 },
+            { id = "scopes", size = 0.5 },
+            { id = "stacks", size = 0.5 },
           },
-          size = 30,
+          size = 0.25,
           position = "left",
         },
+        -- layout 2: the right half of the screen (size 0.5 == 50% width).
+        -- NOTE: dapui layouts are 1-dimensional, so the right half can't be a
+        -- 2x grid. Side-by-side (watches|breakpoints) only works in a
+        -- full-width top/bottom layout, which can't be confined to the right
+        -- half -- so watches / breakpoints / console are stacked top->bottom.
         {
           elements = {
-            { id = "watches", size = 1.0 },
+            { id = "watches", size = 0.35 },
+            { id = "breakpoints", size = 0.35 },
+            { id = "console", size = 0.30 },
           },
-          size = 35,
+          size = 0.5,
           position = "right",
         },
       },
@@ -215,6 +222,11 @@ return {
         watches = {
           edit = {},
           remove = {},
+        },
+        breakpoints = {
+          -- <CR> is "expand" globally, which breakpoints can't do; map it to
+          -- "open" so Enter jumps to the breakpoint's file/line.
+          -- open = "<CR>",
         },
       },
     })
@@ -288,19 +300,107 @@ return {
       end
     end
 
+    -- The watches buffer is created once and cached by dapui, and its filetype
+    -- is set in an async context, so a FileType autocmd alone is unreliable
+    -- (it can be missed for some sessions). Make the keymap setup idempotent
+    -- and also assert it after ui.open() in the dap listeners below.
+    local function ensure_watches_keymaps(buf)
+      if not buf or not vim.api.nvim_buf_is_valid(buf) then
+        return
+      end
+      vim.keymap.set("n", "e", edit_watch, { buffer = buf, desc = "DAP: Edit watch", nowait = true })
+      vim.keymap.set("n", "d", remove_watch, { buffer = buf, desc = "DAP: Remove watch", nowait = true })
+    end
+
     vim.api.nvim_create_autocmd("FileType", {
       pattern = "dapui_watches",
       callback = function(event)
-        vim.keymap.set("n", "e", edit_watch, {
-          buffer = event.buf,
-          desc = "DAP: Edit watch",
-          nowait = true,
-        })
-        vim.keymap.set("n", "d", remove_watch, {
-          buffer = event.buf,
-          desc = "DAP: Remove watch",
-          nowait = true,
-        })
+        ensure_watches_keymaps(event.buf)
+      end,
+    })
+
+    -- Syntax-highlight the source line shown for each breakpoint, using the
+    -- filetype of the file it came from. dapui renders that line as plain text,
+    -- so we re-apply Treesitter highlights after each render. The language is
+    -- inferred per section from the header line (the file's basename).
+    local bp_syntax_ns = vim.api.nvim_create_namespace("dapui_breakpoints_syntax")
+
+    local function highlight_breakpoints_source(buf)
+      if not vim.api.nvim_buf_is_valid(buf) then
+        return
+      end
+      vim.api.nvim_buf_clear_namespace(buf, bp_syntax_ns, 0, -1)
+
+      local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+      local lang
+
+      for row, line in ipairs(lines) do
+        local header = line:match("^(%S.*):$")
+        if header then
+          -- Section header is the file's basename, e.g. "main.c:".
+          local ft = vim.filetype.match({ filename = header })
+          lang = ft and vim.treesitter.language.get_lang(ft) or nil
+        elseif lang then
+          -- Breakpoint line: "<indent><lnum> <source code>".
+          local prefix, code = line:match("^(%s*%d+ )(.*)$")
+          if code and code ~= "" then
+            local ok, parser = pcall(vim.treesitter.get_string_parser, code, lang)
+            local query = ok and vim.treesitter.query.get(lang, "highlights")
+            if ok and query then
+              local tree = parser:parse()[1]
+              local offset = #prefix
+              for id, node in query:iter_captures(tree:root(), code, 0, -1) do
+                local start_row, start_col, end_row, end_col = node:range()
+                if start_row == 0 and end_row == 0 then
+                  pcall(vim.api.nvim_buf_set_extmark, buf, bp_syntax_ns, row - 1, offset + start_col, {
+                    end_col = offset + end_col,
+                    hl_group = "@" .. query.captures[id],
+                    priority = 120,
+                  })
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+
+    -- Idempotent: re-highlight now, and attach an on_lines hook exactly once
+    -- per buffer so re-renders (which wipe our extmarks) get re-highlighted.
+    local function ensure_breakpoints_highlight(buf)
+      if not buf or not vim.api.nvim_buf_is_valid(buf) then
+        return
+      end
+      highlight_breakpoints_source(buf)
+      if vim.b[buf].dapui_bp_syntax_attached then
+        return
+      end
+      vim.b[buf].dapui_bp_syntax_attached = true
+
+      local scheduled = false
+      -- dapui rewrites the buffer on every render, wiping our extmarks, so
+      -- re-highlight whenever its lines change (extmark-only, no recursion).
+      vim.api.nvim_buf_attach(buf, false, {
+        on_lines = function()
+          if not vim.api.nvim_buf_is_valid(buf) then
+            return true
+          end
+          if scheduled then
+            return
+          end
+          scheduled = true
+          vim.schedule(function()
+            scheduled = false
+            highlight_breakpoints_source(buf)
+          end)
+        end,
+      })
+    end
+
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "dapui_breakpoints",
+      callback = function(event)
+        ensure_breakpoints_highlight(event.buf)
       end,
     })
 
@@ -319,6 +419,13 @@ return {
       for bufnr, buf_breakpoints in pairs(breakpoints.get()) do
         local path = vim.api.nvim_buf_get_name(bufnr)
         local filetype = vim.bo[bufnr].filetype
+
+        -- Fall back to filename-based detection: a background buffer (e.g. one
+        -- restored by load_breakpoints) may still have an empty filetype, and
+        -- we don't want to silently drop its breakpoints from the save.
+        if filetype == "" and path ~= "" then
+          filetype = vim.filetype.match({ buf = bufnr, filename = path }) or ""
+        end
 
         if path ~= "" and breakpoint_filetypes[filetype] then
           persisted[path] = {}
@@ -366,6 +473,19 @@ return {
             local bufnr = vim.fn.bufadd(path)
             vim.fn.bufload(bufnr)
 
+            -- bufload() doesn't reliably run filetype detection for these
+            -- background buffers, leaving filetype empty. That both excludes
+            -- them from save_breakpoints (its filetype filter) -- so a
+            -- breakpoint here is dropped when you next quit from a different
+            -- file -- and drops syntax/Treesitter highlighting when you later
+            -- jump into the file from the breakpoints panel. Detect it now.
+            if vim.bo[bufnr].filetype == "" then
+              local ft = vim.filetype.match({ buf = bufnr, filename = path })
+              if ft then
+                vim.bo[bufnr].filetype = ft
+              end
+            end
+
             for _, breakpoint in ipairs(buf_breakpoints) do
               if breakpoint.line then
                 breakpoints.set({
@@ -393,11 +513,18 @@ return {
       callback = save_breakpoints,
     })
 
-    dap.listeners.before.attach.dapui_config = function()
-      ui.open()
+    -- Open only the right-half panel (layout 2); layout 1 (scopes/stacks)
+    -- stays closed until <Leader>dt. Assert our buffer customizations here too,
+    -- since the FileType autocmds can be missed for cached/async buffers.
+    local function open_dapui()
+      ui.open({ layout = 2 })
+      ensure_watches_keymaps(ui.elements.watches.buffer())
+      ensure_breakpoints_highlight(ui.elements.breakpoints.buffer())
     end
+
+    dap.listeners.before.attach.dapui_config = open_dapui
     dap.listeners.before.launch.dapui_config = function()
-      ui.open()
+      open_dapui()
       dap_virtual_text.enable()
     end
     dap.listeners.before.event_terminated.dapui_config = function()
@@ -420,12 +547,27 @@ return {
     end, { desc = "DAP: Set conditional breakpoint" })
     map("n", "<Leader>dr", dap.repl.open, { desc = "DAP: Open REPL" })
     map("n", "<Leader>dl", dap.run_last, { desc = "DAP: Run last" })
+    -- Toggle only the main right panel (layout 2); layout 1 (scopes/stacks) is
+    -- managed separately by <Leader>dt. A bare ui.toggle() toggles each layout
+    -- independently, which would open the normally-closed layout 1 and close
+    -- layout 2 -- the opposite of what we want.
     map("n", "<Leader>du", function()
-      ui.toggle()
+      ui.toggle({ layout = 2 })
       dap_virtual_text.toggle()
     end, { desc = "DAP UI: Toggle" })
+    -- Layout 1 is the left panel (scopes / breakpoints / stacks); toggle it alone.
+    map("n", "<Leader>dt", function()
+      ui.toggle({ layout = 1, reset = false })
+    end, { desc = "DAP UI: Toggle scopes/stacks panel" })
 
-    map("n", "<Leader>ds", dap.terminate, { desc = "DAP: Stop" })
+    -- dap.terminate alone doesn't always close the UI: it depends on the
+    -- adapter emitting event_terminated/event_exited, which some adapters skip
+    -- on an explicit terminate. Close the UI (and virtual text) ourselves.
+    map("n", "<Leader>ds", function()
+      dap.terminate()
+      ui.close()
+      dap_virtual_text.disable()
+    end, { desc = "DAP: Stop" })
     map("n", "<Leader>dr", dap.restart, { desc = "DAP: Restart" })
 
     local function focus_dapui_watches()
@@ -440,6 +582,19 @@ return {
     end
 
     vim.keymap.set("n", "<Leader>dw", focus_dapui_watches, { desc = "DAP UI: Focus Watches" })
+
+    local function focus_dapui_breakpoints()
+      local buf = ui.elements.breakpoints.buffer()
+      for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+        if vim.api.nvim_win_get_buf(win) == buf then
+          vim.api.nvim_set_current_win(win)
+          return
+        end
+      end
+      ui.float_element("breakpoints", { enter = true })
+    end
+
+    vim.keymap.set("n", "<Leader>db", focus_dapui_breakpoints, { desc = "DAP UI: Focus Breakpoints" })
 
     -- Breakpoint sign and colors
     -- Signs

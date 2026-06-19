@@ -9,13 +9,18 @@ keymap.set({ "n", "x" }, "wq", "<cmd>wq<CR>", { desc = "Save and quit" })
 keymap.set({ "n", "x" }, "qq", "<cmd>q!<CR>", { desc = "quit without save" })
 local save_session_and_quit = function(input)
   return function()
+    -- Close the DAP UI first so its windows aren't captured in the session.
+    local ok, dapui = pcall(require, "dapui")
+    if ok then
+      pcall(dapui.close)
+    end
     pcall(vim.cmd, "AutoSession save")
     vim.cmd(input)
   end
 end
 keymap.set({ "n", "x" }, "wa", save_session_and_quit("wqa!"), { desc = "Save all and quit" })
 keymap.set({ "n", "x" }, "qa", save_session_and_quit("qa!"), { desc = "Save session and quit all" })
-keymap.set({ "n", "x" }, "<leader>qa", save_session_and_quit("qa!"), { desc = "Save session and quit all" })
+-- keymap.set({ "n", "x" }, "<leader>qa", save_session_and_quit("qa!"), { desc = "Save session and quit all" })
 keymap.set("x", "s", "<ESC>", { desc = "Exit visual mode with s" })
 keymap.set("i", "<C-f>", "<Right>", { desc = "forward in insertmode" })
 keymap.set("i", "<C-b>", "<Left>", { desc = "backward in insertmode" })
