@@ -125,7 +125,7 @@ keymap.set("n", "<leader>yy", "<Cmd>%y+<CR>", { desc = "yank entire file content
 keymap.set("n", "<leader>yf", "<Cmd>let @+ = expand('%:t')<CR>", { desc = "yank filename" })
 keymap.set("n", "<leader>ya", "<Cmd>let @+ = expand('%:p')<CR>", { desc = "yank absolute path" })
 keymap.set("n", "<leader>yr", "<Cmd>let @+ = expand('%')<CR>", { desc = "yank relative path" })
-keymap.set("n", "<leader>yd", "<Cmd>let @+ = expand('%:h')<CR>", { desc = "yank directory" })
+keymap.set("n", "<leader>yd", "<Cmd>let @+ = expand('%:p:h')<CR>", { desc = "yank directory" })
 
 keymap.set("n", "<leader>nh", "<Cmd>nohl<CR>", { desc = "Clear search highlights" })
 

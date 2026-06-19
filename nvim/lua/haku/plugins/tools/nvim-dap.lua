@@ -413,8 +413,44 @@ return {
       python = true,
     }
 
+    local function read_breakpoint_store()
+      if vim.fn.filereadable(breakpoint_store) ~= 1 then
+        return {}
+      end
+
+      local ok, persisted = pcall(function()
+        return vim.fn.json_decode(table.concat(vim.fn.readfile(breakpoint_store), "\n"))
+      end)
+
+      if not ok or type(persisted) ~= "table" then
+        return {}
+      end
+
+      return persisted
+    end
+
+    -- A single global store holds every project's breakpoints. We scope both
+    -- save and load to the cwd nvim was opened in, so the breakpoints panel
+    -- (<Leader>db) only ever shows the current project's breakpoints.
+    local function path_in_cwd(path)
+      local cwd = vim.fn.getcwd()
+      local abs = vim.fn.fnamemodify(path, ":p")
+      return abs == cwd or abs:sub(1, #cwd + 1) == cwd .. "/"
+    end
+
     local function save_breakpoints()
-      local persisted = {}
+      -- Start from the on-disk store so OTHER projects' breakpoints survive:
+      -- this session only knows about the current project's breakpoints (see
+      -- the cwd filter in load_breakpoints).
+      local persisted = read_breakpoint_store()
+
+      -- Clear the current project's entries up front; they're rewritten from
+      -- live state below, so breakpoints removed this session don't linger.
+      for path in pairs(persisted) do
+        if path_in_cwd(path) then
+          persisted[path] = nil
+        end
+      end
 
       for bufnr, buf_breakpoints in pairs(breakpoints.get()) do
         local path = vim.api.nvim_buf_get_name(bufnr)
@@ -427,7 +463,7 @@ return {
           filetype = vim.filetype.match({ buf = bufnr, filename = path }) or ""
         end
 
-        if path ~= "" and breakpoint_filetypes[filetype] then
+        if path ~= "" and breakpoint_filetypes[filetype] and path_in_cwd(path) then
           persisted[path] = {}
 
           for _, breakpoint in ipairs(buf_breakpoints) do
@@ -446,15 +482,9 @@ return {
     end
 
     local function load_breakpoints()
-      if vim.fn.filereadable(breakpoint_store) ~= 1 then
-        return
-      end
+      local persisted = read_breakpoint_store()
 
-      local ok, persisted = pcall(function()
-        return vim.fn.json_decode(table.concat(vim.fn.readfile(breakpoint_store), "\n"))
-      end)
-
-      if not ok or type(persisted) ~= "table" then
+      if vim.tbl_isempty(persisted) then
         return
       end
 
@@ -469,7 +499,7 @@ return {
 
       local load_ok, load_err = pcall(function()
         for path, buf_breakpoints in pairs(persisted) do
-          if vim.fn.filereadable(path) == 1 and type(buf_breakpoints) == "table" then
+          if path_in_cwd(path) and vim.fn.filereadable(path) == 1 and type(buf_breakpoints) == "table" then
             local bufnr = vim.fn.bufadd(path)
             vim.fn.bufload(bufnr)
 
@@ -551,8 +581,12 @@ return {
     -- managed separately by <Leader>dt. A bare ui.toggle() toggles each layout
     -- independently, which would open the normally-closed layout 1 and close
     -- layout 2 -- the opposite of what we want.
+    -- reset = true restores layout 2 to its configured default size on each
+    -- toggle. Without it, dapui remembers whatever size the windows were left
+    -- at -- e.g. enlarged after a CodeCompanion panel opened/closed alongside
+    -- it -- and reuses that stale size when reopening.
     map("n", "<Leader>du", function()
-      ui.toggle({ layout = 2 })
+      ui.toggle({ layout = 2, reset = true })
       dap_virtual_text.toggle()
     end, { desc = "DAP UI: Toggle" })
     -- Layout 1 is the left panel (scopes / breakpoints / stacks); toggle it alone.
@@ -582,6 +616,20 @@ return {
     end
 
     vim.keymap.set("n", "<Leader>dw", focus_dapui_watches, { desc = "DAP UI: Focus Watches" })
+
+    -- <C-l> normally calls vim-tmux-navigator's :TmuxNavigateRight, which lands
+    -- in whichever right-half window (watches/breakpoints/console, layout 2)
+    -- aligns with the cursor's row. While debugging, from a normal editor
+    -- window we always want watches instead; everywhere else keep the default.
+    local function navigate_right()
+      if dap.session() and not vim.bo.filetype:match("^dapui_") and vim.bo.filetype ~= "dap-repl" then
+        focus_dapui_watches()
+      else
+        vim.cmd("TmuxNavigateRight")
+      end
+    end
+
+    vim.keymap.set("n", "<C-l>", navigate_right, { desc = "Navigate right (DAP: focus Watches)" })
 
     local function focus_dapui_breakpoints()
       local buf = ui.elements.breakpoints.buffer()
