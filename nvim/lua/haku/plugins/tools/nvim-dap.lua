@@ -17,7 +17,7 @@ return {
     dap_virtual_text.setup()
 
     mason_dap.setup({
-      ensure_installed = { "cppdbg", "codelldb", "python" },
+      ensure_installed = { "cppdbg", "codelldb", "python", "fortran" },
       automatic_installation = true,
       handlers = {
         function(config)
@@ -33,6 +33,53 @@ return {
     local is_mac = vim.fn.has("mac") == 1 or vim.fn.has("macunix") == 1
     local debugger_mode = is_mac and "lldb" or "gdb"
     local debugger_path = is_mac and "/usr/bin/lldb" or "/usr/bin/gdb"
+
+    -- Scaffold a starter .nvim/dap.lua in the cwd the first time you start a
+    -- debug session (see <Leader>dq), so per-file build/program/args are easy
+    -- to fill in. Never overwrites an existing file.
+    local dap_config_template = [[return {
+  cpp = {
+    ["src/app.cpp"] = {
+      build = "cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug && cmake --build build -j",
+      program = "build/app",
+      args = { "--config", "debug", "--input", "data/input.txt" },
+    },
+  },
+
+  c = {
+    ["src/app.c"] = {
+      build = "make debug",
+      program = "build/app",
+      args = { "arg1", "arg2" },
+    },
+  },
+
+  python = {
+    ["train.py"] = {
+      args = { "--epochs", "3", "--debug" },
+    },
+  },
+  fortran = {
+    ["main.F90"] = {
+      build = "gfortran -g -o main main.F90",
+      program = "main",
+      args = { "arg1", "arg2" },
+    },
+  },
+}
+]]
+
+    local function ensure_project_dap_config()
+      local project_dap = vim.fn.getcwd() .. "/.nvim/dap.lua"
+
+      if vim.fn.filereadable(project_dap) == 1 then
+        return
+      end
+
+      vim.fn.mkdir(vim.fn.fnamemodify(project_dap, ":h"), "p")
+      vim.fn.writefile(vim.split(dap_config_template, "\n"), project_dap)
+      vim.notify("DAP: created " .. project_dap, vim.log.levels.INFO)
+    end
 
     local function project_config_for(lang)
       local project_dap = vim.fn.getcwd() .. "/.nvim/dap.lua"
@@ -80,22 +127,26 @@ return {
         args = { "--port", "${port}" },
       },
     }
+    dap.adapters.gdb = {
+      type = "executable",
+      command = "gdb",
+      args = { "--interpreter=dap", "--eval-command", "set print pretty on" },
+    }
 
     -- Configurations
     dap.configurations.fortran = {
       {
-        name = "Debug Fortran with LLDB",
-        type = "codelldb",
+        name = "Debug Fortran with gdb",
+        type = "gdb",
         request = "launch",
         program = function()
-          return vim.fn.input("Executable: ", vim.fn.getcwd() .. "/", "file")
+          return build_then_get_program("fortran")
+        end,
+        args = function()
+          return project_config_for("fortran").args or {}
         end,
         cwd = "${workspaceFolder}",
-        stopOnEntry = false,
-        -- LLDB has no Fortran expression frontend, so its native evaluator throws
-        -- "TypeSystem for language fortran95 doesn't exist" for watch/hover.
-        -- Use codelldb's own ("simple") evaluator, which reads variables directly.
-        expressions = "simple",
+        stopAtBeginningOfMainSubprogram = false,
       },
     }
 
@@ -567,7 +618,10 @@ return {
     -- Keymaps
     local map = vim.keymap.set
 
-    map("n", "<Leader>dq", dap.continue, { desc = "DAP: Continue" })
+    map("n", "<Leader>dq", function()
+      ensure_project_dap_config()
+      dap.continue()
+    end, { desc = "DAP: Continue" })
     map("n", "<Leader>dk", dap.step_over, { desc = "DAP: Step over" })
     map("n", "<Leader>dj", dap.step_into, { desc = "DAP: Step into" })
     map("n", "<Leader>dh", dap.step_out, { desc = "DAP: Step out" })
