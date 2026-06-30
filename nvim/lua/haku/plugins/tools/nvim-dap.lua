@@ -88,8 +88,19 @@ return {
       if vim.fn.filereadable(project_dap) == 1 then
         local ok, config = pcall(dofile, project_dap)
 
-        if ok and config[lang] and config[lang][file] then
-          return config[lang][file]
+        if ok and config[lang] then
+          -- Exact relative-path key wins.
+          if config[lang][file] then
+            return config[lang][file]
+          end
+
+          -- Fall back to glob keys (e.g. "**/*.F90"). glob2regpat yields a
+          -- Vim regex, so match with Vim's engine (not Lua's :match).
+          for pattern, entry in pairs(config[lang]) do
+            if vim.fn.match(file, vim.fn.glob2regpat(pattern)) >= 0 then
+              return entry
+            end
+          end
         end
       end
 
@@ -145,6 +156,11 @@ return {
         args = function()
           return project_config_for("fortran").args or {}
         end,
+        -- Under the debugger stdout is a pipe (not a TTY), so the gfortran
+        -- runtime full-buffers it and `print *` output isn't shown until the
+        -- buffer fills or the program exits. Force the preconnected units
+        -- (stdout/stderr) unbuffered so prints appear live while stepping.
+        env = { GFORTRAN_UNBUFFERED_PRECONNECTED = "y" },
         cwd = "${workspaceFolder}",
         stopAtBeginningOfMainSubprogram = false,
       },
@@ -258,8 +274,12 @@ return {
         {
           elements = {
             { id = "watches", size = 0.35 },
-            { id = "breakpoints", size = 0.35 },
-            { id = "console", size = 0.30 },
+            { id = "breakpoints", size = 0.30 },
+            -- gdb's DAP streams program stdout/stderr as `output` events
+            -- (it doesn't use runInTerminal), so they land in the `repl`,
+            -- not the `console` element. Show the repl or `print` output is
+            -- invisible. (console only fills for runInTerminal adapters.)
+            { id = "repl", size = 0.35 },
           },
           size = 0.5,
           position = "right",
@@ -267,7 +287,7 @@ return {
       },
       controls = {
         enabled = true,
-        element = "console",
+        element = "repl",
       },
       element_mappings = {
         watches = {

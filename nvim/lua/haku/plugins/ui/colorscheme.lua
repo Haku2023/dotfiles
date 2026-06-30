@@ -1,5 +1,74 @@
 return {
   {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
+    config = function()
+      require("catppuccin").setup({
+        flavour = "macchiato",
+        transparent_background = true,
+
+        custom_highlights = function(colors)
+          -- All accents sourced from the official Catppuccin Macchiato palette
+          -- so the scheme stays in tune (lavender-tinted, warm) instead of
+          -- clashing with arbitrary cold blues.
+          return {
+            -- Main readability
+            Normal = { fg = colors.text, bg = "NONE" },
+            NormalNC = { fg = colors.subtext1, bg = "NONE" },
+            Comment = { fg = colors.overlay1, italic = true },
+
+            -- Syntax contrast — mauve is the signature Macchiato accent
+            Keyword = { fg = colors.mauve, bold = true },
+            Statement = { fg = colors.mauve, bold = true },
+            Conditional = { fg = colors.mauve, bold = true },
+            Repeat = { fg = colors.mauve, bold = true },
+
+            Function = { fg = colors.blue, italic = true },
+            Identifier = { fg = colors.text },
+            String = { fg = colors.green },
+            Number = { fg = colors.peach },
+            Type = { fg = colors.yellow, bold = true },
+            Constant = { fg = colors.peach },
+            Operator = { fg = colors.sky },
+
+            -- Treesitter groups
+            ["@keyword"] = { fg = colors.mauve, bold = true },
+            ["@keyword.function"] = { fg = colors.mauve, bold = true },
+            ["@keyword.return"] = { fg = colors.pink, bold = true },
+            ["@function"] = { fg = colors.blue, italic = true },
+            ["@function.call"] = { fg = colors.blue },
+            ["@function.builtin"] = { fg = colors.sapphire, italic = true },
+            ["@variable"] = { fg = colors.text },
+            ["@variable.member"] = { fg = colors.lavender },
+            ["@variable.parameter"] = { fg = colors.maroon, italic = true },
+            ["@property"] = { fg = colors.teal },
+            ["@string"] = { fg = colors.green },
+            ["@type"] = { fg = colors.yellow, bold = true },
+            ["@type.builtin"] = { fg = colors.yellow, italic = true },
+            ["@constant"] = { fg = colors.peach },
+            ["@constant.builtin"] = { fg = colors.peach, bold = true },
+            ["@constructor"] = { fg = colors.sapphire },
+            ["@operator"] = { fg = colors.sky },
+            ["@punctuation.delimiter"] = { fg = colors.overlay2 },
+            ["@punctuation.bracket"] = { fg = colors.overlay2 },
+
+            -- UI — tinted from surface/accent so selections feel native
+            CursorLine = { bg = colors.surface0 },
+            CursorLineNr = { fg = colors.yellow, bold = true },
+            LineNr = { fg = colors.overlay0 },
+            Visual = { bg = colors.surface2 },
+            Search = { bg = colors.yellow, fg = colors.crust, bold = true },
+            IncSearch = { bg = colors.green, fg = colors.crust, bold = true },
+            CurSearch = { bg = colors.peach, fg = colors.crust, bold = true },
+          }
+        end,
+      })
+      -- vim.cmd("colorscheme catppuccin")
+    end,
+  },
+  { "rebelot/kanagawa.nvim", name = "kanagawa", priority = 1000 },
+  {
     "folke/tokyonight.nvim",
     priority = 1000,
     config = function()
@@ -203,6 +272,7 @@ return {
         end,
         -- ...
       })
+
       vim.cmd("colorscheme monokai-pro-octagon")
       vim.api.nvim_set_hl(0, "@function.fortran", { link = "@label.fortran" })
       vim.api.nvim_set_hl(0, "@keyword.type.fortran", { link = "@label.fortran" })
@@ -220,6 +290,7 @@ return {
       -- vim.api.nvim_set_hl(0, "CurSearch", { bg = "#33ee00", fg = "#000000", bold = true })
 
       -- vim.api.nvim_set_hl(0, "Search", { bg = "#00ff00", fg = "#000000" })
+      --
     end,
   },
 }
