@@ -87,4 +87,12 @@ return {
       },
     },
   },
+  keys = {
+    {
+      "<leader>a",
+      "<cmd>CodeCompanionChat Toggle<cr>",
+      mode = { "n", "v" },
+      desc = "Toggle CodeCompanion Chat",
+    },
+  },
 }

@@ -179,6 +179,28 @@ wezterm.on("update-status", function(window, _)
 		},
 	}))
 end)
+-- tab swap
+local function active_tab_index(window)
+	for _, t in ipairs(window:mux_window():tabs_with_info()) do
+		if t.is_active then
+			return t.index
+		end
+	end
+end
+wezterm.on("swap-tab", function(window, pane)
+	local current_tab = active_tab_index(window)
+	if _G.tab_pre == nil then
+		_G.tab_pre = current_tab
+		-- window:set_right_status("tab_pre set: " .. tostring(_G.tab_pre))
+		return
+	end
+
+	local previous_tab = _G.tab_pre
+	_G.tab_pre = current_tab
+	-- window:set_right_status("tab_pre: " .. tostring(previous_tab))
+
+	window:perform_action(wezterm.action.ActivateTab(previous_tab), pane)
+end)
 -- }}}
 
 -- window setting
@@ -217,13 +239,19 @@ else
 		local mux = wezterm.mux
 		local workspace_name = "melon"
 		-- First, spawn the default "apple" workspace window
-		local tab, pane, window = mux.spawn_window(cmd or {})
-		-- Then create "banana" workspace in the background with 2 tabs
-		local _, _, _ = mux.spawn_window({
+		local _, _, _ = mux.spawn_window(cmd or {})
+
+		-- Then create "melon" workspace in the background with 2 tabs
+		local tab, pane, melon_window = mux.spawn_window({
 			workspace = workspace_name,
-			-- add dotfiles in banana workspace
 			cwd = wezterm.home_dir,
 		})
+
+		-- Open the pwshh.exe in the new tab of the "melon" workspace
+		-- melon_window:spawn_tab({
+		-- 	cwd = wezterm.home_dir,
+		-- 	args = { "C:\\Users\\hakukt\\AppData\\Local\\Microsoft\\WindowsApps\\pwsh.exe" },
+		-- })
 	end)
 end
 
@@ -335,8 +363,17 @@ local function jump_to_tab(n)
 		table.sort(tabs, function(a, b)
 			return a.tab:tab_id() < b.tab:tab_id()
 		end)
+		local current_index = nil
+		for i, t in ipairs(tabs) do
+			if t.is_active then
+				current_index = i - 1
+			end
+		end
 		local entry = tabs[n]
 		if entry then
+			if n - 1 ~= current_index then
+				_G.tab_pre = current_index
+			end
 			entry.tab:activate()
 		end
 	end)
@@ -416,6 +453,8 @@ config.keys = { -- {{{
 	{ key = "f", mods = "ALT", action = wezterm.action.TogglePaneZoomState },
 	-- Swap Pane
 	{ key = "e", mods = "ALT", action = act.EmitEvent("swap-pane-new") },
+	-- Swap Tab
+	{ key = "o", mods = "ALT", action = act.EmitEvent("swap-tab") },
 	-- Test
 	{ key = "r", mods = "ALT", action = act.EmitEvent("show_status") },
 	-- quick selectmode
@@ -424,9 +463,10 @@ config.keys = { -- {{{
 	{ key = "v", mods = "ALT", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 	{ key = "s", mods = "ALT", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
 	-- Optional: Close current pane
-	-- { key = "w", mods = "ALT", action = wezterm.action.CloseCurrentPane({ confirm = true }) },
-	{ key = "w", mods = "ALT", action = wezterm.action.CloseCurrentTab({ confirm = true }) },
-	{ key = "w", mods = "ALT|SHIFT", action = wezterm.action.CloseCurrentTab({ confirm = false }) },
+	{ key = "w", mods = "ALT", action = wezterm.action.CloseCurrentPane({ confirm = true }) },
+	{ key = "w", mods = "ALT|SHIFT", action = wezterm.action.CloseCurrentPane({ confirm = false }) },
+	-- { key = "w", mods = "ALT", action = wezterm.action.CloseCurrentTab({ confirm = true }) },
+	-- { key = "w", mods = "ALT|SHIFT", action = wezterm.action.CloseCurrentTab({ confirm = false }) },
 	-- Scroll lines using alt
 	-- { key = "n", mods = "ALT", action = wezterm.action.ScrollByLine(5) },
 	-- { key = "p", mods = "ALT", action = wezterm.action.ScrollByLine(-5) },
@@ -456,7 +496,7 @@ config.keys = { -- {{{
 	-- Ctrl+Shift+P will open a new tab running PowerShell
 	{
 		key = "o",
-		mods = "ALT",
+		mods = "ALT|SHIFT",
 		action = act.SpawnCommandInNewTab({
 			args = { Gotop },
 		}),

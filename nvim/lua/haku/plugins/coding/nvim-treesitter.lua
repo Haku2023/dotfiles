@@ -44,6 +44,7 @@ return {
     vim.treesitter.language.register("bash", "sh")
     vim.treesitter.language.register("html", "htmldjango")
     vim.treesitter.language.register("cpp", "c++")
+    vim.treesitter.language.register("cpp", "foam")
 
     -- Don't use tree-sitter for namelist files (causes errors with & syntax)
     -- vim.treesitter.language.register("fortran", "namelist")
@@ -53,6 +54,16 @@ return {
         ["skhdrc"] = "sh",
         ["yabairc"] = "sh",
         [".fortls"] = "json",
+      },
+      -- openfoam files added(notice there is default foam filetype detection)
+      pattern = {
+        [".*/0%.org/.*"] = "foam",
+        [".*/0%.orig/.*"] = "foam",
+        [".*/0/.*"] = "foam",
+        [".*/constant/.*"] = "foam",
+        [".*/system/.*"] = "foam",
+        [".*[Dd]ict.*"] = "foam", -- waveDict_curr_forw etc.
+        [".*[Pp]roperties.*"] = "foam",
       },
       extension = {
         ejs = "html",
