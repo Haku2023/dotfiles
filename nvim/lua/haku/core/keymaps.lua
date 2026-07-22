@@ -183,3 +183,4 @@ end, { desc = "CodeCompanion with Codex" })
 -- remap * and # to search for the word under the cursor without moving the cursor
 vim.keymap.set("n", "*", "mz*`z", { desc = "Search word, stay put" })
 vim.keymap.set("n", "#", "mz#`z", { desc = "Search word backward, stay put" })
+vim.keymap.set("n", "<leader>hi", "<cmd>Inspect<cr>", { desc = "Inspect highlight under cursor" })

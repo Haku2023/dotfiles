@@ -176,7 +176,7 @@ return {
         devicons = true, -- highlight the icons of `nvim-web-devicons`
         styles = {
           comment = { italic = true, fg = "#a4aacb" },
-          keyword = { italic = true }, -- any other keyword
+          keyword = { italic = false }, -- any other keyword
           type = { italic = true }, -- (preferred) int, long, char, etc
           storageclass = { italic = true }, -- static, register, volatile, etc
           structure = { italic = true }, -- struct, union, enum, etc
@@ -223,27 +223,46 @@ return {
         --
         --
         -- ...
-        --- @param filter "classic" | "machine" | "octagon" | "pro" | "ristretto" | "spectrum"
-        overridePalette = function(filter)
+        -- --- @param filter "classic" | "machine" | "octagon" | "pro" | "ristretto" | "spectrum"
+        -- overridePalette = function(filter)
+        --   return {
+        --     -- dark2 = "#101014",
+        --     -- dark1 = "#16161E",
+        --     -- background = "#1A1B26",
+        --     -- text = "#C0CAF5",
+        --     -- accent1 = "#f7768e",
+        --     -- accent2 = "#7aa2f7",
+        --     -- accent3 = "#e0af68",
+        --     -- accent4 = "#9ece6a",
+        --     -- accent5 = "#0DB9D7",
+        --     -- accent6 = "#9d7cd8",
+        --     -- dimmed1 = "#e0af68",
+        --     -- light blue
+        --     -- dimmed2 = "#90a4ff",
+        --     dimmed2 = "#c0c0c0",
+        --
+        --     -- dimmed3 = "#363b54",
+        --     -- dimmed4 = "#363b54",
+        --     -- dimmed5 = "#16161e",
+        --   }
+        -- end,
+        override_palette = function(filter)
           return {
             -- dark2 = "#101014",
             -- dark1 = "#16161E",
             -- background = "#1A1B26",
             -- text = "#C0CAF5",
-            -- accent1 = "#f7768e",
-            -- accent2 = "#7aa2f7",
-            -- accent3 = "#e0af68",
-            -- accent4 = "#9ece6a",
-            -- accent5 = "#0DB9D7",
-            -- accent6 = "#9d7cd8",
-            -- dimmed1 = "#e0af68",
-            -- light blue
-            -- dimmed2 = "#90a4ff",
-            dimmed2 = "#c0c0c0",
-
-            -- dimmed3 = "#363b54",
-            -- dimmed4 = "#363b54",
-            -- dimmed5 = "#16161e",
+            -- accent1 = "#ee6188", -- wild berry / rose
+            -- accent2 = "#e89b6c", -- terracotta / clay
+            -- accent3 = "#e6c384", -- honey / ochre
+            -- accent4 = "#a8c66c", -- moss / sage
+            -- accent5 = "#7bb0a8", -- sea glass / muted teal
+            -- accent6 = "#a888f8", -- wisteria / lavender
+            -- dimmed1 = "#9aa37f", -- lichen
+            -- dimmed2 = "#8c9078", -- driftwood (comment fg)
+            -- dimmed3 = "#3a4034", -- damp bark
+            -- dimmed4 = "#2c3028", -- shadowed moss (indent guides)
+            -- dimmed5 = "#181a15", -- forest floor
           }
         end,
         -- ...
@@ -257,8 +276,13 @@ return {
             -- Normal = { bg = "#282c34" },
             IndentBlanklineChar = { fg = c.base.dimmed4 },
             Comment = { fg = c.base.dimmed2 },
+            -- ["@string"] = { fg = "#93DA97" }, -- uses your palette
+            -- ["@attribute"] = { fg = "#ffd76d" },
+            -- ["@type.builtin"] = { fg = "#33c4dd" },
+            -- ["@type.builtin"] = { fg = "#ff8700" },
             -- colors.comment = "#93DA97"
             -- colors.comment = "#a4aacb"
+            --
           }
           if is_wsl then
             -- Mac-specific overrides
@@ -278,9 +302,14 @@ return {
       vim.api.nvim_set_hl(0, "@keyword.type.fortran", { link = "@label.fortran" })
       vim.api.nvim_set_hl(0, "@keyword.function.fortran", { fg = "#EE6188", bold = true })
       vim.api.nvim_set_hl(0, "@module.fortran", { fg = "#A888F8", bold = true })
-      vim.api.nvim_set_hl(0, "@function.builtin.fortran", { fg = "#EE6188" })
-      vim.api.nvim_set_hl(0, "@label.fortran", { fg = "#A888F8" })
+      vim.api.nvim_set_hl(0, "@function.builtin.fortran", { fg = "#A777ea", bold = true })
+      vim.api.nvim_set_hl(0, "@label.fortran", { fg = "#A777ea", bold = true })
       vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#FFA500", bold = true })
+      vim.api.nvim_set_hl(0, "@keyword", { fg = "#A999F9", bold = true })
+      vim.api.nvim_set_hl(0, "@operator", { fg = "#fa99aa", bold = true })
+      -- vim.api.nvim_set_hl(0, "@punctuation.bracket", { fg = "#bad761" })
+      -- vim.api.nvim_set_hl(0, "@operator", { fg = "#9cd1bb", bold = true })
+      --"#2aceff","#ffaa00"
 
       -- Search highlights: dark yellow background with white text
       vim.api.nvim_set_hl(0, "Search", { bg = "#A888F8", fg = "#FFFFFF", bold = true })

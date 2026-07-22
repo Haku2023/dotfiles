@@ -64,14 +64,14 @@
 (end_select_statement) @keyword
 (end_interface_statement) @keyword
 (end_if_statement) @keyword
-(end_do_loop_statement) @keyword
+(end_do_loop_statement) @keyword.repeat
 (end_associate_statement) @keyword
 
-(end_program_statement) @label.fortran
-(end_module_statement) @label.fortran
-(end_submodule_statement) @label.fortran
+(end_module_statement) @module.fortran
+(end_submodule_statement) @module.fortran
   
 
-["program"] @label.fortran
+(end_program_statement) @module.fortran
+["program"] @module.fortran
 
 

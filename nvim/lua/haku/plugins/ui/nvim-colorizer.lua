@@ -1,13 +1,14 @@
 return {
   "norcalli/nvim-colorizer.lua",
   config = function()
-    require("colorizer").setup({
-      "css",
-      "javascript",
-      html = {
-        mode = "foreground",
+    require("colorizer").setup(
+      -- filetypes: "*" = attach to every buffer (so .lua, .toml, etc. all preview)
+      {
+        "*",
+        html = { mode = "foreground" },
       },
-      DEFAULT_OPTIONS = {
+      -- default options (second arg — applies to all filetypes above)
+      {
         RGB = true, -- #RGB hex codes
         RRGGBB = true, -- #RRGGBB hex codes
         names = true, -- "Name" codes like Blue
@@ -18,7 +19,7 @@ return {
         css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
         -- Available modes: foreground, background
         mode = "background", -- Set the display mode.
-      },
-    })
+      }
+    )
   end,
 }

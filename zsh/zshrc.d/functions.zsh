@@ -1,5 +1,24 @@
 
 if [[ "$(uname)" == "Darwin" ]];then
+  remind() {
+      local minutes=$1
+      shift
+      local message="$*"
+
+      if [[ -z $minutes || -z $message ]]; then
+          print "Usage: remind MINUTES MESSAGE"
+          return 1
+      fi
+
+      (
+          sleep $((minutes * 60))
+          say "$message"
+          osascript -e \
+              "display notification \"${message//\"/\\\"}\" with title \"Reminder\""
+      ) &!
+
+      print "Reminder set for $minutes minute(s): $message"
+  }
 
   haku26 () {
   cd '/Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects' && ls

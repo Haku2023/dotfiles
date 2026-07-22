@@ -1,0 +1,81 @@
+# Dev box for Apple Container — zsh + nvim using ~/dotfiles
+# Build:  container build -t dotbox -f container/Containerfile container
+#
+# Runs as ROOT at runtime: Apple Container 1.0 bind-mounts paths owned by uid 0,
+# so a non-root user cannot write into any mount (nvim data, lazy-lock.json, etc).
+# Homebrew still installs as a non-root user at build time (its installer refuses root).
+FROM ubuntu:24.04
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    LANG=en_US.UTF-8 \
+    LC_ALL=en_US.UTF-8
+
+# Base packages. zsh is needed to run install_new.sh (#!/bin/zsh).
+# build-essential/curl/file/procps/git are linuxbrew prerequisites.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        zsh git curl wget file procps build-essential ca-certificates \
+        locales sudo unzip \
+ && locale-gen en_US.UTF-8 \
+ && rm -rf /var/lib/apt/lists/*
+
+# Non-root user only so Homebrew's installer will run (Linux brew refuses root).
+RUN useradd -m -s /bin/zsh dev \
+ && echo 'dev ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/dev
+USER dev
+WORKDIR /home/dev
+
+# Homebrew (Linux) at the path tools.zsh expects: /home/linuxbrew/.linuxbrew
+RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+ENV PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${PATH}"
+
+# CLI tools your config uses (same names as on macOS).
+RUN brew install neovim fzf fd bat eza zoxide mcfly gdb gfortran gcc node make
+
+# ---- everything below runs as root; runtime HOME is /root ----
+USER root
+ENV HOME=/root
+WORKDIR /root
+
+# tree-sitter CLI (brew's tree-sitter is the library only, not the CLI).
+# Must be after `USER root` — /usr/local/bin isn't writable by the dev user.
+RUN curl -fsSL https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-linux-arm64.gz \
+    | gunzip > /usr/local/bin/tree-sitter \
+ && chmod +x /usr/local/bin/tree-sitter
+
+# System tools mason can't provide on linux/arm64:
+#  - clangd: mason has no arm64 prebuilt ("platform is unsupported")
+#  - python3 + pip: needed by python-based tools such as fortls
+# (Separate apt layer so the Homebrew layer above stays cached on rebuild.)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        clangd python3 python3-pip python3-venv \
+ && rm -rf /var/lib/apt/lists/*
+
+# Miniforge (conda) for Linux/aarch64. A macOS conda (e.g. ~/Tools) is Mach-O and
+# cannot run in this Linux VM, so we install a native Linux conda instead.
+# Use it with:  source /opt/conda/etc/profile.d/conda.sh && conda activate <env>
+RUN curl -fsSL https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh -o /tmp/mf.sh \
+ && bash /tmp/mf.sh -b -p /opt/conda \
+ && rm /tmp/mf.sh
+ENV PATH="/opt/conda/bin:${PATH}"
+
+# zsh plugins expected at $HOME/.zsh-plugins (not in the dotfiles repo).
+RUN mkdir -p /root/.zsh-plugins \
+ && git clone --depth=1 https://github.com/romkatv/powerlevel10k                  /root/.zsh-plugins/powerlevel10k \
+ && git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions          /root/.zsh-plugins/zsh-autosuggestions \
+ && git clone --depth=1 https://github.com/zdharma-continuum/fast-syntax-highlighting /root/.zsh-plugins/fast-syntax-highlighting \
+ && git clone --depth=1 https://github.com/jeffreytse/zsh-vi-mode                 /root/.zsh-plugins/zsh-vi-mode
+
+# `dbrew` = run Homebrew as the dev user (brew refuses root). Use it for
+# runtime, one-off installs:  dbrew install gdb
+# NOTE: runtime installs live in the container layer and are LOST on --rm.
+# For permanent packages, add them to the `brew install` line above and rebuild.
+RUN printf '%s\n' '#!/bin/sh' \
+      'cd /home/dev && exec sudo -u dev env HOME=/home/dev /home/linuxbrew/.linuxbrew/bin/brew "$@"' \
+      > /usr/local/bin/dbrew \
+ && chmod +x /usr/local/bin/dbrew
+
+COPY entrypoint.zsh /root/entrypoint.zsh
+RUN chmod +x /root/entrypoint.zsh
+
+ENTRYPOINT ["/root/entrypoint.zsh"]
+CMD ["/bin/zsh", "-l"]
