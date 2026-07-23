@@ -1275,6 +1275,24 @@
           }
         }
       ],
+      "to_delayed_action": {
+        "to_if_canceled": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ],
+        "to_if_invoked": [
+          {
+            "set_notification_message": {
+              "id": "my_message",
+              "text": ""
+            }
+          }
+        ]
+      },
       "type": "basic",
       "parameters": { "basic.to_delayed_action_delay_milliseconds": 1000 }
     },

@@ -2,13 +2,33 @@ return {
   "akinsho/toggleterm.nvim",
   version = "*",
   config = function()
+    local function default_size(term)
+      if term.direction == "horizontal" then
+        return 15
+      elseif term.direction == "vertical" then
+        return math.floor(vim.o.columns * 0.4)
+      end
+    end
+
+    local function reset_size(term)
+      if not term.window or not vim.api.nvim_win_is_valid(term.window) then
+        return
+      end
+
+      local size = default_size(term)
+      if term.direction == "horizontal" and size then
+        vim.api.nvim_win_set_height(term.window, size)
+      elseif term.direction == "vertical" and size then
+        vim.api.nvim_win_set_width(term.window, size)
+      end
+    end
+
     require("toggleterm").setup({
-      size = function(term)
-        if term.direction == "horizontal" then
-          return 15
-        elseif term.direction == "vertical" then
-          return vim.o.columns * 0.4
-        end
+      size = default_size,
+      on_open = function(term)
+        vim.schedule(function()
+          reset_size(term)
+        end)
       end,
       -- When the terminal closes, restore layout only if a *non-terminal*
       -- window was maximized, so subsequent <leader>sm works correctly.
