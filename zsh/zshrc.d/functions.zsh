@@ -100,8 +100,12 @@ bindkey '^ ' autosuggest-accept
 
 # batch zcp,zln
 autoload -Uz zmv
+zcpn() {
+  # zmv -vRC "$@"
+  zmv -n -v -C -p 'cp -R' "$@"
+}
 zcp() {
-  zmv -vC "$@"
+  zmv  -v -C -p 'cp -R' "$@"
 }
 zln() {
   zmv -vL "$@"

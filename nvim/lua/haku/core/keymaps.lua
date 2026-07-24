@@ -166,7 +166,7 @@ vim.keymap.set("n", "<leader>jv", "<Cmd>2ToggleTerm direction=horizontal<CR>", {
 -- Open CodeCompanion chat
 vim.keymap.set("n", "<leader>a", "<cmd>CodeCompanionChat Toggle<cr>", { desc = "Toggle CodeCompanion chat" })
 vim.keymap.set(
-  { "n", "v" },
+  { "v" },
   "<leader>ga",
   "<cmd>CodeCompanionChat Add<cr>",
   { desc = "add visually selected chat to current chat buffer" }

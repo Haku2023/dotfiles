@@ -16,6 +16,17 @@ return {
           buffer = args.buf,
           desc = "Exit terminal mode (Claude)",
         })
+
+        -- keymaps.lua defines global `qq`/`qa`/`wq`/`wa` that quit the window.
+        -- Once <Esc> drops us into Normal mode here, those leak into the Claude
+        -- pane and closing it on a stray `q`. Shadow them buffer-locally with
+        -- no-ops so the Claude terminal never quits from a `q`/`w` prefix.
+        for _, lhs in ipairs({ "qq", "qa", "wq", "wa" }) do
+          vim.keymap.set({ "n", "x" }, lhs, "<Nop>", {
+            buffer = args.buf,
+            desc = "Disabled quit mapping (Claude)",
+          })
+        end
       end,
     })
   end,
