@@ -59,7 +59,7 @@
 (end_type_statement) @label.fortran
 (end_block_construct_statement) @keyword
 
-(end_subroutine_statement) @keyword
+(end_subroutine_statement) @keyword.function.fortran
 (end_function_statement) @keyword
 (end_select_statement) @keyword
 (end_interface_statement) @keyword
