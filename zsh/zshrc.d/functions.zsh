@@ -12,9 +12,10 @@ if [[ "$(uname)" == "Darwin" ]];then
 
       (
           sleep $((minutes * 60))
-          say "$message"
+          local now="$(date '+%-I:%M %p')"
+          say "$message. The time is now $now"
           osascript -e \
-              "display notification \"${message//\"/\\\"}\" with title \"Reminder\""
+              "display notification \"${message//\"/\\\"}\" with title \"Reminder ($now)\""
       ) &!
 
       print "Reminder set for $minutes minute(s): $message"

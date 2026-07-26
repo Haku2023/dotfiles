@@ -29,7 +29,7 @@ RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/instal
 ENV PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${PATH}"
 
 # CLI tools your config uses (same names as on macOS).
-RUN brew install neovim fzf fd bat eza zoxide mcfly gdb gfortran gcc node make
+RUN brew install neovim fzf fd bat eza zoxide mcfly gdb gfortran gcc node make xsel
 
 # ---- everything below runs as root; runtime HOME is /root ----
 USER root

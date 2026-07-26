@@ -610,8 +610,216 @@ return {
 
     load_breakpoints()
 
+    -- Watcher lists: save the current dapui watch expressions under a label so
+    -- they can be recalled into a later debug session (<Leader>dl). A label is
+    -- armed with <Leader>da; the actual write happens on stop (<Leader>ds) or on
+    -- quit (VimLeavePre) so the *final* watch list is captured, not whatever it
+    -- was when the label was armed. Nothing is ever saved unless a label was
+    -- armed (pending_watch stays nil) -- see requirement 4.
+    local watch_store = vim.fn.stdpath("data") .. "/dap-watches.json"
+
+    -- { label = "watcher1", filetype = "cpp" } once armed, else nil.
+    local pending_watch = nil
+
+    local function read_watch_store()
+      if vim.fn.filereadable(watch_store) ~= 1 then
+        return {}
+      end
+
+      local ok, persisted = pcall(function()
+        return vim.fn.json_decode(table.concat(vim.fn.readfile(watch_store), "\n"))
+      end)
+
+      if not ok or type(persisted) ~= "table" then
+        return {}
+      end
+
+      return persisted
+    end
+
+    -- The filetype tagged onto a saved list (the "cpp"/"fortran" suffix). Prefer
+    -- the current buffer when it's a real source file; otherwise scan the
+    -- tabpage's windows, since the cursor may be in a dapui/repl buffer when the
+    -- label is armed or the list is saved.
+    local function current_source_filetype()
+      if breakpoint_filetypes[vim.bo.filetype] then
+        return vim.bo.filetype
+      end
+
+      for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+        local ft = vim.bo[vim.api.nvim_win_get_buf(win)].filetype
+        if breakpoint_filetypes[ft] then
+          return ft
+        end
+      end
+
+      return ""
+    end
+
+    local function save_pending_watches()
+      if not pending_watch then
+        return
+      end
+
+      local expressions = {}
+      for _, watch in ipairs(ui.elements.watches.get()) do
+        table.insert(expressions, watch.expression)
+      end
+
+      -- An armed label but an empty watch list: nothing worth persisting.
+      if #expressions == 0 then
+        pending_watch = nil
+        return
+      end
+
+      local persisted = read_watch_store()
+      local entry = {
+        label = pending_watch.label,
+        filetype = pending_watch.filetype,
+        expressions = expressions,
+      }
+
+      -- Overwrite a list saved under the same label+filetype; else append.
+      local replaced = false
+      for index, saved in ipairs(persisted) do
+        if saved.label == entry.label and saved.filetype == entry.filetype then
+          persisted[index] = entry
+          replaced = true
+          break
+        end
+      end
+      if not replaced then
+        table.insert(persisted, entry)
+      end
+
+      vim.fn.mkdir(vim.fn.fnamemodify(watch_store, ":h"), "p")
+      vim.fn.writefile({ vim.fn.json_encode(persisted) }, watch_store)
+      pending_watch = nil
+    end
+
+    -- <Leader>da: arm a label. Captures the source filetype now (the cursor is
+    -- usually on the file being debugged); the watch expressions are captured
+    -- later, at save time.
+    local function arm_watch_save()
+      if not dap.session() then
+        vim.notify("DAP: not active (press <Leader>dq to start a session)", vim.log.levels.WARN)
+        return
+      end
+      local ft = current_source_filetype()
+
+      vim.ui.input({ prompt = "Save watches as (label): " }, function(label)
+        if not label or label == "" then
+          return
+        end
+
+        pending_watch = { label = label, filetype = ft }
+        vim.notify(
+          ("DAP: watches will be saved as '%s%s' on stop/quit"):format(label, ft ~= "" and (" " .. ft) or ""),
+          vim.log.levels.INFO
+        )
+      end)
+    end
+
+    -- <Leader>dl: telescope picker over the saved watcher lists. Only meaningful
+    -- while a session is running (that's where watches live), so require it.
+    local function pick_watch_list()
+      if not dap.session() then
+        vim.notify("DAP: not active (press <Leader>dq to start a session)", vim.log.levels.WARN)
+        return
+      end
+
+      local saved = read_watch_store()
+      if type(saved) ~= "table" or #saved == 0 then
+        vim.notify("DAP: no saved watcher lists", vim.log.levels.INFO)
+        return
+      end
+
+      local pickers = require("telescope.pickers")
+      local finders = require("telescope.finders")
+      local conf = require("telescope.config").values
+      local actions = require("telescope.actions")
+      local action_state = require("telescope.actions.state")
+      local previewers = require("telescope.previewers")
+
+      local function make_finder(results)
+        return finders.new_table({
+          results = results,
+          entry_maker = function(item)
+            local display = item.label .. (item.filetype ~= "" and (" " .. item.filetype) or "")
+            return {
+              value = item,
+              display = display,
+              ordinal = display,
+            }
+          end,
+        })
+      end
+
+      pickers
+        .new({}, {
+          prompt_title = "DAP Watcher Lists (<C-d> delete)",
+          finder = make_finder(saved),
+          sorter = conf.generic_sorter({}),
+          previewer = previewers.new_buffer_previewer({
+            title = "Watch expressions",
+            define_preview = function(self, entry)
+              vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, entry.value.expressions or {})
+            end,
+          }),
+          attach_mappings = function(prompt_bufnr, map)
+            actions.select_default:replace(function()
+              local selection = action_state.get_selected_entry()
+              actions.close(prompt_bufnr)
+              if not selection then
+                return
+              end
+
+              local added = 0
+              for _, expr in ipairs(selection.value.expressions or {}) do
+                ui.elements.watches.add(expr)
+                added = added + 1
+              end
+              vim.notify(
+                ("DAP: added %d watch(es) from '%s'"):format(added, selection.value.label),
+                vim.log.levels.INFO
+              )
+            end)
+
+            -- <C-d>: delete the selected list from the store and refresh the
+            -- picker in place (no reopen). Works in insert and normal mode.
+            local function delete_selected()
+              local selection = action_state.get_selected_entry()
+              if not selection then
+                return
+              end
+
+              for index, item in ipairs(saved) do
+                if item == selection.value then
+                  table.remove(saved, index)
+                  break
+                end
+              end
+
+              vim.fn.mkdir(vim.fn.fnamemodify(watch_store, ":h"), "p")
+              vim.fn.writefile({ vim.fn.json_encode(saved) }, watch_store)
+              vim.notify(("DAP: deleted watcher list '%s'"):format(selection.value.label), vim.log.levels.INFO)
+
+              action_state.get_current_picker(prompt_bufnr):refresh(make_finder(saved), { reset_prompt = false })
+            end
+
+            map("i", "<C-d>", delete_selected)
+            map("n", "<C-d>", delete_selected)
+            return true
+          end,
+        })
+        :find()
+    end
+
     vim.api.nvim_create_autocmd("VimLeavePre", {
-      callback = save_breakpoints,
+      callback = function()
+        save_breakpoints()
+        save_pending_watches()
+      end,
     })
 
     -- Open only the right-half panel (layout 2); layout 1 (scopes/stacks)
@@ -650,7 +858,9 @@ return {
       dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
     end, { desc = "DAP: Set conditional breakpoint" })
     map("n", "<Leader>dr", dap.repl.open, { desc = "DAP: Open REPL" })
-    map("n", "<Leader>dl", dap.run_last, { desc = "DAP: Run last" })
+    -- map("n", "<Leader>dl", dap.run_last, { desc = "DAP: Run last" })
+    map("n", "<Leader>dl", pick_watch_list, { desc = "DAP: Load saved watcher list" })
+    map("n", "<Leader>da", arm_watch_save, { desc = "DAP: Save current watches (on stop/quit)" })
     -- Toggle only the main right panel (layout 2); layout 1 (scopes/stacks) is
     -- managed separately by <Leader>dt. A bare ui.toggle() toggles each layout
     -- independently, which would open the normally-closed layout 1 and close
@@ -672,6 +882,9 @@ return {
     -- adapter emitting event_terminated/event_exited, which some adapters skip
     -- on an explicit terminate. Close the UI (and virtual text) ourselves.
     map("n", "<Leader>ds", function()
+      -- Persist the armed watcher list before terminating: terminate/close can
+      -- clear the watches element, so capture it while it's still populated.
+      save_pending_watches()
       dap.terminate()
       ui.close()
       dap_virtual_text.disable()

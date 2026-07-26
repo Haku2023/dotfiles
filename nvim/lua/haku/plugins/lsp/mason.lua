@@ -24,27 +24,40 @@ return {
       },
     })
 
+    -- mason ships no clangd build for linux/arm64 ("The current platform is
+    -- unsupported"), which is the dotbox container. There clangd comes from apt
+    -- (see container/Containerfile), so ask mason for it everywhere else only.
+    local uname = vim.uv.os_uname()
+    local system_clangd = uname.sysname == "Linux"
+      and (uname.machine == "aarch64" or uname.machine == "arm64")
+
+    local servers = {
+      "ts_ls",
+      "html",
+      "cssls",
+      "tailwindcss",
+      "svelte",
+      "lua_ls",
+      "graphql",
+      "emmet_ls",
+      "prismals",
+      "pyright",
+      "eslint",
+      "fortls",
+      "bashls",
+      "texlab",
+      "neocmake",
+    }
+    if not system_clangd then
+      table.insert(servers, "clangd")
+    else
+      -- Not mason-managed here, so enable the PATH one ourselves.
+      vim.lsp.enable("clangd")
+    end
+
     mason_lspconfig.setup({
       -- list of servers for mason to install
-      ensure_installed = {
-        "ts_ls",
-        "ts_ls",
-        "html",
-        "cssls",
-        "tailwindcss",
-        "svelte",
-        "lua_ls",
-        "graphql",
-        "emmet_ls",
-        "prismals",
-        "pyright",
-        "eslint",
-        "fortls",
-        "bashls",
-        "clangd",
-        "texlab",
-        "neocmake",
-      },
+      ensure_installed = servers,
       -- auto-install configured servers (with lspconfig)
       automatic_installation = true, -- not the same as ensure_installed
     })
