@@ -28,8 +28,7 @@ return {
     -- unsupported"), which is the dotbox container. There clangd comes from apt
     -- (see container/Containerfile), so ask mason for it everywhere else only.
     local uname = vim.uv.os_uname()
-    local system_clangd = uname.sysname == "Linux"
-      and (uname.machine == "aarch64" or uname.machine == "arm64")
+    local system_clangd = uname.sysname == "Linux" and (uname.machine == "aarch64" or uname.machine == "arm64")
 
     local servers = {
       "ts_ls",
@@ -45,6 +44,7 @@ return {
       "eslint",
       "fortls",
       "bashls",
+      "shuck", -- for zsh
       "texlab",
       "neocmake",
     }

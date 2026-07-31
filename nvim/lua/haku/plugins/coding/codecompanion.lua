@@ -43,9 +43,9 @@ return {
         codex = function()
           return require("codecompanion.adapters").extend("codex", {
             defaults = {
-              auth_method = "chatgpt", -- "openai-api-key"|"codex-api-key"|"chatgpt"
-              model = "gpt-5.5",
-              model_reasoning_effort = "high",
+              auth_method = "chat-gpt", -- "openai-api-key"|"codex-api-key"|"chatgpt"
+              -- model = "gpt-5.5",
+              -- model_reasoning_effort = "high",
             },
             env = {},
           })

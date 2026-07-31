@@ -31,7 +31,7 @@ return {
       -- miniyank only keeps a linear ring; these give you stable, addressable slots.
       -- NOTE: named registers are used on purpose — numbered registers "1-"9 get
       -- reshuffled by Vim on every delete, so they can't be used as stable slots.
-      local slots = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" }
+      local slots = { "a", "b", "c", "d", "e", "f", "g", "h", "i" }
       for i, reg in ipairs(slots) do
         -- yank selection into slot i (visual mode)
         vim.keymap.set("x", "<leader>y" .. i, '"' .. reg .. "y", { desc = "Yank to slot " .. i })

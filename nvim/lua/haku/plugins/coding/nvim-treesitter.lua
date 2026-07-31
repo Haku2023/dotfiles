@@ -27,6 +27,7 @@ return {
       "svelte",
       "graphql",
       "bash",
+      "zsh",
       "lua",
       "vim",
       "dockerfile",
@@ -40,7 +41,7 @@ return {
     })
 
     -- use <bash> parser for <zsh> files
-    vim.treesitter.language.register("bash", "zsh")
+    -- vim.treesitter.language.register("bash", "zsh")
     vim.treesitter.language.register("bash", "sh")
     vim.treesitter.language.register("html", "htmldjango")
     vim.treesitter.language.register("cpp", "c++")

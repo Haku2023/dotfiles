@@ -341,7 +341,7 @@ wezterm.on("swap-pane-new", function(window, pane)
 
 	-- if 1, create new pane, full current
 	if n_panes == 1 then
-		local new_pane = pane:split({ Direction = "Right" })
+		local new_pane = pane:split({ Direction = "Down" })
 		window:perform_action(wezterm.action.SetPaneZoomState(true), new_pane)
 	else
 		for _, new_pane in ipairs(tab:panes()) do
