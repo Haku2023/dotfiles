@@ -298,18 +298,21 @@ return {
       })
 
       vim.cmd("colorscheme monokai-pro-octagon")
-      vim.api.nvim_set_hl(0, "@function.fortran", { link = "@label.fortran" })
-      vim.api.nvim_set_hl(0, "@keyword.type.fortran", { link = "@label.fortran" })
+      -- vim.api.nvim_set_hl(0, "@function.fortran", { link = "@label.fortran" })
+      vim.api.nvim_set_hl(0, "@function.fortran", { link = "@keyword" })
+      vim.api.nvim_set_hl(0, "@keyword.type.fortran", { link = "@keyword" })
       vim.api.nvim_set_hl(0, "@keyword.function.fortran", { fg = "#EE6188", bold = true })
-      vim.api.nvim_set_hl(0, "@module.fortran", { fg = "#A888F8", bold = true })
+      vim.api.nvim_set_hl(0, "@module.fortran", { fg = "#A777ea", bold = true })
       vim.api.nvim_set_hl(0, "@function.builtin.fortran", { fg = "#A777ea", bold = true })
-      vim.api.nvim_set_hl(0, "@label.fortran", { fg = "#A777ea", bold = true })
+      vim.api.nvim_set_hl(0, "@label.fortran", { fg = "#9cd1bb", bold = true })
       vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#FFA500", bold = true })
-      vim.api.nvim_set_hl(0, "@keyword", { fg = "#A999F9", bold = true })
+      vim.api.nvim_set_hl(0, "@keyword", { fg = "#A777ea", bold = true })
       vim.api.nvim_set_hl(0, "@operator", { fg = "#fa99aa", bold = true })
+      vim.api.nvim_set_hl(0, "@punctuation.special.fortran", { fg = "#ffaa00", bold = true })
+      vim.api.nvim_set_hl(0, "@operator.pointer.fortran", { fg = "#af87ff", bold = true })
       -- vim.api.nvim_set_hl(0, "@punctuation.bracket", { fg = "#bad761" })
       -- vim.api.nvim_set_hl(0, "@operator", { fg = "#9cd1bb", bold = true })
-      --"#2aceff","#ffaa00"
+      --"#2aceff","#ffaa00","#A777ea", "#A888F8","#A999F9"
 
       -- Search highlights: dark yellow background with white text
       vim.api.nvim_set_hl(0, "Search", { bg = "#A888F8", fg = "#FFFFFF", bold = true })

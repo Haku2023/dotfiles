@@ -53,7 +53,7 @@
 (block_label) @label.fortran
 (block_label_start_expression) @label.fortran
 (deallocate_statement ) @keyword
-; (name) @label.fortran
+(name) @label.fortran
 (module_name) @keyword
 (type_name) @label.fortran
 (end_type_statement) @label.fortran
@@ -63,10 +63,11 @@
 (end_function_statement) @keyword
 (end_select_statement) @keyword
 (end_interface_statement) @keyword
-(end_if_statement) @keyword
+(end_if_statement) @keyword.conditional
 (end_do_loop_statement) @keyword.repeat
 (end_associate_statement) @keyword
 
+(module_statement) @module.fortran
 (end_module_statement) @module.fortran
 (end_submodule_statement) @module.fortran
   

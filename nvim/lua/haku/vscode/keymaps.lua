@@ -28,7 +28,7 @@ keymap("n", "<Esc>", "<Esc>:noh<CR>", opts)
 keymap({ "n", "v" }, "<leader>t", "<cmd>lua require('vscode').action('workbench.action.terminal.toggleTerminal')<CR>")
 keymap({ "n", "v" }, "<leader>b", "<cmd>lua require('vscode').action('editor.debug.action.toggleBreakpoint')<CR>")
 -- keymap({ "n", "v" }, "<leader>d", "<cmd>lua require('vscode').action('editor.action.showHover')<CR>")
-keymap({ "n", "v" }, "<leader>a", "<cmd>lua require('vscode').action('editor.action.quickFix')<CR>")
+-- keymap({ "n", "v" }, "<leader>a", "<cmd>lua require('vscode').action('editor.action.quickFix')<CR>")
 keymap({ "n", "v" }, "<leader>sp", "<cmd>lua require('vscode').action('workbench.actions.view.problems')<CR>")
 keymap({ "n", "v" }, "<leader>cn", "<cmd>lua require('vscode').action('notifications.clearAll')<CR>")
 keymap({ "n", "v" }, "<leader>cp", "<cmd>lua require('vscode').action('workbench.action.showCommands')<CR>")
@@ -40,7 +40,7 @@ keymap({ "n", "v" }, "<leader>fd", "<cmd>lua require('vscode').action('editor.ac
 -- navigation
 -- keymap("n", "H", "<nop>")
 -- keymap("n", "L", "<nop>")
-keymap({ "n", "v" }, "<leader>j", "<cmd>>lua require('vscode').action('workbench.action.focusBelowGroup')<CR>")
+keymap({ "n", "v" }, "<leader>j", "<cmd>lua require('vscode').action('workbench.action.focusBelowGroup')<CR>")
 -- comment
 keymap({ "n", "v" }, "<leader>/", "<cmd>lua require('vscode').action('editor.action.commentLine')<CR>")
 -- bookmarks
@@ -97,14 +97,25 @@ keymap({ "n", "v" }, "<leader>pe", "<cmd>lua require('vscode').action('projectMa
 -- keymap({ "n", "x" }, "<C-u>", function()
 --   vim.fn.VSCodeNotify("cursorMove", { to = "up", by = "wrappedLine", value = 20 })
 -- end, { silent = true })
+-- local function map(mode, lhs, command, args)
+--   keymap(mode, lhs, function()
+--     if args then
+--       vim.fn.VSCodeNotify(command, args)
+--     else
+--       vim.fn.VSCodeNotify(command)
+--     end
+--   end, { silent = true, noremap = true })
+-- end
+--
+local vscode = require("vscode")
+
 local function map(mode, lhs, command, args)
-  keymap(mode, lhs, function()
-    if args then
-      vim.fn.VSCodeNotify(command, args)
-    else
-      vim.fn.VSCodeNotify(command)
-    end
-  end, { silent = true, noremap = true })
+  vim.keymap.set(mode, lhs, function()
+    vscode.action(command, args and { args = args } or nil)
+  end, {
+    silent = true,
+    desc = "VSCode: " .. command,
+  })
 end
 
 -- gj / gk move for nvim

@@ -14,7 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 if vim.g.vscode then
   require("lazy").setup({ { import = "haku.plugins.vscode" } }, {
     install = {
-      colorscheme = { "nightfily" },
+      colorscheme = { "nightfly" },
     },
     checker = {
       enabled = true,
@@ -35,7 +35,7 @@ else
     { import = "haku.plugins.lsp" },
   }, {
     install = {
-      colorscheme = { "nightfily" },
+      -- colorscheme = { "nightfly" },
     },
     checker = {
       enabled = true,
