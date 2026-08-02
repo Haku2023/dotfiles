@@ -312,7 +312,7 @@ return {
       vim.api.nvim_set_hl(0, "@operator.pointer.fortran", { fg = "#af87ff", bold = true })
       -- vim.api.nvim_set_hl(0, "@punctuation.bracket", { fg = "#bad761" })
       -- vim.api.nvim_set_hl(0, "@operator", { fg = "#9cd1bb", bold = true })
-      --"#2aceff","#ffaa00","#A777ea", "#A888F8","#A999F9"
+      --"#2aceff","#ffaa00","#A777ea", "#A888F8","#A999F9","#ff8700"
 
       -- Search highlights: dark yellow background with white text
       vim.api.nvim_set_hl(0, "Search", { bg = "#A888F8", fg = "#FFFFFF", bold = true })

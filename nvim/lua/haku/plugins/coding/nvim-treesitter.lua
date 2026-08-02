@@ -118,7 +118,7 @@ return {
 
     local function set_fortran_hl()
       vim.api.nvim_set_hl(0, "fortranDirective", { fg = "#82d600", bold = true })
-      vim.api.nvim_set_hl(0, "fortranOpenMP", { fg = "#ff8700", bold = true })
+      vim.api.nvim_set_hl(0, "fortranOpenMP", { fg = "#ffaa00", bold = true })
     end
     set_fortran_hl()
 
