@@ -216,7 +216,7 @@ config.bind("<alt-f>", "fake-key <ctrl-right>", mode="insert")
 config.bind("<alt-d>", "fake-key <alt-shift-right><delete>", mode="insert")
 config.bind("<alt-p>", "tab-pin")
 config.bind("<alt-s>", "config-source")
-config.bind("<alt-e>", "tab-focus last")
+config.bind("<alt-o>", "tab-focus last")
 config.bind("<alt-j>", "click-element position 1300,300")
 ## function for look
 config.bind(

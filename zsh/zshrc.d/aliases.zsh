@@ -36,22 +36,22 @@ alias vu="vi ~/Documents/Projects/haku_git/haku_tools_linux/useful_linux_command
 alias vc="vi ~/haku_git/wezterm-nvim_setup/zsh_setup.md"
 alias hwlua="vi ~/haku_git/wezterm-nvim_setup/wezterm.lua"
 alias cd="z"
+alias poly="$HOME/haku_posts/Scripts/polynomial_plotter.py"
 # check which port is on listening
 alias hlisten="echo '(head -n 1 && grep LISTEN) <<< sudo lsof -i -P -n ';(head -n 1 && grep LISTEN) <<< \`sudo lsof -i -P -n\`"
-if [[ "$(uname)" == "Darwin" ]];then
-  alias rm="\grm --preserve-root -I"
-  alias haku25_old="cd '/Users/bai.haodong/Documents/Doctor_Life/G-学会/14. English Thesis/graphs'"
-  alias haku25="cd '/Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2025_Projects/H-Fresh'; vi "
-  # alias haku26="cd '/Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects';ls "
-  # alias rsync_cip="echo 'rsync -avz --del --progress 73:~/Projects/Yodo_26/CIP/*'; rsync -avz --progress '73:~/Projects/Yodo_26/CIP/*' /Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects/CIP"
-  # life
-  alias myLove="open https://meeting.tencent.com/p/9796730765\?pwd\=500012"
-  alias japaneseCourse="open https://kyoto-u-edu.zoom.us/j/91423186918\?pwd\=alhtRnhlcUljVi84Z0hncjRZREtjZz09"
-elif [[ -n "$WSL_DISTRO_NAME"  ]] ;then
-  # alias haku26="cd /mnt/c/cygwin64/home/baihaodong/Projects/Yodo_26/"
-elif [[ "$(uname)" == "Linux" ]];then
-  alias rm="rm --preserve-root -I"
-  alias chmod="chmod --preserve-root"
+if [[ "$(uname)" == "Darwin" ]]; then
+	alias rm="\grm --preserve-root -I"
+	alias haku25_old="cd '/Users/bai.haodong/Documents/Doctor_Life/G-学会/14. English Thesis/graphs'"
+	alias haku25="cd '/Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2025_Projects/H-Fresh'; vi "
+	# alias haku26="cd '/Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects';ls "
+	# alias rsync_cip="echo 'rsync -avz --del --progress 73:~/Projects/Yodo_26/CIP/*'; rsync -avz --progress '73:~/Projects/Yodo_26/CIP/*' /Users/bai.haodong/Documents/Doctor_Life/The_Way_To/2026_Projects/CIP"
+	# life
+	alias myLove="open https://meeting.tencent.com/p/9796730765\?pwd\=500012"
+	alias japaneseCourse="open https://kyoto-u-edu.zoom.us/j/91423186918\?pwd\=alhtRnhlcUljVi84Z0hncjRZREtjZz09"
+elif [[ -n "$WSL_DISTRO_NAME" ]]; then
+elif [[ "$(uname)" == "Linux" ]]; then
+	alias rm="rm --preserve-root -I"
+	alias chmod="chmod --preserve-root"
 fi
 
 # git
@@ -69,11 +69,11 @@ alias gstp='git stash pop'
 alias gdup='git diff @{upstream}'
 
 function gd() {
-  if [[ "${1}" =~ ^[1-9]$ ]];then
-    git diff @{${1}}
-  else
-    git diff "$@"
-  fi
+	if [[ "${1}" =~ ^[1-9]$ ]]; then
+		git diff @{${1}}
+	else
+		git diff "$@"
+	fi
 }
 #<<<{{{
 #

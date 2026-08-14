@@ -60,7 +60,7 @@
 (end_block_construct_statement) @keyword
 
 (end_subroutine_statement) @keyword.function.fortran
-(end_function_statement) @keyword
+(end_function_statement) @keyword.function.fortran
 (end_select_statement) @keyword
 (end_interface_statement) @keyword
 (end_if_statement) @keyword.conditional
