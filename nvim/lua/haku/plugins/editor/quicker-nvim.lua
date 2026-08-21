@@ -13,14 +13,58 @@ local function open_entry(action)
   end
 
   -- Find a usable "normal" window to land in (skip qf, floats, greeter).
-  local file_win, any_win
-  for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
-    if win ~= qf_win and vim.api.nvim_win_get_config(win).relative == "" then
-      any_win = any_win or win
-      local buf = vim.api.nvim_win_get_buf(win)
-      if vim.bo[buf].buftype == "" and vim.bo[buf].filetype ~= "alpha" then
-        file_win = win
-        break
+  -- local file_win, any_win
+  -- for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+  --   if win ~= qf_win and vim.api.nvim_win_get_config(win).relative == "" then
+  --     any_win = any_win or win
+  --     local buf = vim.api.nvim_win_get_buf(win)
+  --     if vim.bo[buf].buftype == "" and vim.bo[buf].filetype ~= "alpha" then
+  --       file_win = win
+  --       break
+  --     end
+  --   end
+  -- end
+  --
+  -- local fname = vim.fn.fnameescape(vim.api.nvim_buf_get_name(item.bufnr))
+  --
+  -- if file_win then
+  --   -- A real editing window exists: honour edit/split/vsplit there.
+  --   vim.api.nvim_set_current_win(file_win)
+  --   local cmd = action == "split" and "split" or action == "vsplit" and "vsplit" or "edit"
+  --   vim.cmd(cmd .. " " .. fname)
+  -- else
+  --   -- Only the greeter (or similar) is around: replace it, never split.
+  --   if any_win then
+  --     vim.api.nvim_set_current_win(any_win)
+  --   end
+  --   vim.cmd("edit " .. fname)
+  -- end
+  --
+  -- vim.api.nvim_win_set_cursor(0, { item.lnum, math.max((item.col or 1) - 1, 0) })
+  --
+  -- Prefer the window that was focused immediately before Quicker.
+  local previous_win = vim.fn.win_getid(vim.fn.winnr("#"))
+
+  if previous_win ~= 0 and vim.api.nvim_win_is_valid(previous_win) then
+    local buf = vim.api.nvim_win_get_buf(previous_win)
+    local config = vim.api.nvim_win_get_config(previous_win)
+
+    if config.relative == "" and vim.bo[buf].buftype == "" and vim.bo[buf].filetype ~= "alpha" then
+      file_win = previous_win
+    end
+  end
+
+  -- Fall back to another usable normal window.
+  if not file_win then
+    for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+      if win ~= qf_win and vim.api.nvim_win_get_config(win).relative == "" then
+        any_win = any_win or win
+
+        local buf = vim.api.nvim_win_get_buf(win)
+        if vim.bo[buf].buftype == "" and vim.bo[buf].filetype ~= "alpha" then
+          file_win = win
+          break
+        end
       end
     end
   end
@@ -28,19 +72,24 @@ local function open_entry(action)
   local fname = vim.fn.fnameescape(vim.api.nvim_buf_get_name(item.bufnr))
 
   if file_win then
-    -- A real editing window exists: honour edit/split/vsplit there.
     vim.api.nvim_set_current_win(file_win)
+
     local cmd = action == "split" and "split" or action == "vsplit" and "vsplit" or "edit"
+
     vim.cmd(cmd .. " " .. fname)
   else
-    -- Only the greeter (or similar) is around: replace it, never split.
+    -- Only a special window, such as the alpha greeter, is available.
     if any_win then
       vim.api.nvim_set_current_win(any_win)
     end
+
     vim.cmd("edit " .. fname)
   end
 
-  vim.api.nvim_win_set_cursor(0, { item.lnum, math.max((item.col or 1) - 1, 0) })
+  vim.api.nvim_win_set_cursor(0, {
+    item.lnum,
+    math.max((item.col or 1) - 1, 0),
+  })
 end
 
 return {

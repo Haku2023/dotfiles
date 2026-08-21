@@ -873,6 +873,9 @@ return {
       ui.toggle({ layout = 2, reset = true })
       dap_virtual_text.toggle()
     end, { desc = "DAP UI: Toggle" })
+    map("n", "<Leader>dv", function()
+      dap_virtual_text.toggle()
+    end, { desc = "DAP UI: Toggle" })
     -- Layout 1 is the left panel (scopes / breakpoints / stacks); toggle it alone.
     map("n", "<Leader>dt", function()
       ui.toggle({ layout = 1, reset = false })
@@ -916,7 +919,26 @@ return {
       end
     end
 
-    vim.keymap.set("n", "<C-l>", navigate_right, { desc = "Navigate right (DAP: focus Watches)" })
+    local function codecompanion_window_exists()
+      for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+        local buf = vim.api.nvim_win_get_buf(win)
+
+        if vim.bo[buf].filetype == "codecompanion" then
+          return true
+        end
+      end
+
+      return false
+    end
+
+    vim.keymap.set("n", "<C-l>", function()
+      -- if codecompanion_window_exists() then
+      if codecompanion_window_exists() or vim.fn.winnr("$") > 4 then
+        vim.cmd("TmuxNavigateRight")
+      else
+        navigate_right()
+      end
+    end, { desc = "Navigate right (DAP: focus Watches)" })
 
     local function focus_dapui_breakpoints()
       local buf = ui.elements.breakpoints.buffer()
