@@ -2,13 +2,13 @@
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+	source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # Plugins
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-if [[ -f $ZDOTDIR/.p10k.zsh ]];then
-  source $ZDOTDIR/.p10k.zsh
+if [[ -f $ZDOTDIR/.p10k.zsh ]]; then
+	source $ZDOTDIR/.p10k.zsh
 fi
 source $HOME/.zsh-plugins/powerlevel10k/powerlevel10k.zsh-theme
 source $HOME/.zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -16,15 +16,16 @@ source $HOME/.zsh-plugins/fast-syntax-highlighting/fast-syntax-highlighting.plug
 
 # Start from insertmode for zsh-vi-mode, needed before source zsh-vi-mode
 function zvm_config() {
-  ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
-  ZVM_KEYTIMEOUT=0.01
+	ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+	ZVM_KEYTIMEOUT=0.01
 }
 source $HOME/.zsh-plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
-# Zshrc 
+# Zshrc
 # autocomplete hidden files
 # auto completion init, need highter priority
-autoload -U compinit; compinit -d "$XDG_CACHE_HOME/zsh/zcompdump"
+autoload -U compinit
+compinit -d "$XDG_CACHE_HOME/zsh/zcompdump"
 _comp_options+=(globdots)
 source ~/dotfiles/zsh/external/completion.zsh
 source "$ZDOTDIR/zshrc.d/aliases.zsh"
@@ -34,9 +35,8 @@ source "$ZDOTDIR/zshrc.d/functions.zsh"
 
 # Load local secrets (not in repo)
 if [[ -f "$HOME/.zshenv.local" ]]; then
-  source "$HOME/.zshenv.local"
+	source "$HOME/.zshenv.local"
 fi
-
 
 # chocolate
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#d2691e'
