@@ -160,13 +160,14 @@ haku_end() {
 # mac / linux
 if [[ "$(uname)" == "Darwin" ]]; then
 	paste-from-clipboard() {
-		RBUFFER=${RBUFFER:0:1}$(pbpaste)${RBUFFER:1}
+		# RBUFFER=${RBUFFER:0:1}$(pbpaste)${RBUFFER:1}
+		RBUFFER=$(pbpaste)${RBUFFER:0}
 		zle end-of-line
 		zvm_enter_insert_mode
 	}
 elif [[ "$(uname)" == "Linux" ]]; then
 	paste-from-clipboard() {
-		RBUFFER=${RBUFFER:0:1}$(wl-paste --no-newline 2>/dev/null || xsel -b -o)${RBUFFER:1}
+		RBUFFER=$(wl-paste --no-newline 2>/dev/null || xsel -b -o)${RBUFFER:0}
 		zle end-of-line
 		zvm_enter_insert_mode
 	}
@@ -551,4 +552,3 @@ conda() {
 	unset __conda_setup
 	conda "$@"
 }
-# <<< conda initialize <<<}}}

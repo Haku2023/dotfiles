@@ -66,3 +66,8 @@ return {
     vim.keymap.set("n", "<leader>L", "m'<cmd>lua require('marks').prev()<CR>", { desc = "Prev mark" })
   end,
 }
+-- >>> refine the mark place correctly after exit the file
+-- in /home/haku/.local/share/nvim/lazy/marks.nvim/lua/marks/mark.lua
+-- comment all pos[3] related line to			-- self:register_mark(mark, pos[2], pos[3], bufnr)
+-- to         self:register_mark(mark, pos[2], math.max(pos[3] - 1, 0), bufnr)
+-- >>>
