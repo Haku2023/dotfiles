@@ -1,3 +1,5 @@
+# basic platform specific functions
+#{{{
 if [[ "$(uname)" == "Darwin" ]]; then
 	remind() {
 		local minutes=$1
@@ -110,6 +112,8 @@ zcp() {
 zln() {
 	zmv -vL "$@"
 }
+
+#}}}
 
 # haku useful functions cdn mcd lsn
 # >>>>>>>>>>>>>>>>{{{
@@ -534,8 +538,8 @@ done
 
 unset keymap
 #<<<}}}
-#
-# conda initialize
+
+# conda initialize with python function
 # <<<{{{
 conda() {
 	unset -f conda
@@ -552,3 +556,44 @@ conda() {
 	unset __conda_setup
 	conda "$@"
 }
+
+python() {
+	if ((!${+commands[python]})); then
+		if ((${+functions[conda]} || ${+commands[conda]})); then
+			conda activate base || return
+		else
+			print -u2 -- 'python: command not found; install Python or initialize conda'
+			return 127
+		fi
+	fi
+
+	if ((!${+commands[python]})); then
+		print -u2 -- 'python: conda base does not provide Python'
+		return 127
+	fi
+
+	command python "$@"
+}
+
+# not good version, using python function should focus on using python
+# instead of focusing on no python error output
+# python() {
+# 	if (($+commands[python])); then
+# 		command python "$@"
+# 		return $?
+# 	fi
+#
+# 	if (($+functions[conda] || $+commands[conda])); then
+# 		conda activate base || return $?
+#
+# 		if (($+commands[python])); then
+# 			command python "$@"
+# 			return $?
+# 		fi
+# 	fi
+#
+# 	print -u2 -- 'python: command not found; install Python or initialize conda'
+# 	return 127
+# }
+#
+#<<<}}}

@@ -48,12 +48,15 @@ if [[ -n "$WSL_DISTRO_NAME" ]]; then
 	path+=(/mnt/c/Windows)
 fi
 
-# set .local/bin in path
 export MANPATH="/usr/local/man:$MANPATH"
 # Latex
 if [[ "$(uname)" == "Linux" && -z "$WSL_DISTRO_NAME" ]]; then
 	# turn off flow control
 	# stty -ixon
+	# only on real linux, start-hyprland
+	if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
+		exec start-hyprland
+	fi
 	export MANPATH="/usr/local/texlive/2025/texmf-dist/doc/man:$MANPATH"
 	export INFOPATH="/usr/local/texlive/2025/texmf-dist/doc/info:$INFOPATH"
 	path+=(/usr/local/texlive/2025/bin/x86_64-linux)
@@ -65,12 +68,3 @@ elif [[ "$(uname)" == "Darwin" ]]; then
 	# Path to Latex
 	path+=(/Library/Tex/texbin)
 fi
-
-# only on real linux, start-hyprland
-# <<<{{{
-if [[ -z "$WSL_DISTRO_NAME" ]] && [[ "$(uname)" == "Linux" ]]; then
-	if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
-		exec start-hyprland
-	fi
-fi
-#<<<}}}

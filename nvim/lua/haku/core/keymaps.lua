@@ -189,3 +189,7 @@ end, { desc = "CodeCompanion with Codex" })
 vim.keymap.set("n", "*", "mz*`z", { desc = "Search word, stay put" })
 vim.keymap.set("n", "#", "mz#`z", { desc = "Search word backward, stay put" })
 vim.keymap.set("n", "<leader>hi", "<cmd>Inspect<cr>", { desc = "Inspect highlight under cursor" })
+
+-- remap folding
+keymap.set("n", "zc", "zm", { desc = "close all fold" })
+keymap.set("n", "zo", "zr", { desc = "open all fold" })
