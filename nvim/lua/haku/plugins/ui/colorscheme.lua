@@ -302,6 +302,8 @@ return {
       vim.api.nvim_set_hl(0, "@function.fortran", { link = "@keyword" })
       vim.api.nvim_set_hl(0, "@keyword.type.fortran", { link = "@keyword" })
       vim.api.nvim_set_hl(0, "@keyword.function.fortran", { fg = "#EE6188", bold = true })
+      vim.api.nvim_set_hl(0, "@attribute.fortran", { fg = "#EE6188", bold = true })
+      vim.api.nvim_set_hl(0, "@type.builtin.fortran", { fg = "#bad761", bold = false, italic = true })
       vim.api.nvim_set_hl(0, "@module.fortran", { fg = "#A777ea", bold = true })
       vim.api.nvim_set_hl(0, "@function.builtin.fortran", { fg = "#A777ea", bold = true })
       vim.api.nvim_set_hl(0, "@label.fortran", { fg = "#9cd1bb", bold = true })

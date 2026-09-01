@@ -18,6 +18,7 @@ source $HOME/.zsh-plugins/fast-syntax-highlighting/fast-syntax-highlighting.plug
 function zvm_config() {
 	ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 	ZVM_KEYTIMEOUT=0.01
+	ZVM_SYSTEM_CLIPBOARD_ENABLED=true
 }
 source $HOME/.zsh-plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 

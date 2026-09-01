@@ -25,6 +25,7 @@ local original_notify = vim.notify
 --   return original_notify(msg, ...)
 -- end
 
+vim.opt.report = 10
 opt.relativenumber = true
 opt.number = true
 opt.fileformats = { "unix", "dos" }

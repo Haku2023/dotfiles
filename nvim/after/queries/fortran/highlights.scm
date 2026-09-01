@@ -2,7 +2,7 @@
 
 ; Match the subroutine field in subroutine_call
 (subroutine_call
-  subroutine: (identifier) @function.call
+  subroutine: (identifier) @label.fortran
   (#set! priority 150))
 
 [
