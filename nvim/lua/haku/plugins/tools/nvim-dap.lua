@@ -255,6 +255,11 @@ return {
     -- Dap UI
 
     ui.setup({
+      floating = {
+        mappings = {
+          close = { "q" },
+        },
+      },
       layouts = {
         -- layout 1: scopes/stacks. Left sidebar, closed by default (see
         -- listeners below); toggle it with <Leader>dt.
@@ -846,6 +851,16 @@ return {
     -- Keymaps
     local map = vim.keymap.set
 
+    map("n", "<Leader>dc", function()
+      if not dap.session() then
+        return
+      end
+
+      local watches = ui.elements.watches
+      for index = #watches.get(), 1, -1 do
+        watches.remove(index)
+      end
+    end, { desc = "DAP: Clear all watches" })
     map("n", "<Leader>dq", function()
       ensure_project_dap_config()
       dap.continue()
