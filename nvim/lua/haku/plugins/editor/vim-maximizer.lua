@@ -170,15 +170,43 @@ local function restore()
   end
 end
 
-local function maximize()
-  local wins = windows()
-  if #wins < 2 then
-    return
+local function hide_tool_panels(editor)
+  local tab = api.nvim_get_current_tabpage()
+  local terminal = package.loaded["toggleterm.terminal"]
+  if terminal then
+    for _, term in pairs(terminal.get_all(true)) do
+      local win = term.window
+      if win and api.nvim_win_is_valid(win) and win ~= editor and api.nvim_win_get_tabpage(win) == tab then
+        term:close() -- Hide the terminal; keep its process and buffer.
+      end
+    end
   end
+
+  local Chat = package.loaded["codecompanion.interactions.chat"]
+  if Chat then
+    for _, win in ipairs(api.nvim_tabpage_list_wins(tab)) do
+      local buf = api.nvim_win_get_buf(win)
+      if win ~= editor and vim.bo[buf].filetype == "codecompanion" then
+        local chat = Chat.buf_get_chat(buf)
+        if chat and chat.ui then
+          chat.ui:hide() -- Keep the conversation available for reopening.
+        end
+      end
+    end
+  end
+  api.nvim_set_current_win(editor)
+end
+
+local function maximize()
   local current = api.nvim_get_current_win()
   if api.nvim_win_get_config(current).relative ~= "" then
     return
   end
+  local buf = api.nvim_win_get_buf(current)
+  if vim.bo[buf].buftype == "" and vim.bo[buf].filetype ~= "codecompanion" then
+    hide_tool_panels(current)
+  end
+  local wins = windows()
   clear_covers()
   local s = { original = {}, hidden = {}, focus = current }
   for _, win in ipairs(wins) do

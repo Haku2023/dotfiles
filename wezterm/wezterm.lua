@@ -159,7 +159,11 @@ config.hide_tab_bar_if_only_one_tab = false
 -- set toggle tab bar
 wezterm.on("toggle-tab-bar", function(window, _)
 	local overrides = window:get_config_overrides() or {}
-	overrides.enable_tab_bar = not overrides.enable_tab_bar
+	local enabled = overrides.enable_tab_bar
+	if enabled == nil then
+		enabled = config.enable_tab_bar
+	end
+	overrides.enable_tab_bar = not enabled
 	window:set_config_overrides(overrides)
 end)
 wezterm.on("update-status", function(window, _)
