@@ -92,7 +92,8 @@ local function refresh(panel_sizes)
         row = pos[1],
         col = pos[2],
         width = api.nvim_win_get_width(win),
-        height = api.nvim_win_get_height(win) + ((vim.o.laststatus == 1 or vim.o.laststatus == 2) and 1 or 0),
+        -- height = api.nvim_win_get_height(win) + ((vim.o.laststatus == 1 or vim.o.laststatus == 2) and 1 or 0),
+        height = api.nvim_win_get_height(win),
       }
     end
   end
@@ -150,23 +151,30 @@ local function restore()
 
   -- Restore by window ID: opening panels changes window numbers.
   -- Scale original editors into the space they currently occupy.
-  for _, dimension in ipairs({ "width", "height" }) do
-    local get = api["nvim_win_get_" .. dimension]
-    local set = api["nvim_win_set_" .. dimension]
-    local before, now = 0, 0
-    for _, saved in ipairs(s.original) do
-      if api.nvim_win_is_valid(saved.win) then
-        before = before + saved[dimension]
-        now = now + get(saved.win)
-      end
-    end
-    if before > 0 then
-      for _, saved in ipairs(s.original) do
-        if api.nvim_win_is_valid(saved.win) then
-          pcall(set, saved.win, math.max(1, math.floor(saved[dimension] * now / before + 0.5)))
-        end
-      end
-    end
+  -- for _, dimension in ipairs({ "width", "height" }) do
+  --   local get = api["nvim_win_get_" .. dimension]
+  --   local set = api["nvim_win_set_" .. dimension]
+  --   local before, now = 0, 0
+  --   for _, saved in ipairs(s.original) do
+  --     if api.nvim_win_is_valid(saved.win) then
+  --       before = before + saved[dimension]
+  --       now = now + get(saved.win)
+  --     end
+  --   end
+  --   if before > 0 then
+  --     for _, saved in ipairs(s.original) do
+  --       if api.nvim_win_is_valid(saved.win) then
+  --         pcall(set, saved.win, math.max(1, math.floor(saved[dimension] * now / before + 0.5)))
+  --       end
+  --     end
+  --   end
+  -- end
+
+  if s.restore_cmd then
+    vim.cmd(s.restore_cmd)
+  end
+  if api.nvim_win_is_valid(s.focus) then
+    api.nvim_set_current_win(s.focus)
   end
 end
 
@@ -202,13 +210,19 @@ local function maximize()
   if api.nvim_win_get_config(current).relative ~= "" then
     return
   end
-  local buf = api.nvim_win_get_buf(current)
-  if vim.bo[buf].buftype == "" and vim.bo[buf].filetype ~= "codecompanion" then
-    hide_tool_panels(current)
-  end
+  -- local buf = api.nvim_win_get_buf(current)
+  -- if vim.bo[buf].buftype == "" and vim.bo[buf].filetype ~= "codecompanion" then
+  --   hide_tool_panels(current)
+  -- end
   local wins = windows()
   clear_covers()
-  local s = { original = {}, hidden = {}, focus = current }
+  -- local s = { original = {}, hidden = {}, focus = current }
+  local s = {
+    original = {},
+    hidden = {},
+    focus = current,
+    restore_cmd = vim.fn.winrestcmd(),
+  }
   for _, win in ipairs(wins) do
     s.original[#s.original + 1] = {
       win = win,
@@ -324,6 +338,8 @@ return {
   init = function()
     vim.g.maximizer_restore_on_winleave = 0
     vim.g.maximizer_set_default_mapping = 0
+    vim.o.winminwidth = 1
+    vim.o.winminheight = 1
   end,
   config = function()
     local group = api.nvim_create_augroup("MaximizerStrip", { clear = true })

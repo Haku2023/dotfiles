@@ -65,12 +65,21 @@ return {
       pre_hook = function(ctx)
         local ft = vim.bo.filetype
 
-        if ft == "namelist" or ft == "autohotkey" or ft == "ahk" then
+        -- Use Comment.nvim's built-in C line/block defaults.
+        if ft == "c" then
+          return nil
+        end
+
+        if ft == "namelist" or ft == "ROMSin" or ft == "autohotkey" or ft == "ahk" then
           return vim.bo.commentstring
         end
 
         local ok, cstr = pcall(ts_pre_hook, ctx)
-        return ok and cstr or vim.bo.commentstring
+        if ok then
+          return cstr
+        end
+
+        return nil
       end,
       toggler = {
         line = "<leader>/",
