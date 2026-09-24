@@ -172,6 +172,7 @@ return {
         -- type = "cppdbg",
         type = "codelldb",
         request = "launch",
+        terminal = "console", -- Add this for console output
         cwd = "${workspaceFolder}",
         program = function()
           return build_then_get_program("c")
@@ -212,6 +213,7 @@ return {
         name = "Build and debug project C++ file",
         type = "codelldb",
         request = "launch",
+        terminal = "console", -- Add this for console output
         cwd = "${workspaceFolder}",
         program = function()
           return build_then_get_program("cpp")
@@ -237,6 +239,7 @@ return {
             and ((vim.fn.has("win32") == 1 and venv_path .. "/Scripts/python") or venv_path .. "/bin/python")
           or nil,
         console = "integratedTerminal",
+        redirectOutput = true, -- add this for console output
         args = function()
           local cfg = project_config_for("python")
           return cfg.args or {}
@@ -278,13 +281,13 @@ return {
         -- half -- so watches / breakpoints / console are stacked top->bottom.
         {
           elements = {
-            { id = "watches", size = 0.35 },
-            { id = "breakpoints", size = 0.30 },
+            { id = "watches", size = 0.5 },
+            -- { id = "breakpoints", size = 0.30 },
             -- gdb's DAP streams program stdout/stderr as `output` events
             -- (it doesn't use runInTerminal), so they land in the `repl`,
             -- not the `console` element. Show the repl or `print` output is
             -- invisible. (console only fills for runInTerminal adapters.)
-            { id = "repl", size = 0.35 },
+            { id = "repl", size = 0.5 },
           },
           size = 0.5,
           position = "right",
@@ -614,6 +617,142 @@ return {
     end
 
     load_breakpoints()
+    -- Browse all project breakpoints in Telescope, with red dots on breakpoint
+    -- lines in the preview. Press <CR> to jump or <C-d> to delete the selected
+    -- breakpoint and refresh the results. Project scope follows the current cwd.
+    vim.keymap.set("n", "<leader>fd", function()
+      local pickers = require("telescope.pickers")
+      local finders = require("telescope.finders")
+      local previewers = require("telescope.previewers")
+      local actions = require("telescope.actions")
+      local action_state = require("telescope.actions.state")
+      local conf = require("telescope.config").values
+      local opts = {}
+      local ns = vim.api.nvim_create_namespace("telescope_dap_breakpoints")
+
+      local function get_entries()
+        local project = {}
+        for bufnr, items in pairs(breakpoints.get()) do
+          if path_in_cwd(vim.api.nvim_buf_get_name(bufnr)) then
+            project[bufnr] = items
+          end
+        end
+        return breakpoints.to_qf_list(project)
+      end
+
+      local function make_finder(entries)
+        return finders.new_table({
+          results = entries,
+          entry_maker = require("telescope.make_entry").gen_from_quickfix(opts),
+        })
+      end
+
+      local entries = get_entries()
+      if #entries == 0 then
+        vim.notify("No breakpoints in this project", vim.log.levels.INFO)
+        return
+      end
+
+      pickers
+        .new(opts, {
+          prompt_title = "Project Breakpoints",
+          finder = make_finder(entries),
+          sorter = conf.generic_sorter(opts),
+
+          previewer = previewers.new_buffer_previewer({
+            title = "Breakpoints",
+            define_preview = function(self, entry)
+              local source = entry.bufnr
+              local buf = self.state.bufnr
+              local win = self.state.winid
+              local lines = vim.api.nvim_buf_get_lines(source, 0, -1, false)
+
+              vim.bo[buf].modifiable = true
+              vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+              vim.bo[buf].modifiable = false
+
+              require("telescope.previewers.utils").highlighter(buf, vim.bo[source].filetype)
+
+              vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
+              for _, bp in ipairs(breakpoints.get(source)[source] or {}) do
+                if bp.line > 0 and bp.line <= #lines then
+                  vim.api.nvim_buf_set_extmark(buf, ns, bp.line - 1, 0, {
+                    sign_text = "●",
+                    sign_hl_group = "DapBreakpoint",
+                    priority = 100,
+                  })
+                end
+              end
+
+              -- Wait until Telescope displays this preview buffer before moving the cursor.
+              vim.schedule(function()
+                if
+                  not vim.api.nvim_win_is_valid(win)
+                  or not vim.api.nvim_buf_is_valid(buf)
+                  or vim.api.nvim_win_get_buf(win) ~= buf
+                then
+                  return
+                end
+
+                vim.wo[win].signcolumn = "yes"
+                vim.wo[win].number = true
+                vim.wo[win].cursorline = true
+
+                local count = vim.api.nvim_buf_line_count(buf)
+                local line = math.max(1, math.min(entry.lnum or 1, count))
+                vim.api.nvim_win_set_cursor(win, { line, 0 })
+                vim.api.nvim_win_call(win, function()
+                  vim.cmd("normal! zz")
+                end)
+              end)
+            end,
+          }),
+
+          attach_mappings = function(prompt_bufnr, map)
+            local function delete_breakpoint()
+              local entry = action_state.get_selected_entry()
+              if not entry then
+                return
+              end
+
+              -- Confirm it still exists before toggling it off.
+              local exists = false
+              for _, bp in ipairs(breakpoints.get(entry.bufnr)[entry.bufnr] or {}) do
+                if bp.line == entry.lnum then
+                  exists = true
+                  break
+                end
+              end
+
+              if exists then
+                vim.api.nvim_buf_call(entry.bufnr, function()
+                  local cursor = vim.api.nvim_win_get_cursor(0)
+                  vim.api.nvim_win_set_cursor(0, { entry.lnum, 0 })
+                  local ok, err = pcall(dap.toggle_breakpoint)
+                  vim.api.nvim_win_set_cursor(0, cursor)
+                  if not ok then
+                    error(err)
+                  end
+                end)
+              end
+
+              local remaining = get_entries()
+              if #remaining == 0 then
+                actions.close(prompt_bufnr)
+                vim.notify("No breakpoints left in this project")
+                return
+              end
+
+              action_state.get_current_picker(prompt_bufnr):refresh(make_finder(remaining), { reset_prompt = false })
+            end
+
+            -- map("n", "<C-d>", delete_breakpoint)
+            map("n", "dd", delete_breakpoint)
+            return true
+          end,
+        })
+        :find()
+    end, { desc = "Find project breakpoints" })
 
     -- Watcher lists: save the current dapui watch expressions under a label so
     -- they can be recalled into a later debug session (<Leader>dl). A label is

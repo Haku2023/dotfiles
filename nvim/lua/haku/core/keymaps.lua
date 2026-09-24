@@ -5,8 +5,88 @@ local keymap = vim.keymap -- for conciseness
 
 -- keymap.set("i", "jj", "<ESC>", { desc = "Exit insert mode with kk" })
 -- keymap.set("i", "jk", "<ESC>:w<CR>", { desc = "Exit insert mode and save with jk" })
-keymap.set({ "n", "x" }, "wq", "<cmd>wq<CR>", { desc = "Save and quit" })
-keymap.set({ "n", "x" }, "qq", "<cmd>q!<CR>", { desc = "quit without save" })
+-- function to hide CodeCompanion and ToggleTerm panels and quit Neovim
+--{{{
+local function hide_panels_and_quit(save)
+  local api = vim.api
+  local editor_win = api.nvim_get_current_win()
+  local tab = api.nvim_get_current_tabpage()
+  local current_buf = api.nvim_win_get_buf(editor_win)
+
+  -- Count ordinary splits, excluding terminals and CodeCompanion chats.
+  -- Maximizer's floating covers are excluded automatically.
+  local pane_count = 0
+  for _, win in ipairs(api.nvim_tabpage_list_wins(tab)) do
+    local buf = api.nvim_win_get_buf(win)
+    local config = api.nvim_win_get_config(win)
+
+    if
+      config.relative == ""
+      and not config.external
+      and vim.bo[buf].buftype ~= "terminal"
+      and vim.bo[buf].filetype ~= "codecompanion"
+    then
+      pane_count = pane_count + 1
+    end
+  end
+
+  -- Write editing buffers only; tool panes such as quickfix are not files.
+  -- If writing fails, leave the layout intact.
+  if save and vim.bo[current_buf].buftype == "" then
+    vim.cmd("write")
+  end
+
+  -- With extra panes open, close only the current window.
+  local current_config = api.nvim_win_get_config(editor_win)
+  if pane_count > 1 or current_config.relative ~= "" then
+    vim.cmd(save and "close" or "close!")
+    return
+  end
+
+  -- Hide visible CodeCompanion chats in this tab.
+  local cc = package.loaded["codecompanion"]
+  if cc then
+    for _, win in ipairs(api.nvim_tabpage_list_wins(tab)) do
+      if win ~= editor_win and api.nvim_win_is_valid(win) then
+        local chat = cc.buf_get_chat(api.nvim_win_get_buf(win))
+        if chat then
+          chat.ui:hide()
+        end
+      end
+    end
+  end
+
+  -- Hide visible ToggleTerm terminals in this tab.
+  local terminals = package.loaded["toggleterm.terminal"]
+  if terminals then
+    for _, term in pairs(terminals.get_all(true)) do
+      if
+        term.window
+        and term.window ~= editor_win
+        and api.nvim_win_is_valid(term.window)
+        and api.nvim_win_get_tabpage(term.window) == tab
+      then
+        term:close()
+      end
+    end
+  end
+
+  if api.nvim_win_is_valid(editor_win) then
+    api.nvim_set_current_win(editor_win)
+    vim.cmd(save and "quit" or "quit!")
+  end
+end
+--}}}
+
+keymap.set({ "n", "x" }, "wq", function()
+  hide_panels_and_quit(true)
+end, { desc = "Save, hide panels, and quit" })
+
+keymap.set({ "n", "x" }, "qq", function()
+  hide_panels_and_quit(false)
+end, { desc = "Hide panels and quit without saving" })
+-- keymap.set({ "n", "x" }, "wq", "<cmd>wq<CR>", { desc = "Save and quit" })
+-- keymap.set({ "n", "x" }, "qq", "<cmd>q!<CR>", { desc = "quit without save" })
 local save_session_and_quit = function(input)
   return function()
     -- Close the DAP UI first so its windows aren't captured in the session.

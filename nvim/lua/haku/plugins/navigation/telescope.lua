@@ -62,15 +62,27 @@ return {
             ["<C-q>"] = actions.send_selected_to_qflist + custom_actions.open_trouble_qflist,
             ["<C-t>"] = trouble_telescope.open,
             ["<C-i>"] = actions.preview_scrolling_right,
-            ["<C-u>"] = actions.preview_scrolling_left,
-            ["<C-k>"] = actions.preview_scrolling_up,
-            ["<C-j>"] = actions.preview_scrolling_down,
-            ["<C-f>"] = actions.results_scrolling_right,
-            ["<C-b>"] = actions.results_scrolling_left,
+            -- ["<C-u>"] = actions.preview_scrolling_left,
+            -- ["<C-k>"] = actions.preview_scrolling_up,
+            ["<C-d>"] = actions.preview_scrolling_down,
+            ["<C-u>"] = actions.preview_scrolling_up,
+            -- ["<C-j>"] = actions.preview_scrolling_down,
+            -- ["<C-f>"] = actions.results_scrolling_right,
+            -- ["<C-b>"] = actions.results_scrolling_left,
+            ["<C-f>"] = { "<Right>", type = "command" },
+            ["<C-b>"] = { "<Left>", type = "command" },
+            ["<C-a>"] = { "<Home>", type = "command" },
+            ["<C-e>"] = { "<End>", type = "command" },
             ["<C-l>"] = actions.complete_tag,
             -- ["<C-k>"] = actions.move_selection_previous,
             -- ["<C-j>"] = actions.move_selection_next,
             -- ["<C-g>"] = actions.send_selected_to_qflist + custom_actions.open_trouble_qflist,
+          },
+          n = {
+            ["l"] = actions.preview_scrolling_right,
+            ["h"] = actions.preview_scrolling_left,
+            ["f"] = actions.results_scrolling_right,
+            ["b"] = actions.results_scrolling_left,
           },
         },
       },
@@ -83,9 +95,15 @@ return {
     local builtin = require("telescope.builtin")
 
     keymap.set("n", "<leader>fm", builtin.marks, { desc = "Fuzzy find marks" })
+    -- keymap.set("n", "<leader>fB", function()
+    --   builtin.buffers({ sort_mru = true })
+    -- end, { desc = "Fuzzy find in buffers" })
     keymap.set("n", "<leader>fB", function()
-      builtin.buffers({ sort_mru = true })
-    end, { desc = "Fuzzy find in buffers" })
+      builtin.live_grep({
+        grep_open_files = true,
+        prompt_title = "Search in Open Files",
+      })
+    end, { desc = "Search contents of open files" })
     keymap.set("n", "<leader>fb", builtin.current_buffer_fuzzy_find, { desc = "Fuzzy find in current buffer" })
     keymap.set("n", "<leader>ff", function()
       builtin.find_files({ hidden = true, no_ignore = false })
