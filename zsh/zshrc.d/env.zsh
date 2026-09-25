@@ -60,6 +60,9 @@ if [[ "$(uname)" == "Linux" && -z "$WSL_DISTRO_NAME" ]]; then
 	export MANPATH="/usr/local/texlive/2025/texmf-dist/doc/man:$MANPATH"
 	export INFOPATH="/usr/local/texlive/2025/texmf-dist/doc/info:$INFOPATH"
 	path+=(/usr/local/texlive/2025/bin/x86_64-linux)
+elif [[ "$(uname)" == "Linux" && -n "$WSL_DISTRO_NAME" ]]; then
+	# for newer brew as(assembler) on WSL to match gfortran
+	path=(/home/linuxbrew/.linuxbrew/opt/binutils/bin $path)
 elif [[ "$(uname)" == "Darwin" ]]; then
 	# Path to llvm clange
 	path+=(/usr/local/opt/llvm/bin)

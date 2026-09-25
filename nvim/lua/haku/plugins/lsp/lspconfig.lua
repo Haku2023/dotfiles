@@ -288,7 +288,7 @@ return {
         settings = {
           -- Fortitude language server settings go here
           check = {
-            ignore = { "E001" },
+            ignore = { "E001", "S241" },
           },
         },
       },

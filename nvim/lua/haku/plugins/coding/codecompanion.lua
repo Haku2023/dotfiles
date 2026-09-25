@@ -65,7 +65,7 @@ return {
               -- BETTER: set this via environment variable instead of hardcoding
             },
             defaults = {
-              model = "Default",
+              -- model = "Default",
             },
           })
         end,

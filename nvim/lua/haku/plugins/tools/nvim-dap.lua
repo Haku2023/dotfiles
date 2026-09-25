@@ -513,7 +513,9 @@ return {
     -- (<Leader>db) only ever shows the current project's breakpoints.
     local function path_in_cwd(path)
       local cwd = vim.fn.getcwd()
-      local abs = vim.fn.fnamemodify(path, ":p")
+      -- don't use fnamemodify(":p"): it stat()s the path, which blocks ~21s
+      -- when the path is on an unreachable network share (/mnt/x, /mnt/y ...)
+      local abs = path:sub(1, 1) == "/" and vim.fs.normalize(path) or vim.fs.joinpath(cwd, path)
       return abs == cwd or abs:sub(1, #cwd + 1) == cwd .. "/"
     end
 

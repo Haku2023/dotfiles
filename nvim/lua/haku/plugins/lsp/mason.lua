@@ -47,6 +47,7 @@ return {
       "shuck", -- for zsh
       "texlab",
       "neocmake",
+      "marksman", -- markdown
     }
     if not system_clangd then
       table.insert(servers, "clangd")

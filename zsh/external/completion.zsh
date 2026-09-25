@@ -3,14 +3,14 @@
 # Options
 #
 
-setopt COMPLETE_IN_WORD    # Complete from both ends of a word.
-setopt ALWAYS_TO_END       # Move cursor to the end of a completed word.
-setopt PATH_DIRS           # Perform path search even on command names with slashes.
+setopt COMPLETE_IN_WORD # Complete from both ends of a word.
+setopt ALWAYS_TO_END    # Move cursor to the end of a completed word.
+setopt PATH_DIRS        # Perform path search even on command names with slashes.
 # setopt AUTO_MENU           # Show completion menu on a successive tab press.
-setopt AUTO_LIST           # Automatically list choices on ambiguous completion.
-setopt AUTO_PARAM_SLASH    # If completed parameter is a directory, add a trailing slash.
-setopt EXTENDED_GLOB       # Needed for file modification glob modifiers with compinit
-setopt MENU_COMPLETE     # Do not autoselect the first completion entry.
+setopt AUTO_LIST        # Automatically list choices on ambiguous completion.
+setopt AUTO_PARAM_SLASH # If completed parameter is a directory, add a trailing slash.
+setopt EXTENDED_GLOB    # Needed for file modification glob modifiers with compinit
+setopt MENU_COMPLETE    # Do not autoselect the first completion entry.
 # unsetopt FLOW_CONTROL      # Disable start/stop characters in shell editor.
 
 # Use caching to make completion for commands such as dpkg and apt usable.
@@ -18,7 +18,12 @@ zstyle ':completion::complete:*' use-cache on
 zstyle ':completion::complete:*' cache-path "$XDG_CACHE_HOME/.zcompcache"
 
 # Case-insensitive completion
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+# zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+# allow the substring matching
+zstyle ':completion:*' matcher-list \
+	'm:{a-zA-Z}={A-Za-z}' \
+	'm:{a-zA-Z}={A-Za-z} r:|[._-]=* r:|=*' \
+	'm:{a-zA-Z}={A-Za-z} l:|=* r:|=*'
 # unsetopt CASE_GLOB
 
 # Group matches and describe.
@@ -71,13 +76,13 @@ zstyle -e ':completion:*:hosts' hosts 'reply=(
 
 # Don't complete uninteresting users...
 zstyle ':completion:*:*:*:users' ignored-patterns \
-  adm amanda apache avahi beaglidx bin cacti canna clamav daemon \
-  dbus distcache docker dovecot fax ftp games gdm gkrellmd gopher \
-  hacluster haldaemon halt hsqldb ident junkbust ldap lp mail \
-  mailman mailnull mldonkey mysql nagios \
-  named netdump news nfsnobody nobody nscd ntp nut nx openvpn \
-  operator pcap postfix postgres privoxy pulse pvm quagga radvd \
-  rpc rpcuser rpm shutdown squid sshd sync uucp vcsa xfs '_*'
+	adm amanda apache avahi beaglidx bin cacti canna clamav daemon \
+	dbus distcache docker dovecot fax ftp games gdm gkrellmd gopher \
+	hacluster haldaemon halt hsqldb ident junkbust ldap lp mail \
+	mailman mailnull mldonkey mysql nagios \
+	named netdump news nfsnobody nobody nscd ntp nut nx openvpn \
+	operator pcap postfix postgres privoxy pulse pvm quagga radvd \
+	rpc rpcuser rpm shutdown squid sshd sync uucp vcsa xfs '_*'
 
 # ... unless we really want to.
 # zstyle '*' single-ignored show
