@@ -161,7 +161,10 @@ return {
         -- buffer fills or the program exits. Force the preconnected units
         -- (stdout/stderr) unbuffered so prints appear live while stepping.
         env = { GFORTRAN_UNBUFFERED_PRECONNECTED = "y" },
-        cwd = "${workspaceFolder}",
+        -- cwd = "${workspaceFolder}",
+        cwd = function()
+          return project_config_for("fortran").cwd or vim.fn.getcwd()
+        end,
         stopAtBeginningOfMainSubprogram = false,
       },
     }
@@ -622,7 +625,7 @@ return {
     -- Browse all project breakpoints in Telescope, with red dots on breakpoint
     -- lines in the preview. Press <CR> to jump or <C-d> to delete the selected
     -- breakpoint and refresh the results. Project scope follows the current cwd.
-    vim.keymap.set("n", "<leader>fd", function()
+    vim.keymap.set("n", "<leader>fb", function()
       local pickers = require("telescope.pickers")
       local finders = require("telescope.finders")
       local previewers = require("telescope.previewers")
@@ -1009,6 +1012,7 @@ return {
     map("n", "<Leader>dk", dap.step_over, { desc = "DAP: Step over" })
     map("n", "<Leader>dj", dap.step_into, { desc = "DAP: Step into" })
     map("n", "<Leader>dh", dap.step_out, { desc = "DAP: Step out" })
+    map("n", "<Leader>cb", dap.clear_breakpoints, { desc = "DAP: Clear all breakpoints" })
     map("n", "<Leader>b", dap.toggle_breakpoint, { desc = "DAP: Toggle breakpoint" })
     map("n", "<Leader>B", function()
       dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))

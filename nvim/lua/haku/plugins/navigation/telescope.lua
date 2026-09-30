@@ -112,13 +112,13 @@ return {
     -- keymap.set("n", "<leader>fB", function()
     --   builtin.buffers({ sort_mru = true })
     -- end, { desc = "Fuzzy find in buffers" })
-    keymap.set("n", "<leader>fB", function()
+    keymap.set("n", "<leader>fo", function()
       builtin.live_grep({
         grep_open_files = true,
         prompt_title = "Search in Open Files",
       })
     end, { desc = "Search contents of open files" })
-    keymap.set("n", "<leader>fb", builtin.current_buffer_fuzzy_find, { desc = "Fuzzy find in current buffer" })
+    keymap.set("n", "<leader>fB", builtin.current_buffer_fuzzy_find, { desc = "Fuzzy find in current buffer" })
     keymap.set("n", "<leader>ff", function()
       builtin.find_files({ hidden = true, no_ignore = false })
     end, { desc = "Fuzzy find files in cwd" })

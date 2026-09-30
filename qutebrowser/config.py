@@ -158,6 +158,9 @@ elif sys.platform.startswith("linux"):
 else:
     c.tabs.position = "left"
     c.tabs.position = "bottom"
+    # for chatgpt font size, but it will change all
+    c.fonts.web.size.minimum = 20
+c.statusbar.show = "in-mode"
 c.scrolling.smooth = True
 c.search.incremental = False
 c.messages.timeout = 0
