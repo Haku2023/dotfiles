@@ -188,6 +188,17 @@ return {
         },
       },
     })
+    vim.lsp.config("vtsls", {
+      settings = {
+        typescript = {
+          tsserver = {
+            experimental = {
+              enableProjectDiagnostics = true,
+            },
+          },
+        },
+      },
+    })
 
     --- https://github.com/microsoft/pyright
     ---
@@ -252,7 +263,8 @@ return {
           analysis = {
             autoSearchPaths = true,
             useLibraryCodeForTypes = true,
-            diagnosticMode = "openFilesOnly",
+            -- diagnosticMode = "openFilesOnly",
+            diagnosticMode = "workspace",
           },
         },
       },

@@ -179,6 +179,16 @@ c.content.javascript.log_message.excludes = {
     "userscript:_qute_js": ["*read properties*"],
 }
 
+# set default start pages
+c.url.start_pages = [
+    "https://chatgpt.com/",
+    "https://hydrosoken.backlog.com/view/26I16-1",
+    "https://www.chatwork.com/#!rid184848788",
+    "https://desknets.hydrosoken.co.jp/scripts/dneo/dneo.exe?cmd=schindex",
+    "https://mail.google.com/mail/u/0/#inbox",
+    "https://timecrowd.net/app",
+    "https://s2.ta.kingoftime.jp/independent/recorder2/personal/",
+]
 
 # normal keys
 config.bind("K", "tab-next")
@@ -269,5 +279,6 @@ config.bind(
     "ee",
     "spawn --detach wezterm cli spawn  --new-window -- pass insert websites/{url:host}/",
 )
+config.bind("<alt-w>", "quit")
 # Replace 'kitty -e' with the wezterm equivalent
 # Haku Check

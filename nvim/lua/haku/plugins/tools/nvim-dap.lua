@@ -10,6 +10,20 @@ return {
   config = function()
     local mason_dap = require("mason-nvim-dap")
     local dap = require("dap")
+    -- Give pending GDB breakpoints their original requested line.
+    dap.listeners.before.setBreakpoints["gdb_pending_lines"] = function(session, err, response, request)
+      if session.config.type ~= "gdb" or err or not response or not request then
+        return
+      end
+
+      for i, bp in ipairs(response.breakpoints or {}) do
+        local requested = (request.breakpoints or {})[i]
+        if bp.line == nil and requested then
+          bp.line = requested.line
+        end
+      end
+    end
+    --
     local ui = require("dapui")
     local dap_virtual_text = require("nvim-dap-virtual-text")
 
@@ -138,10 +152,53 @@ return {
         args = { "--port", "${port}" },
       },
     }
+    -- dap.adapters.gdb = {
+    --   type = "executable",
+    --   command = "gdb",
+    --   args = { "--interpreter=dap", "--eval-command", "set print pretty on" },
+    -- }
+    -- add fortran string helper
+    --
+    local fortran_string_helper = [[
+import gdb
+
+class FString(gdb.Function):
+    def __init__(self):
+        super().__init__("fstr")
+
+    def invoke(self, qualified):
+        module, name = qualified.string().lower().split("::", 1)
+        symbol = gdb.lookup_global_symbol(module + "::" + name)
+        length = gdb.lookup_global_symbol(
+            "_F." + module + "_MOD_" + name
+        )
+
+        if symbol is None or length is None:
+            raise gdb.GdbError("String or compiler length symbol not found")
+
+        value = symbol.value()
+        if int(value) == 0:
+            raise gdb.GdbError("String is not allocated")
+
+        size = int(length.value())
+        if size == 0:
+            return gdb.Value("")
+
+        array = gdb.lookup_type("char").array(size - 1)
+        return value.cast(array.pointer()).dereference()
+
+FString()
+]]
     dap.adapters.gdb = {
       type = "executable",
       command = "gdb",
-      args = { "--interpreter=dap", "--eval-command", "set print pretty on" },
+      args = {
+        "--interpreter=dap",
+        "--eval-command",
+        "set print pretty on",
+        "--eval-command",
+        "python exec(" .. vim.fn.json_encode(fortran_string_helper) .. ")",
+      },
     }
 
     -- Configurations

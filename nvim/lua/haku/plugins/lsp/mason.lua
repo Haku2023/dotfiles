@@ -31,7 +31,8 @@ return {
     local system_clangd = uname.sysname == "Linux" and (uname.machine == "aarch64" or uname.machine == "arm64")
 
     local servers = {
-      "ts_ls",
+      -- "ts_ls", -- using vtsls for project diagnostics
+      "vtsls",
       "html",
       "cssls",
       "tailwindcss",
@@ -61,6 +62,10 @@ return {
       ensure_installed = servers,
       -- auto-install configured servers (with lspconfig)
       automatic_installation = true, -- not the same as ensure_installed
+      -- using vtsls for project diagnostics, so don't auto-enable ts_ls
+      automatic_enable = {
+        exclude = { "ts_ls" },
+      },
     })
 
     mason_tool_installer.setup({

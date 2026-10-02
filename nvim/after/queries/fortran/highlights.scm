@@ -57,6 +57,7 @@
 (module_name) @keyword
 (type_name) @label.fortran
 (end_type_statement) @label.fortran
+(end_where_statement) @keyword.conditional
 (end_block_construct_statement) @keyword
 
 (end_subroutine_statement) @keyword.function.fortran
