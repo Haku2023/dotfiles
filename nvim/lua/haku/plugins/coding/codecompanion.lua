@@ -87,6 +87,70 @@ return {
       },
     },
   },
+  -- Optional: override the default session_list method for the codex/claude_code adapter
+  -- For real path matching rather than lower case string matching for resume
+  config = function(_, opts)
+    require("codecompanion").setup(opts)
+
+    local Connection = require("codecompanion.acp")
+    local original_session_list = Connection.session_list
+
+    function Connection:session_list(list_opts)
+      -- Keep the default behavior for other adapters.
+      if self.adapter.name ~= "codex" and self.adapter.name ~= "claude_code" then
+        return original_session_list(self, list_opts)
+      end
+
+      if not self:is_ready() then
+        return {}
+      end
+
+      local current = vim.uv.fs_stat(vim.fn.getcwd())
+      if not current then
+        return original_session_list(self, list_opts)
+      end
+
+      local limit = (list_opts and list_opts.max_sessions) or 500
+      local sessions, seen_cursors = {}, {}
+      local cursor
+
+      repeat
+        -- Omit cwd so the adapter doesn't filter by capitalization.
+        local params = {}
+        if cursor then
+          params.cursor = cursor
+        end
+
+        local result = self:send_rpc_request(self.METHODS.SESSION_LIST, params)
+        if not result then
+          break
+        end
+
+        for _, session in ipairs(result.sessions or {}) do
+          local stat = type(session.cwd) == "string" and vim.uv.fs_stat(session.cwd)
+
+          if stat and stat.type == "directory" and stat.dev == current.dev and stat.ino == current.ino then
+            sessions[#sessions + 1] = session
+            if #sessions >= limit then
+              return sessions
+            end
+          end
+        end
+
+        cursor = type(result.nextCursor) == "string" and result.nextCursor or nil
+
+        if cursor and seen_cursors[cursor] then
+          break
+        end
+        if cursor then
+          seen_cursors[cursor] = true
+        end
+      until not cursor
+
+      return sessions
+    end
+  end,
+  --
   keys = {
     {
       "<leader>a",
