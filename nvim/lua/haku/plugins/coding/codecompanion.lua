@@ -24,6 +24,21 @@ return {
             opts = {},
           },
           -- Add further custom keymaps here
+          --
+          resume = {
+            modes = { n = "gr" },
+            description = "Resume an ACP session",
+            callback = function(chat)
+              local config = require("codecompanion.config")
+              local commands = require("codecompanion.interactions.chat.slash_commands")
+
+              commands.new():execute({
+                label = "/resume",
+                config = config.interactions.chat.slash_commands.resume,
+                context = chat.buffer_context,
+              }, chat)
+            end,
+          },
         },
       },
       inline = {

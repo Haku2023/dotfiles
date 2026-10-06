@@ -131,7 +131,49 @@ return {
     keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
     keymap.set("n", "<leader>fs", builtin.lsp_workspace_symbols, { desc = "Fuzzy find symbols in workspace" })
     keymap.set("n", "<leader>fS", builtin.lsp_document_symbols, { desc = "Fuzzy find symbols in current buffer" })
-    keymap.set("n", "<leader>fq", builtin.quickfix, { desc = "Telescope quickfix" })
+    keymap.set("n", "<leader>fq", function()
+      local state = require("telescope.actions.state")
+      local finders = require("telescope.finders")
+      local qf_id = vim.fn.getqflist({ id = 0 }).id
+
+      builtin.quickfix({
+        path_display = function(_, path)
+          return vim.fn.fnamemodify(path, ":.")
+        end,
+        show_line = false,
+        attach_mappings = function(prompt_bufnr, map)
+          local function delete_item()
+            local entry = state.get_selected_entry()
+            if not entry then
+              return
+            end
+
+            local picker = state.get_current_picker(prompt_bufnr)
+            local finder = picker.finder
+            local items = {}
+
+            for _, result in ipairs(finder.results) do
+              if result ~= entry then
+                table.insert(items, result.value)
+              end
+            end
+
+            vim.fn.setqflist({}, "r", { id = qf_id, items = items })
+            picker:refresh(
+              finders.new_table({
+                results = items,
+                entry_maker = finder.entry_maker,
+              }),
+              { reset_prompt = false }
+            )
+          end
+
+          map("i", "<C-d>", delete_item)
+          map("n", "<C-d>", delete_item)
+          return true
+        end,
+      })
+    end, { desc = "Telescope quickfix" })
     keymap.set("n", "<leader>fl", builtin.loclist, { desc = "Telescope loclist" })
     keymap.set("n", "<leader>fd", function()
       builtin.diagnostics({
