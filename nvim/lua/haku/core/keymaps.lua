@@ -269,6 +269,7 @@ end, { desc = "CodeCompanion with Codex" })
 vim.keymap.set("n", "*", "mz*`z", { desc = "Search word, stay put" })
 vim.keymap.set("n", "#", "mz#`z", { desc = "Search word backward, stay put" })
 vim.keymap.set("n", "<leader>hi", "<cmd>Inspect<cr>", { desc = "Inspect highlight under cursor" })
+vim.keymap.set("n", "<C-n>", "<C-^>", { desc = "Switch to previous file" })
 
 -- remap folding
 keymap.set("n", "zc", "zm", { desc = "close all fold" })

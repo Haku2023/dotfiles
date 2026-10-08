@@ -25,7 +25,7 @@
   (#any-of? @function
     ; Math functions
     "abs" "acos" "asin" "atan" "atan2" "ceiling" "cos" "cosh" "exp" "floor"
-    "log" "log10" "max" "min" "mod" "sign" "sin" "sinh" "sqrt" "tan" "tanh"
+    "log" "log10" "max" "min" "mod" "modulo" "sign" "sin" "sinh" "sqrt" "tan" "tanh"
     "real" "int" "nint" "aint" "anint" "dble" "cmplx"
     ; Array functions
     "size" "shape" "lbound" "ubound" "allocated" "associated"
