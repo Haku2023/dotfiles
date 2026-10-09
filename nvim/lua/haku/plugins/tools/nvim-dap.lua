@@ -1052,16 +1052,29 @@ FString()
     -- Keymaps
     local map = vim.keymap.set
 
+    -- map("n", "<Leader>dc", function()
+    --   if not dap.session() then
+    --     return
+    --   end
+    --
+    --   local watches = ui.elements.watches
+    --   for index = #watches.get(), 1, -1 do
+    --     watches.remove(index)
+    --   end
+    -- end, { desc = "DAP: Clear all watches" })
     map("n", "<Leader>dc", function()
       if not dap.session() then
         return
       end
-
-      local watches = ui.elements.watches
-      for index = #watches.get(), 1, -1 do
-        watches.remove(index)
+      if vim.bo.filetype == "dapui_watches" then
+        local watches = ui.elements.watches
+        for index = #watches.get(), 1, -1 do
+          watches.remove(index)
+        end
+      elseif vim.bo.buftype == "" then
+        dap.clear_breakpoints()
       end
-    end, { desc = "DAP: Clear all watches" })
+    end, { desc = "DAP: Clear watches or breakpoints" })
     map("n", "<Leader>dq", function()
       ensure_project_dap_config()
       dap.continue()
@@ -1069,7 +1082,7 @@ FString()
     map("n", "<Leader>dk", dap.step_over, { desc = "DAP: Step over" })
     map("n", "<Leader>dj", dap.step_into, { desc = "DAP: Step into" })
     map("n", "<Leader>dh", dap.step_out, { desc = "DAP: Step out" })
-    map("n", "<Leader>cb", dap.clear_breakpoints, { desc = "DAP: Clear all breakpoints" })
+    -- map("n", "<Leader>cb", dap.clear_breakpoints, { desc = "DAP: Clear all breakpoints" })
     map("n", "<Leader>b", dap.toggle_breakpoint, { desc = "DAP: Toggle breakpoint" })
     map("n", "<Leader>B", function()
       dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
@@ -1168,7 +1181,10 @@ FString()
       ui.float_element("breakpoints", { enter = true })
     end
 
-    vim.keymap.set("n", "<Leader>db", focus_dapui_breakpoints, { desc = "DAP UI: Focus Breakpoints" })
+    -- vim.keymap.set("n", "<Leader>db", focus_dapui_breakpoints, { desc = "DAP UI: Focus Breakpoints" })
+    vim.keymap.set("n", "<Leader>db", dap.pause, {
+      desc = "DAP: Pause execution",
+    })
 
     -- Breakpoint sign and colors
     -- Signs

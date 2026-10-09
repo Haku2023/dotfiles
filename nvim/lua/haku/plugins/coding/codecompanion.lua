@@ -11,6 +11,7 @@ return {
         -- adapter = "claude_code", -- ACP adapter (chat only)
         adapter = "codex", -- ACP adapter (chat only)
         keymaps = {
+          regenerate = false, -- Free gr for your custom resume mapping
           change_adapter = {
             modes = { n = "<C-a>" },
           },
@@ -28,9 +29,33 @@ return {
           resume = {
             modes = { n = "gr" },
             description = "Resume an ACP session",
+            -- callback = function(chat)
+            --   local config = require("codecompanion.config")
+            --   local commands = require("codecompanion.interactions.chat.slash_commands")
+            --
+            --   commands.new():execute({
+            --     label = "/resume",
+            --     config = config.interactions.chat.slash_commands.resume,
+            --     context = chat.buffer_context,
+            --   }, chat)
+            -- end,
+
             callback = function(chat)
               local config = require("codecompanion.config")
               local commands = require("codecompanion.interactions.chat.slash_commands")
+              local resume = require("codecompanion.interactions.chat.slash_commands.builtin.resume")
+
+              local connection = chat.acp_connection
+              if connection and not connection:is_ready() then
+                vim.notify("Adapter is still connecting. Try gr again shortly.", vim.log.levels.WARN)
+                return
+              end
+
+              local enabled, reason = resume.enabled(chat)
+              if not enabled then
+                vim.notify(("Resume unavailable for %s: %s"):format(chat.adapter.name, reason), vim.log.levels.WARN)
+                return
+              end
 
               commands.new():execute({
                 label = "/resume",
