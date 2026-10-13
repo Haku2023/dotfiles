@@ -49,6 +49,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
 	alias myLove="open https://meeting.tencent.com/p/9796730765\?pwd\=500012"
 	alias japaneseCourse="open https://kyoto-u-edu.zoom.us/j/91423186918\?pwd\=alhtRnhlcUljVi84Z0hncjRZREtjZz09"
 elif [[ -n "$WSL_DISTRO_NAME" ]]; then
+	:
 elif [[ "$(uname)" == "Linux" ]]; then
 	alias rm="rm --preserve-root -I"
 	alias chmod="chmod --preserve-root"
@@ -73,6 +74,13 @@ function gd() {
 		git diff @{${1}}
 	else
 		git diff "$@"
+	fi
+}
+function gls() {
+	if [[ "${1}" =~ ^[1-9][0-9]*$ ]]; then
+		git log --stat -n ${1}
+	else
+		git log --stat -n 10
 	fi
 }
 #<<<{{{
