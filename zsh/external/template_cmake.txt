@@ -1,0 +1,17 @@
+cmake_minimum_required(VERSION 3.23)
+
+project(
+Practice
+VERSION 0.0.1
+DESCRIPTION "Simple Practice"
+LANGUAGES lang
+)
+
+# Generate compile_commands.json for clangd
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+add_executable(template)
+
+target_sources(template
+PRIVATE
+./main.lang_ext)

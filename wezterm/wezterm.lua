@@ -168,6 +168,7 @@ wezterm.on("toggle-tab-bar", function(window, _)
 end)
 wezterm.on("update-status", function(window, _)
 	local date = wezterm.strftime("%Y-%m-%d %H:%M:%S")
+	-- local date = wezterm.strftime("%Y-%m-%d %H:%M:%S %Z %z")
 	window:set_right_status(wezterm.format({
 		{ Attribute = { Underline = "None" } },
 		{
@@ -209,7 +210,8 @@ end)
 
 -- window setting
 -- to make windows resized also can exclude the top bar
-config.window_decorations = "RESIZE" -- {{{
+config.window_decorations = "NONE" -- {{{
+-- config.window_decorations = "RESIZE"
 -- config.window_close_confirmation = "NeverPrompt"
 config.window_padding = {
 	left = 0,

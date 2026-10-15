@@ -83,9 +83,8 @@ return {
         codex = function()
           return require("codecompanion.adapters").extend("codex", {
             defaults = {
-              auth_method = "chat-gpt", -- "openai-api-key"|"codex-api-key"|"chatgpt"
-              -- model = "gpt-5.5",
-              -- model_reasoning_effort = "high",
+              auth_method = "chat-gpt",
+              model = "6.1 Sol",
             },
             env = {},
           })
@@ -197,6 +196,29 @@ return {
       "<cmd>CodeCompanionChat Toggle<cr>",
       mode = { "n", "v" },
       desc = "Toggle CodeCompanion Chat",
+    },
+    {
+      "<C-a>",
+      function()
+        -- Remove this global mapping after its first use.
+        -- Outside chat, subsequent presses use normal number increment.
+        vim.keymap.del("n", "<C-a>")
+
+        local Chat = require("codecompanion.interactions.chat")
+
+        if not Chat.is_visible() then
+          vim.cmd("CodeCompanionChat Toggle")
+        end
+
+        vim.schedule(function()
+          local chat = Chat.last_chat()
+          if chat then
+            require("codecompanion.interactions.chat.keymaps.change_adapter").callback(chat)
+          end
+        end)
+      end,
+      mode = "n",
+      desc = "Open CodeCompanion and select adapter (once)",
     },
   },
 }

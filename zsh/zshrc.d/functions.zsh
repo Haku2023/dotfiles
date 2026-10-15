@@ -117,6 +117,51 @@ zln() {
 
 # haku useful functions cdn mcd lsn
 # >>>>>>>>>>>>>>>>{{{
+hkcmake() {
+	if (($# != 2)); then
+		print -u2 "ERROR: need 2 args (eg. cpp exe_name)"
+		return 1
+	fi
+	if [[ -z ${ZDOTDIR} ]]; then
+		print -u2 "ERROR: no ZDOTDIR"
+		return 1
+	fi
+
+	local lang ext
+	case "$1" in
+	fortran)
+		lang=Fortran
+		ext=F90
+		;;
+	cpp)
+		lang=CXX
+		ext=cpp
+		;;
+	c)
+		lang=C
+		ext=c
+		;;
+	*)
+		print -u2 -- "Unknown CMake language: $1"
+		return 1
+		;;
+	esac
+	# Accept a simple executable name starting with a letter or underscore.
+	if [[ $2 != [a-zA-Z_]* || $2 == *[^a-zA-Z0-9_-]* ]]; then
+		print -u2 -- "Invalid executable name: $2"
+		return 1
+	fi
+	if ((!${+commands[cmake]})); then
+		print -u2 "cmake not exist!"
+		return 2
+	fi
+	sed -e "s/lang_ext/${ext}/g" \
+		-e "s/[[:space:]]lang/ ${lang}/g" \
+		-e "s/template/${2}/g" \
+		${ZDOTDIR}/external/template_cmake.txt >./CMakeLists.txt || return 3
+	mkdir -p input output src || return 4
+	touch "src/main.${ext}" || return 5
+}
 # cdn - cd to newest directory, or nth newest with argument
 cdn() {
 	local n=${1:-1}
@@ -145,9 +190,9 @@ mcd() {
 # lso(){
 # find . -type f -exec ls -lt {} + | head -$1
 # }
-lsh() {
-	ls -ld -s="modified" **/*(D.om[1,$1])
-}
+# lsh() {
+# 	ls -ld -s="modified" **/*(D.om[1,$1])
+# }
 # set start and end function to calc time
 haku_start() {
 	start_time=$(date +%s)
@@ -353,15 +398,15 @@ function push_past() {
 	fi
 }
 
-function push_future() {
-	setopt localoptions no_ksh_arrays
-	if [[ $#dirhistory_future -ge $DIRHISTORY_SIZE ]]; then
-		shift dirhistory_future
-	fi
-	if [[ $#dirhistory_future -eq 0 || $dirhistory_futuret[$#dirhistory_future] != "$1" ]]; then
-		dirhistory_future+=($1)
-	fi
-}
+# function push_future() {
+# 	setopt localoptions no_ksh_arrays
+# 	if [[ $#dirhistory_future -ge $DIRHISTORY_SIZE ]]; then
+# 		shift dirhistory_future
+# 	fi
+# 	if [[ $#dirhistory_future -eq 0 || $dirhistory_futuret[$#dirhistory_future] != "$1" ]]; then
+# 		dirhistory_future+=($1)
+# 	fi
+# }
 
 # Called by zsh when directory changes
 autoload -U add-zsh-hook
