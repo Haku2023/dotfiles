@@ -182,12 +182,12 @@ c.content.javascript.log_message.excludes = {
 # set default start pages
 c.url.start_pages = [
     "https://chatgpt.com/",
-    "https://hydrosoken.backlog.com/view/26I16-1",
-    "https://www.chatwork.com/#!rid184848788",
-    "https://desknets.hydrosoken.co.jp/scripts/dneo/dneo.exe?cmd=schindex",
-    "https://mail.google.com/mail/u/0/#inbox",
-    "https://timecrowd.net/app",
-    "https://s2.ta.kingoftime.jp/independent/recorder2/personal/",
+    # "https://hydrosoken.backlog.com/view/26I16-1",
+    # "https://www.chatwork.com/#!rid184848788",
+    # "https://desknets.hydrosoken.co.jp/scripts/dneo/dneo.exe?cmd=schindex",
+    # "https://mail.google.com/mail/u/0/#inbox",
+    # "https://timecrowd.net/app",
+    # "https://s2.ta.kingoftime.jp/independent/recorder2/personal/",
 ]
 
 # normal keys
