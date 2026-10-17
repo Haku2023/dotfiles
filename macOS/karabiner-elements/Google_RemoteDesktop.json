@@ -66,54 +66,6 @@
         }
       ],
       "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": [
-            "^com.google.Chrome.app.cmkncekebbebpfilplodngbpllndjkfo$"
-          ],
-          "type": "frontmost_application_if"
-        }
-      ],
-      "from": {
-        "key_code": "comma",
-        "modifiers": {
-          "mandatory": ["command"],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "left_arrow",
-          "modifiers": ["command", "control"]
-        }
-      ],
-      "type": "basic"
-    },
-    {
-      "conditions": [
-        {
-          "bundle_identifiers": [
-            "^com.google.Chrome.app.cmkncekebbebpfilplodngbpllndjkfo$"
-          ],
-          "type": "frontmost_application_if"
-        }
-      ],
-      "from": {
-        "key_code": "period",
-        "modifiers": {
-          "mandatory": ["command"],
-          "optional": []
-        }
-      },
-      "to": [
-        {
-          "key_code": "right_arrow",
-          "modifiers": ["command", "control"]
-        }
-      ],
-      "type": "basic"
     }
   ]
 }

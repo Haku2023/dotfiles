@@ -146,7 +146,8 @@
         {
           "bundle_identifiers": [
             "^com.github.wez.wezterm$",
-            "^com.microsoft.rdc.macos$"
+            "^com.microsoft.rdc.macos$",
+            "^com.google.Chrome.app.cmkncekebbebpfilplodngbpllndjkfo$"
           ],
           "type": "frontmost_application_unless"
         }
@@ -220,7 +221,8 @@
           "bundle_identifiers": [
             "^com.github.wez.wezterm$",
             "^com.microsoft.rdc.macos$",
-            "^com.microsoft.VSCode$"
+            "^com.microsoft.VSCode$",
+            "^com.google.Chrome.app.cmkncekebbebpfilplodngbpllndjkfo$"
           ],
           "type": "frontmost_application_unless"
         }
@@ -246,7 +248,8 @@
           "bundle_identifiers": [
             "^com.github.wez.wezterm$",
             "^com.microsoft.rdc.macos$",
-            "^com.microsoft.VSCode$"
+            "^com.microsoft.VSCode$",
+            "^com.google.Chrome.app.cmkncekebbebpfilplodngbpllndjkfo$"
           ],
           "type": "frontmost_application_unless"
         }
