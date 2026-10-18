@@ -21,6 +21,7 @@ import sys
 
 # Change the argument to True to still load settings configured via autoconfig.yml
 config.load_autoconfig(False)
+c.url.searchengines["DEFAULT"] = "https://kagi.com/search?q={}"
 
 # Which cookies to accept. With QtWebEngine, this setting also controls
 # other features with tracking capabilities similar to those of cookies;
@@ -175,8 +176,7 @@ c.content.javascript.log_message.excludes = {
         "*Refused to apply inline style because it violates the following \
         Content Security Policy directive: *"
     ],
-    "userscript:_qute_js": ["*TrustedHTML*"],
-    "userscript:_qute_js": ["*read properties*"],
+    "userscript:_qute_js": ["*TrustedHTML*", "*read properties*"],
 }
 
 # set default start pages
@@ -197,8 +197,10 @@ config.bind(
     "z",
     "config-cycle tabs.show always never;; config-cycle statusbar.show always never",
 )
-config.bind("d", "cmd-run-with-count 20 scroll down")
-config.bind("u", "cmd-run-with-count 20 scroll up")
+# config.bind("d", "cmd-run-with-count 20 scroll down")
+# config.bind("u", "cmd-run-with-count 20 scroll up")
+config.bind("u", "scroll-px 0 -400", mode="normal")
+config.bind("d", "scroll-px 0 400", mode="normal")
 config.bind("x", "tab-close")
 config.bind("X", "tab-only -p")
 config.bind("a", "mode-enter insert", mode="normal")
@@ -229,7 +231,7 @@ config.bind("<alt-f>", "fake-key <ctrl-right>", mode="insert")
 config.bind("<alt-d>", "fake-key <alt-shift-right><delete>", mode="insert")
 config.bind("<alt-p>", "tab-pin")
 config.bind("<alt-s>", "config-source")
-config.bind("<alt-o>", "tab-focus last")
+config.bind("<alt-e>", "tab-focus last")
 config.bind("<alt-j>", "click-element position 1300,300")
 ## function for look
 config.bind(
@@ -237,7 +239,12 @@ config.bind(
 )
 config.bind("tt", "spawn --userscript ./translate_ch_jp_message-info.sh", mode="caret")
 config.bind("<ctrl-f>", "spawn --userscript qute-pass.py", mode="normal")
-config.bind("<Escape>", "mode-leave;;clear-messages", mode="caret")
+# config.bind("<Escape>", "mode-leave;;clear-messages", mode="caret")
+config.bind(
+    "<Escape>",
+    "mode-leave ;; jseval -q document.activeElement.blur()",
+    mode="insert",
+)
 config.bind(
     "<Escape>",
     "clear-messages;;clear-keychain ;; search ;; fullscreen --leave",

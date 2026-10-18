@@ -29,6 +29,8 @@ live so configs stay editable from the Mac.
 ## Quick start
 
 ```bash
+container system start
+container system status
 # 1. Build the image (first build takes a few minutes — installs Homebrew)
 container build -t dotbox -f ~/dotfiles/container/Containerfile ~/dotfiles/container
 

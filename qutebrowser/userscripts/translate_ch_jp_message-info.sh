@@ -19,10 +19,23 @@ if [ -n "$WORD" ]; then
 	# We'll use both the Chinese and the Japanese (EN-JA) dictionary
 	# Important: Quote dictionary names to handle spaces or special characters
 	# SDCV_CMD="/opt/homebrew/bin/sdcv -u \"$CHINESE_DICT\" -u \"$JAPANESE_EN_JA_DICT\" \"$WORD\""
-	SDCV_CMD="$(command -v sdcv) -u \"$CHINESE_DICT\" -u \"$JAPANESE_EN_JA_DICT\" \"$WORD\""
+	export PATH="$PATH:/opt/homebrew/bin:/usr/local/bin"
+	SDCV_BIN=$(command -v sdcv)
 
-	# Run sdcv and capture output
-	DEFINITION=$(eval "$SDCV_CMD")
+	if [ -z "$SDCV_BIN" ]; then
+		echo "message-error 'sdcv was not found in PATH.'" >"$QUTE_FIFO"
+		exit 1
+	fi
+
+	DEFINITION=$(
+		"$SDCV_BIN" \
+			--non-interactive \
+			--utf8-output \
+			--data-dir "${XDG_DATA_HOME:-$HOME/.local/share}/stardict/dic" \
+			-u "$CHINESE_DICT" \
+			-u "$JAPANESE_EN_JA_DICT" \
+			-- "$WORD" 2>&1
+	)
 
 	# haku_chek="$(command -v sdcv )"
 	# haku_chek="$(command -v /opt/homebrew/bin/sdcv )"
@@ -51,7 +64,7 @@ if [ -n "$WORD" ]; then
 
 		# Alternative: If you want to open a terminal for full output
 		# You'll need to comment out the message.info line above and uncomment this:
-		# xfce4-terminal -e "bash -c 'eval \"$SDCV_CMD\"; echo; read -p \"Press Enter to close\"'" & & &
+		# xfce4-terminal -e "bash -c 'eval \"$SDCV_CMD\"; echo; read -p \"Press Enter to close\"'" & & & & & &
 	fi
 else
 	echo "message-warning 'No word selected for sdcv lookup.'" >"$QUTE_FIFO"

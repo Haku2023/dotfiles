@@ -114,10 +114,10 @@ on-mode-changed = []
     alt-shift-quote = 'layout accordion horizontal vertical'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#focus
-    cmd-h = 'focus left'
-    cmd-j = 'focus down'
-    cmd-k = 'focus up'
-    cmd-l = 'focus right'
+    # cmd-h = 'focus left'
+    # cmd-j = 'focus down'
+    # cmd-k = 'focus up'
+    # cmd-l = 'focus right'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move
     # cmd-shift-h = 'move left'
@@ -139,22 +139,27 @@ on-mode-changed = []
     ctrl-7 = 'workspace 7'
     ctrl-8 = 'workspace 8'
     ctrl-9 = 'workspace 9'
-    alt-ctrl-g = 'workspace G'
-    # ctrl-g = 'workspace G'
+    cmd-c = 'workspace C'
+    cmd-g = 'workspace G'
+    cmd-q = 'workspace Q'
+    cmd-k = 'workspace K'
+    cmd-f = 'workspace F'
+    cmd-x = 'workspace X'
+    # cmd-ctrl-g = 'workspace G'
     # ctrl-q = 'workspace Q'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-    alt-shift-1 = 'move-node-to-workspace 1'
-    alt-shift-2 = 'move-node-to-workspace 2'
-    alt-shift-3 = 'move-node-to-workspace 3'
-    alt-shift-4 = 'move-node-to-workspace 4'
-    alt-shift-5 = 'move-node-to-workspace 5'
-    alt-shift-6 = 'move-node-to-workspace 6'
-    alt-shift-7 = 'move-node-to-workspace 7'
-    alt-shift-8 = 'move-node-to-workspace 8'
-    alt-shift-9 = 'move-node-to-workspace 9'
-    alt-shift-q = 'move-node-to-workspace Q'
-    alt-shift-g = 'move-node-to-workspace G'
+    cmd-shift-1 = 'move-node-to-workspace 1'
+    cmd-shift-2 = 'move-node-to-workspace 2'
+    cmd-shift-3 = 'move-node-to-workspace 3'
+    cmd-shift-4 = 'move-node-to-workspace 4'
+    cmd-shift-5 = 'move-node-to-workspace 5'
+    cmd-shift-6 = 'move-node-to-workspace 6'
+    cmd-shift-7 = 'move-node-to-workspace 7'
+    cmd-shift-8 = 'move-node-to-workspace 8'
+    cmd-shift-9 = 'move-node-to-workspace 9'
+    cmd-shift-q = 'move-node-to-workspace Q'
+    cmd-shift-g = 'move-node-to-workspace G'
 
     alt-shift-f = 'fullscreen'
     alt-shift-r = 'flatten-workspace-tree' # reset layout
@@ -187,7 +192,7 @@ on-mode-changed = []
     run = ['layout floating','move-node-to-workspace Q']
 [[on-window-detected]]
     if.app-id = 'org.mozilla.firefox'
-    run = ['layout floating','move-node-to-workspace A']
+    run = ['layout floating','move-node-to-workspace F']
 [[on-window-detected]]
     if.app-id = 'org.qutebrowser.qutebrowser'
     run = ['move-node-to-workspace Q','fullscreen']
@@ -214,7 +219,7 @@ on-mode-changed = []
     run = ['move-node-to-workspace K']
 [[on-window-detected]]
     if.app-id='com.google.Chrome.app.cmkncekebbebpfilplodngbpllndjkfo'
-    run = ['move-node-to-workspace G']
+    run = ['move-node-to-workspace C','fullscreen']
 # [[on-window-detected]]
     # if.app-id = 'com.apple.finder'
     # run = ['layout tiling']
@@ -224,4 +229,7 @@ on-mode-changed = []
 [[on-window-detected]]
     if.app-id='org.blenderfoundation.blender'
     run = ['move-node-to-workspace B','layout floating']
+[[on-window-detected]]
+    if.app-name-regex-substring = 'Viewer'
+    run = ['layout floating']
 

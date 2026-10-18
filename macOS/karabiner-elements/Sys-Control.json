@@ -35,7 +35,8 @@
           "bundle_identifiers": [
             "^com.github.wez.wezterm$",
             "^com.apple.systempreferences$",
-            "^com.microsoft.VSCode$"
+            "^com.microsoft.VSCode$",
+            "^com.google.Chrome.app.cmkncekebbebpfilplodngbpllndjkfo$"
           ],
           "type": "frontmost_application_unless"
         }
@@ -140,7 +141,11 @@
     {
       "conditions": [
         {
-          "bundle_identifiers": ["^com.apple.Preview$"],
+          "bundle_identifiers": [
+            "^com.apple.Preview$",
+            "^com.github.wez.wezterm$",
+            "^com.google.Chrome.app.cmkncekebbebpfilplodngbpllndjkfo$"
+          ],
           "type": "frontmost_application_unless"
         }
       ],
@@ -406,22 +411,6 @@
       "type": "basic"
     },
     {
-      "from": {
-        "key_code": "w",
-        "modifiers": { "mandatory": ["control"], "optional": [] }
-      },
-      "to": [
-        {
-          "software_function": {
-            "open_application": {
-              "file_path": "/Users/bai.haodong/Applications/Chrome Apps.localized/Chrome Remote Desktop.app"
-            }
-          }
-        }
-      ],
-      "type": "basic"
-    },
-    {
       "conditions": [
         {
           "bundle_identifiers": ["^org.mozilla.firefox$"],
@@ -438,6 +427,27 @@
       "to": [
         {
           "shell_command": "osascript -e 'tell application \"Firefox\" to activate' && sleep 0.3 && open -a firefox"
+        }
+      ],
+      "type": "basic"
+    },
+    {
+      "conditions": [
+        {
+          "bundle_identifiers": ["^org.qutebrowser.qutebrowser$"],
+          "type": "frontmost_application_unless"
+        }
+      ],
+      "from": {
+        "key_code": "w",
+        "modifiers": {
+          "mandatory": ["control"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "shell_command": "open -a qutebrowser && osascript -e 'tell application \"qutebrowser\" to activate'"
         }
       ],
       "type": "basic"

@@ -178,7 +178,7 @@
         "key_code": "tab",
         "modifiers": {
           "mandatory": ["option"],
-          "optional": ["any"]
+          "optional": []
         }
       },
       "to": [
@@ -472,11 +472,95 @@
       },
       "to": [
         {
-          "key_code": "m",
-          "modifiers": ["command", "control"]
+          "key_code": "f2",
+          "modifiers": ["control", "fn"]
         }
       ],
       "type": "basic"
+    },
+    {
+      "type": "basic",
+      "conditions": [
+        {
+          "type": "frontmost_application_unless",
+          "bundle_identifiers": ["^com.github.wez.wezterm$"]
+        }
+      ],
+      "from": {
+        "key_code": "h",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "shell_command": "/opt/homebrew/bin/aerospace focus left"
+        }
+      ]
+    },
+    {
+      "type": "basic",
+      "conditions": [
+        {
+          "type": "frontmost_application_unless",
+          "bundle_identifiers": ["^com.github.wez.wezterm$"]
+        }
+      ],
+      "from": {
+        "key_code": "j",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "shell_command": "/opt/homebrew/bin/aerospace focus down"
+        }
+      ]
+    },
+    {
+      "type": "basic",
+      "conditions": [
+        {
+          "type": "frontmost_application_unless",
+          "bundle_identifiers": ["^com.github.wez.wezterm$"]
+        }
+      ],
+      "from": {
+        "key_code": "k",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "shell_command": "/opt/homebrew/bin/aerospace focus up"
+        }
+      ]
+    },
+    {
+      "type": "basic",
+      "conditions": [
+        {
+          "type": "frontmost_application_unless",
+          "bundle_identifiers": ["^com.github.wez.wezterm$"]
+        }
+      ],
+      "from": {
+        "key_code": "l",
+        "modifiers": {
+          "mandatory": ["option"],
+          "optional": []
+        }
+      },
+      "to": [
+        {
+          "shell_command": "/opt/homebrew/bin/aerospace focus right"
+        }
+      ]
     }
   ]
 }

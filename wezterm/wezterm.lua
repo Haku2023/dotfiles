@@ -25,7 +25,7 @@ elseif wezterm.target_triple == "aarch64-apple-darwin" then
 	-- font setting
 	-- config.font = wezterm.font("MesloLGS NF", { weight = "Medium", stretch = "Normal", style = "Normal" })
 	config.font = wezterm.font("JetBrains Mono NL", { weight = "Regular", stretch = "Normal", style = "Normal" })
-	config.font_size = 21
+	config.font_size = 24
 	Gotop = "/usr/local/bin/gotop"
 	HOME = os.getenv("HOME")
 	-- HOME = wezterm.home_dir
@@ -451,12 +451,14 @@ config.keys = { -- {{{
 	{ key = "j", mods = "ALT|SHIFT", action = wezterm.action.AdjustPaneSize({ "Down", 1 }) },
 	{ key = "k", mods = "ALT|SHIFT", action = wezterm.action.AdjustPaneSize({ "Up", 1 }) },
 	-- Pane navigation (like Vim: Alt+h/j/k/l)
-	{ key = "h", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Left") },
-	{ key = "l", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Right") },
-	{ key = "k", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Up") },
-	{ key = "j", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Down") },
+	-- { key = "h", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Left") },
+	-- { key = "l", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Right") },
+	-- { key = "k", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Up") },
+	-- { key = "j", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Down") },
+	{ key = "k", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Right") },
+	{ key = "j", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Left") },
 	-- Pane max
-	{ key = "f", mods = "ALT", action = wezterm.action.TogglePaneZoomState },
+	{ key = "m", mods = "ALT", action = wezterm.action.TogglePaneZoomState },
 	-- Swap Pane
 	{ key = "e", mods = "ALT", action = act.EmitEvent("swap-pane-new") },
 	-- Swap Tab

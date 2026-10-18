@@ -104,8 +104,23 @@ keymap.set({ "n", "x" }, "wa", "<cmd>wqa<CR>", { desc = "Save all and quit" })
 keymap.set({ "n", "x" }, "qa", "<cmd>qa<CR>", { desc = "Save session and quit all" })
 -- keymap.set({ "n", "x" }, "<leader>qa", save_session_and_quit("qa!"), { desc = "Save session and quit all" })
 keymap.set("x", "s", "<ESC>", { desc = "Exit visual mode with s" })
-keymap.set("i", "<C-f>", "<Right>", { desc = "forward in insertmode" })
-keymap.set("i", "<C-b>", "<Left>", { desc = "backward in insertmode" })
+local emacs_insert = {
+  ["<C-a>"] = "<Home>", -- beginning of line
+  ["<C-e>"] = "<End>", -- end of line
+  ["<C-b>"] = "<Left>", -- backward one character
+  ["<C-f>"] = "<Right>", -- forward one character
+  ["<C-p>"] = "<Up>", -- previous line
+  ["<C-n>"] = "<Down>", -- next line
+  ["<C-h>"] = "<BS>", -- delete previous character
+  ["<C-d>"] = "<Del>", -- delete next character
+  ["<M-b>"] = "<C-Left>", -- backward one word
+  ["<M-f>"] = "<C-Right>", -- forward one word
+  ["<M-h>"] = "<C-w>", -- delete previous word
+}
+
+for lhs, rhs in pairs(emacs_insert) do
+  vim.keymap.set("i", lhs, rhs, { desc = "Emacs-style insert editing" })
+end
 -- keymap.set("i", "hh", "<C-h>", { desc = "delete character in insertmode" })
 -- keymap.set("i", "ff", "<Right>", { desc = "forward character in insertmode" })
 keymap.set("i", "jj", "<End><CR>", { desc = "forward character in insertmode" })
