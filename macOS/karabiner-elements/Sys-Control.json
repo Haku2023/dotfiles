@@ -167,7 +167,11 @@
     {
       "conditions": [
         {
-          "bundle_identifiers": ["^com.apple.Preview$"],
+          "bundle_identifiers": [
+            "^com.apple.Preview$",
+            "^com.github.wez.wezterm$",
+            "^com.google.Chrome.app.cmkncekebbebpfilplodngbpllndjkfo$"
+          ],
           "type": "frontmost_application_unless"
         }
       ],
@@ -185,6 +189,57 @@
         }
       ],
       "type": "basic"
+    },
+    {
+      "type": "basic",
+      "conditions": [
+        {
+          "type": "input_source_if",
+          "input_sources": [{ "language": "^ja$" }]
+        }
+      ],
+      "from": {
+        "key_code": "h",
+        "modifiers": {
+          "mandatory": ["control"],
+          "optional": []
+        }
+      },
+      "to": [{ "key_code": "delete_or_backspace" }]
+    },
+    {
+      "type": "basic",
+      "conditions": [
+        {
+          "type": "input_source_if",
+          "input_sources": [{ "language": "^ja$" }]
+        }
+      ],
+      "from": {
+        "key_code": "n",
+        "modifiers": {
+          "mandatory": ["control"],
+          "optional": []
+        }
+      },
+      "to": [{ "key_code": "down_arrow" }]
+    },
+    {
+      "type": "basic",
+      "conditions": [
+        {
+          "type": "input_source_if",
+          "input_sources": [{ "language": "^ja$" }]
+        }
+      ],
+      "from": {
+        "key_code": "p",
+        "modifiers": {
+          "mandatory": ["control"],
+          "optional": []
+        }
+      },
+      "to": [{ "key_code": "up_arrow" }]
     },
     {
       "conditions": [
