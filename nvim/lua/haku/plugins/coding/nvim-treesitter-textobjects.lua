@@ -174,6 +174,19 @@ return {
     end
 
     local function pick_lists()
+      local ok, data = pcall(function()
+        return vim.json.decode(table.concat(vim.fn.readfile(path), "\n"))
+      end)
+
+      if not ok or type(data) ~= "table" or type(data.lists) ~= "table" then
+        vim.notify("Could not reload mark lists from " .. path, vim.log.levels.ERROR)
+        return
+      end
+
+      local active = _G.HakuMarks.active or "default"
+      data.lists[active] = data.lists[active] or {}
+      _G.HakuMarks = data
+      activate(active)
       pickers
         .new({}, {
           prompt_title = "Mark Lists",
@@ -214,6 +227,9 @@ return {
                 local remaining = vim.tbl_keys(_G.HakuMarks.lists)
                 activate(remaining[1] or "default")
               end
+
+              -- Save the deletion immediately.
+              vim.fn.writefile({ vim.json.encode(_G.HakuMarks) }, path)
               action_state.get_current_picker(prompt_bufnr):refresh(list_finder(), { reset_prompt = false })
             end
             map("i", "<C-d>", delete_list)
@@ -261,11 +277,11 @@ return {
     vim.api.nvim_create_autocmd("ColorScheme", { callback = set_hl }) -- colorschemes wipe custom hls
 
     -- write marks to disk before quitting
-    vim.api.nvim_create_autocmd("VimLeavePre", {
-      callback = function()
-        vim.fn.writefile({ vim.json.encode(_G.HakuMarks) }, path)
-      end,
-    })
+    -- vim.api.nvim_create_autocmd("VimLeavePre", {
+    --   callback = function()
+    --     vim.fn.writefile({ vim.json.encode(_G.HakuMarks) }, path)
+    --   end,
+    -- })
     -- paint ONE buffer: clear our old marks, then tint each stored line number
     local function paint(buf)
       if not vim.api.nvim_buf_is_loaded(buf) then
@@ -300,7 +316,7 @@ return {
       end,
     })
 
-    -- record / un-record the current line (toggle)
+    -- record / un-record the current line (togthe weird thing is that I remember I have stored this file some days agao, but now it is just a defaultgle)
     local function toggle()
       -- local line = vim.api.nvim_win_get_cursor(0)[1] -- {row, col}; row is 1-indexed
       local cursor = vim.api.nvim_win_get_cursor(0)
@@ -405,6 +421,9 @@ return {
 
     vim.keymap.set("n", "<leader>gg", toggle, { desc = "Toggle line mark" })
     vim.keymap.set("n", "<leader>gc", clear, { desc = "Clear line mark" })
+    vim.keymap.set("n", "<leader>gs", function()
+      vim.fn.writefile({ vim.json.encode(_G.HakuMarks) }, path)
+    end, { desc = "save line mark" })
 
     -- optional, if you also want bracket motions:
     vim.keymap.set("n", "]g", function()

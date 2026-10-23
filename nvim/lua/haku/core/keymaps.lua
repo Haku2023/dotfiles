@@ -201,9 +201,9 @@ keymap.set("i", "<C-v>", "<C-o>p", { desc = "Paste in insert mode" })
 --From dycw/dotfiles
 
 -- inspect
-keymap.set("n", "<leader>i", "<Cmd>Inspect<CR>", { desc = "Clear All Marks a-z A-Z 0-9" })
+keymap.set("n", "<leader>i", "<Cmd>Inspect<CR>", { desc = "Inspect" })
 -- marks
-keymap.set("n", "<leader>kd", "<Cmd>delmarks a-z A-Z 0-9<CR>", { desc = "Clear All Marks a-z A-Z 0-9" })
+keymap.set("n", "<leader>cm", "<Cmd>delmarks a-z A-Z 0-9<CR>", { desc = "Clear All Marks a-z A-Z 0-9" })
 --inspect
 keymap.set("n", "<leader>i", "<Cmd>Inspect<CR>", { desc = "Inspect in Treesitter" })
 -- show full path
@@ -235,7 +235,7 @@ keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) --  decreme
 
 -- window management
 keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
-keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" })
+keymap.set("n", "<leader>sx", "<C-w>s", { desc = "Split window horizontally" })
 keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make split equal size" })
 keymap.set("n", "<leader>sw", "<Cmd>close<CR>", { desc = "Close current split" })
 -- keymap.set("n", "<leader>ss", [[:%s/\r//g<CR><C-o>]], { desc = "Strip ^M" })

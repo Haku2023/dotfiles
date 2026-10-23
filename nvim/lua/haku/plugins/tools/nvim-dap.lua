@@ -217,7 +217,13 @@ FString()
         -- runtime full-buffers it and `print *` output isn't shown until the
         -- buffer fills or the program exits. Force the preconnected units
         -- (stdout/stderr) unbuffered so prints appear live while stepping.
-        env = { GFORTRAN_UNBUFFERED_PRECONNECTED = "y" },
+        -- env = { GFORTRAN_UNBUFFERED_PRECONNECTED = "y" },
+        -- env = vim.tbl_extend("force", vim.fn.environ(), {
+        --   GFORTRAN_UNBUFFERED_PRECONNECTED = "y",
+        -- }),
+        env = vim.tbl_extend("force", vim.fn.environ(), {
+          GFORTRAN_UNBUFFERED_PRECONNECTED = "y", -- gfortran: unbuffered stdout
+        }),
         -- cwd = "${workspaceFolder}",
         cwd = function()
           return project_config_for("fortran").cwd or vim.fn.getcwd()
@@ -1062,16 +1068,17 @@ FString()
     --     watches.remove(index)
     --   end
     -- end, { desc = "DAP: Clear all watches" })
-    map("n", "<Leader>dc", function()
-      if not dap.session() then
-        return
-      end
+    map("n", "<Leader>cb", function()
+      -- if not dap.session() then
+      --   return
+      -- end
       if vim.bo.filetype == "dapui_watches" then
         local watches = ui.elements.watches
         for index = #watches.get(), 1, -1 do
           watches.remove(index)
         end
-      elseif vim.bo.buftype == "" then
+      -- elseif vim.bo.buftype == "" then
+      else
         dap.clear_breakpoints()
       end
     end, { desc = "DAP: Clear watches or breakpoints" })

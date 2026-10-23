@@ -67,6 +67,7 @@ opt.splitbelow = true -- split horizontal window to the bottom
 
 -- allow fold mark
 opt.foldmethod = "marker"
+opt.foldmarker = "fold-start,fold-end"
 opt.foldlevel = 0
 opt.foldlevelstart = 0
 

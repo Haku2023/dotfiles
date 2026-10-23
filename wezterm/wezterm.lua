@@ -405,6 +405,7 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 		ansi = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#0FC5ED", "#a277ff", "#24EAF7", "#24EAF7" },
 		brights = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#A277FF", "#a277ff", "#24EAF7", "#24EAF7" },
 	}
+	-- config.ime_preedit_rendering = "System"
 else
 	config.colors = {
 		foreground = "#CBE0F0",
@@ -567,9 +568,10 @@ config.keys = { -- {{{
 }
 
 -- if in linux, using tab alt to change workspace
-if string.find(wezterm.target_triple, "linux") or string.find(wezterm.target_triple, "apple") then
-	table.insert(config.keys, { key = "Tab", mods = "ALT", action = act.EmitEvent("swap-workspace") })
-end
+-- if string.find(wezterm.target_triple, "linux") or string.find(wezterm.target_triple, "apple") then
+-- 	-- table.insert(config.keys, { key = "Tab", mods = "ALT", action = act.EmitEvent("swap-workspace") })
+-- end
+table.insert(config.keys, { key = "n", mods = "ALT", action = act.EmitEvent("swap-workspace") })
 
 -- haku test use <A-r>
 wezterm.on("show_status", function(window, pane)

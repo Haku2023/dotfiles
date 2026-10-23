@@ -25,6 +25,14 @@ return {
         vim.bo.commentstring = "; %s"
       end,
     })
+
+    -- Set commentstring for shader files
+    -- vim.api.nvim_create_autocmd("FileType", {
+    --   pattern = { "glsl" },
+    --   callback = function()
+    --     vim.bo.commentstring = "// %s"
+    --   end,
+    -- })
     -- enable comment
     -- comment.setup({
     --   -- for commenting tsx, jsx, svelte, html files

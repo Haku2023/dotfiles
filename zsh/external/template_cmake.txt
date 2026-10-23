@@ -10,8 +10,31 @@ LANGUAGES lang
 # Generate compile_commands.json for clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+
 add_executable(template)
 
 target_sources(template
 PRIVATE
-./main.lang_ext)
+./src/main.lang_ext)
+
+
+#target_include_directories(tinyfd_ext PUBLIC
+#      ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyfd)
+
+# --- library part
+#add_library(dialog_lib)
+# --- for cpp
+#target_sources(dialog_lib
+#      PRIVATE src/folder_dialog.cpp
+#      PUBLIC FILE_SET HEADERS BASE_DIRS include
+#             FILES include/myproject/folder_dialog.hpp)
+#target_compile_features(dialog_lib PUBLIC cxx_std_17)
+#if(WIN32)
+#  target_link_libraries(dialog_lib PRIVATE ole32 shell32 uuid)
+#else()
+#  target_link_libraries(dialog_lib PRIVATE tinyfd_ext)
+#endif()
+#target_link_libraries(template PRIVATE
+#  dialog_lib
+#)
+# --- library part
