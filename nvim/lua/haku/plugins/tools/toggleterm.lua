@@ -76,6 +76,12 @@ return {
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-\\><C-n>", true, false, true), "n", false)
       end, opts)
 
+      -- Shell command editing in terminal input mode
+      vim.keymap.set("t", "<C-d>", "<Del>", opts)
+      vim.keymap.set("t", "<M-b>", "<C-Left>", opts)
+      vim.keymap.set("t", "<M-f>", "<C-Right>", opts)
+      vim.keymap.set("t", "<M-h>", "<C-w>", opts)
+
       -- jk → leave terminal-mode
       vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
 

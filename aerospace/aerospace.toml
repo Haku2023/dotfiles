@@ -145,6 +145,7 @@ on-mode-changed = []
     cmd-shift-k = 'workspace K'
     cmd-shift-f = 'workspace F'
     cmd-shift-x = 'workspace X'
+    cmd-shift-l = 'workspace L'
     # cmd-ctrl-g = 'workspace G'
     # ctrl-q = 'workspace Q'
 
@@ -160,6 +161,7 @@ on-mode-changed = []
     alt-shift-9 = 'move-node-to-workspace 9'
     alt-shift-q = 'move-node-to-workspace Q'
     alt-shift-g = 'move-node-to-workspace G'
+    # alt-shift-l = 'move-node-to-workspace L'
 
     alt-shift-f = 'fullscreen'
     alt-shift-r = 'flatten-workspace-tree' # reset layout
@@ -195,7 +197,7 @@ on-mode-changed = []
     run = ['layout floating','move-node-to-workspace F']
 [[on-window-detected]]
     if.app-id = 'org.qutebrowser.qutebrowser'
-    run = ['move-node-to-workspace Q','fullscreen']
+    run = ['layout floating','move-node-to-workspace Q','fullscreen']
 [[on-window-detected]]
     if.app-id = 'com.apple.mail'
     run = ['move-node-to-workspace M','fullscreen']
@@ -208,6 +210,9 @@ on-mode-changed = []
 [[on-window-detected]]
     if.app-id = 'com.tencent.xinWeChat'
     run = ['move-node-to-workspace X','layout floating','fullscreen']
+[[on-window-detected]]
+    if.app-id = 'jp.naver.line.mac'
+    run = ['move-node-to-workspace L','layout floating','fullscreen']
 [[on-window-detected]]
     if.app-id = 'com.apple.iWork.Keynote'
     run = ['layout floating']

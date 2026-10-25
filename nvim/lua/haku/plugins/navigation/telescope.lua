@@ -125,8 +125,18 @@ return {
     keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Find string in cwd" })
     keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "Fuzzy find recent files" })
     keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
-    keymap.set("n", "<leader>fT", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
-    keymap.set("n", "<leader>ft", "<cmd>TodoTelescope keywords=TEST<cr>", { desc = "Find Test" })
+    keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
+    -- keymap.set("n", "<leader>ft", "<cmd>TodoTelescope keywords=TEST<cr>", { desc = "Find Test" })
+    keymap.set("n", "<leader>fT", function()
+      require("telescope").extensions["todo-comments"].todo({
+        keywords = "TEST",
+        attach_mappings = function(prompt_bufnr)
+          local picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
+          picker.prompt_border:change_title("Find Test")
+          return true
+        end,
+      })
+    end, { desc = "Find Test" })
     keymap.set("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", { desc = "Find keymaps?" })
     keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
     keymap.set("n", "<leader>fs", builtin.lsp_workspace_symbols, { desc = "Fuzzy find symbols in workspace" })

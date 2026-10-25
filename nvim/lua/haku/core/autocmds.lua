@@ -124,3 +124,33 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
     end
   end,
 })
+
+-- Follow Markdown file links with gf
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function(event)
+    vim.keymap.set("n", "gf", function()
+      local line = vim.api.nvim_get_current_line()
+      local col = vim.api.nvim_win_get_cursor(0)[2] + 1
+      local offset = 1
+
+      while true do
+        local first, last, target = line:find("%b[]%((.-)%)", offset)
+        if not first then
+          break
+        end
+
+        if col >= first and col <= last then
+          local path = vim.fn.expand("%:p:h") .. "/" .. target
+          vim.cmd.edit(vim.fn.fnameescape(path))
+          return
+        end
+
+        offset = last + 1
+      end
+
+      vim.cmd("normal! gf")
+    end, { buffer = event.buf, desc = "Follow Markdown file link" })
+  end,
+  -- command = "echo 'enter the markdown file'",
+})

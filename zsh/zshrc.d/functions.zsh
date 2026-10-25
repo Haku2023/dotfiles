@@ -1,5 +1,5 @@
 # basic platform specific functions
-#{{{
+#fold-start
 if [[ "$(uname)" == "Darwin" ]]; then
 	remind() {
 		local minutes=$1
@@ -113,10 +113,11 @@ zln() {
 	zmv -vL "$@"
 }
 
-#}}}
+#fold-end
 
-# haku useful functions cdn mcd lsn
-# >>>>>>>>>>>>>>>>{{{
+# haku useful functions
+# hkcmake cdn mcd lsn
+# >>>>>>>>>>>>>>>>fold-start
 hkcmake() {
 	if (($# != 2)); then
 		print -u2 "ERROR: need 2 args (eg. cpp exe_name)"
@@ -168,13 +169,37 @@ cdn() {
 	new_file=$(eza -snew -D --icons=never | tail -n${n} | head -n1)
 	cd ${new_file}
 }
+rp() {
+	local n=${1:-10}
+	if (($# == 2)) || { (($# == 1)) && [[ $1 != <-> ]]; }; then
+		local folder=$1
+		n=${2:-10}
+	else
+		local n=${1:-10}
+		folder="."
+	fi
+	realpath ${folder}/*(Om) | tail -n${n}
+}
 lsn() {
 	local n=${1:-10}
-	eza -snew -l --icons=always --color=always | tail -n${n}
+	if (($# == 2)) || [[ $1 != <-> ]]; then
+		local folder=$1
+		n=${2:-10}
+	else
+		local n=${1:-10}
+		folder="."
+	fi
+	eza -snew -l --icons=always --color=always ${folder} | tail -n${n}
 }
 lsnf() {
 	local n=${1:-10}
-	eza -snew -l --icons=always --color=always --only-files | tail -n${n}
+	if (($# == 2)) || [[ $1 != <-> ]]; then
+		local folder=$1
+		n=${2:-10}
+	else
+		folder="."
+	fi
+	eza -snew -l --icons=always --color=always --only-files ${folder} | tail -n${n}
 }
 vin() {
 	local n=${1:-1}
@@ -293,8 +318,15 @@ zvm_after_init_commands+=(
 	"KEYTIMEOUT=1"
 	#   #for dirhistory
 	"bindkey -s '^K' '^[[1;3A'" "bindkey -M vicmd -s '^K' '^[[1;3A'"
-	"bindkey -s '^U' '^[[1;3C'" "bindkey -M vicmd -s '^U' '^[[1;3C'"
-	"bindkey -s '^O' '^[[1;3D'" "bindkey -M vicmd -s '^O' '^[[1;3D'"
+	# old
+	# "bindkey -s '^U' '^[[1;3C'" "bindkey -M vicmd -s '^U' '^[[1;3C'"
+	# "bindkey -s '^O' '^[[1;3D'" "bindkey -M vicmd -s '^O' '^[[1;3D'"
+	# new
+	"bindkey -M viins '^U' dirhistory_zle_dirhistory_future"
+	"bindkey -M vicmd '^U' dirhistory_zle_dirhistory_future"
+	"bindkey -M viins '^O' dirhistory_zle_dirhistory_back"
+	"bindkey -M vicmd '^O' dirhistory_zle_dirhistory_back"
+	#-
 	"bindkey '^J' open-nvim" "bindkey -M vicmd '^J' open-nvim"
 	# "bindkey '\en'  open-nvim" "bindkey -M vicmd '\en' open-nvim"        # Alt-n
 	"bindkey '^H' backward-delete-char"
@@ -317,10 +349,26 @@ function zvm_after_lazy_keybindings() {
 
 # Start in command mode (this is the key part)
 # zle-line-init() { zle -K vicmd; }
-# <<<<<<<<<<<<<<<<# }}}
+# <<<<<<<<<<<<<<<<# fold-end
+
+# haku Zsh emacs insert
+# >>>fold-start
+for keymap in emacs viins; do
+	# Command editing keys sent by Neovim's terminal mappings
+	bindkey -M "$keymap" '^[[1;5D' backward-word
+	bindkey -M "$keymap" '^[[1;5C' forward-word
+	bindkey -M "$keymap" '^W' backward-kill-word
+
+	# emacs setting for zsh shell
+	bindkey -M "$keymap" '^[b' backward-word
+	bindkey -M "$keymap" '^[f' forward-word
+	bindkey -M "$keymap" '^[h' backward-kill-word
+	bindkey -M "$keymap" '^D' delete-char
+done
+# >>>fold-end
 
 # refer oh-my-zsh
-#d(){{{
+#>>> fold-start
 function d() {
 	if [[ -n $1 ]]; then
 		dirs "$@"
@@ -329,8 +377,6 @@ function d() {
 	fi
 }
 compdef _dirs d
-#<<}}}
-#omz_history(){{{
 function omz_history {
 	# parse arguments and remove from $@
 	local clear list stamp REPLY
@@ -356,8 +402,7 @@ function omz_history {
 		builtin fc "${stamp[@]}" -l "$@"
 	fi
 }
-#<<<}}}
-# Navigate directory history using ALT-Navs{{{
+# Navigate directory history using ALT-Navs
 dirhistory_past=($PWD)
 dirhistory_future=()
 export dirhistory_past
@@ -398,15 +443,15 @@ function push_past() {
 	fi
 }
 
-# function push_future() {
-# 	setopt localoptions no_ksh_arrays
-# 	if [[ $#dirhistory_future -ge $DIRHISTORY_SIZE ]]; then
-# 		shift dirhistory_future
-# 	fi
-# 	if [[ $#dirhistory_future -eq 0 || $dirhistory_futuret[$#dirhistory_future] != "$1" ]]; then
-# 		dirhistory_future+=($1)
-# 	fi
-# }
+function push_future() {
+	setopt localoptions no_ksh_arrays
+	if [[ $#dirhistory_future -ge $DIRHISTORY_SIZE ]]; then
+		shift dirhistory_future
+	fi
+	if [[ $#dirhistory_future -eq 0 || $dirhistory_future[$#dirhistory_future] != "$1" ]]; then
+		dirhistory_future+=($1)
+	fi
+}
 
 # Called by zsh when directory changes
 autoload -U add-zsh-hook
@@ -548,6 +593,7 @@ zle -N dirhistory_zle_dirhistory_up
 zle -N dirhistory_zle_dirhistory_down
 
 for keymap in emacs vicmd viins; do
+
 	# dirhistory_up
 	bindkey -M $keymap "\e[3A" dirhistory_zle_dirhistory_up   # xterm in normal mode
 	bindkey -M $keymap "\e[1;3A" dirhistory_zle_dirhistory_up # xterm in normal mode
@@ -582,10 +628,10 @@ for keymap in emacs vicmd viins; do
 done
 
 unset keymap
-#<<<}}}
+#<<<fold-end
 
 # conda initialize with python function
-# <<<{{{
+# <<<fold-start
 conda() {
 	unset -f conda
 	__conda_setup="$("${HOME}/Tools/miniconda3/bin/conda" 'shell.zsh' 'hook' 2>/dev/null)"
@@ -599,7 +645,12 @@ conda() {
 		fi
 	fi
 	unset __conda_setup
-	conda "$@"
+	if (($# == 0)); then
+		conda activate base
+		print -- "conda: no arguments provided, activated base environment"
+	else
+		conda "$@"
+	fi
 }
 
 python() {
@@ -641,4 +692,4 @@ python() {
 # 	return 127
 # }
 #
-#<<<}}}
+#<<<fold-end

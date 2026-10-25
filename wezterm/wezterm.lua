@@ -452,6 +452,7 @@ config.keys = { -- {{{
 	{ key = "j", mods = "ALT|SHIFT", action = wezterm.action.AdjustPaneSize({ "Down", 1 }) },
 	{ key = "k", mods = "ALT|SHIFT", action = wezterm.action.AdjustPaneSize({ "Up", 1 }) },
 	-- Pane navigation (like Vim: Alt+h/j/k/l)
+	-- Alt + h used for delete word in nvim
 	-- { key = "h", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Left") },
 	-- { key = "l", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Right") },
 	-- { key = "k", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Up") },
