@@ -36,7 +36,7 @@
     ; Type inquiry
     "kind" "selected_int_kind" "selected_real_kind" "precision" "range"
     ; Bit functions
-    "iand" "ior" "ieor" "not" "ishft" "ishftc" "btest" "ibset" "ibclr"
+    "iand" "ior" "ieor" "not" "ishft" "ishftc" "btest" "ibset" "ibclr" "storage_size"
     ; Miscellaneous
     "present" "null" "transfer" "huge" "tiny" "epsilon"
     ))

@@ -129,23 +129,16 @@ wezterm.on("select-workspace", function(window, pane)
 end)
 -- swap workspace
 wezterm.on("swap-workspace", function(window, pane)
-	_G.workspace_p = _G.workspace_p or "0"
+	local current = window:active_workspace()
+	local previous = wezterm.GLOBAL.previous_workspace
 
-	-- window:set_right_status(_G.workspace_p)
-
-	local current_workspace_name = window:active_workspace()
-	local workspace_p_name = nil
-
-	-- window:set_right_status("pindex pure: " .. tostring(G.pane_pindex))
-	-- if nil, give current index and toggle maximum return
-	if _G.workspace_p ~= "0" then
-		workspace_p_name = _G.workspace_p
-		_G.workspace_p = current_workspace_name
-		-- window:perform_action(wezterm.action.SetPaneZoomState(false), pane)
-		window:perform_action(wezterm.action.SwitchToWorkspace({ name = workspace_p_name }), pane)
-	else
-		_G.workspace_p = current_workspace_name
+	if not previous or previous == current then
+		wezterm.GLOBAL.previous_workspace = current
+		return
 	end
+
+	wezterm.GLOBAL.previous_workspace = current
+	window:perform_action(wezterm.action.SwitchToWorkspace({ name = previous }), pane)
 end)
 -- }}}
 
@@ -490,8 +483,24 @@ config.keys = { -- {{{
 	{ key = "4", mods = "ALT", action = jump_to_tab(4) },
 	-- { key = "0", mods = "ALT", action = act.EmitEvent("toggle-background-image") },
 	-- workspace
-	{ key = ",", mods = "ALT", action = act.SwitchWorkspaceRelative(-1) },
-	{ key = ".", mods = "ALT", action = act.SwitchWorkspaceRelative(1) },
+	-- { key = ",", mods = "ALT", action = act.SwitchWorkspaceRelative(-1) },
+	-- { key = ".", mods = "ALT", action = act.SwitchWorkspaceRelative(1) },
+	{
+		key = ",",
+		mods = "ALT",
+		action = wezterm.action_callback(function(window, pane)
+			wezterm.GLOBAL.previous_workspace = window:active_workspace()
+			window:perform_action(act.SwitchWorkspaceRelative(-1), pane)
+		end),
+	},
+	{
+		key = ".",
+		mods = "ALT",
+		action = wezterm.action_callback(function(window, pane)
+			wezterm.GLOBAL.previous_workspace = window:active_workspace()
+			window:perform_action(act.SwitchWorkspaceRelative(1), pane)
+		end),
+	},
 	{ key = "/", mods = "ALT", action = act.EmitEvent("select-workspace") },
 	{ key = "n", mods = "ALT|SHIFT", action = act.EmitEvent("create-workspace") },
 	-- new tab as powershell

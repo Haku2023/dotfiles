@@ -170,8 +170,14 @@ local function restore()
   --   end
   -- end
 
+  -- if s.restore_cmd then
+  --   vim.cmd(s.restore_cmd)
+  -- end
   if s.restore_cmd then
     vim.cmd(s.restore_cmd)
+    if vim.fn.winrestcmd() ~= s.restore_cmd then
+      vim.cmd("wincmd =")
+    end
   end
   if api.nvim_win_is_valid(s.focus) then
     api.nvim_set_current_win(s.focus)

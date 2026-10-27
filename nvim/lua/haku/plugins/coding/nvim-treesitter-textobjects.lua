@@ -147,6 +147,36 @@ return {
     local previewers = require("telescope.previewers")
     -- ts_repeat_move is already required in your file as `ts_repeat_move`
     local path = vim.fn.stdpath("data") .. "/haku_linemarks.json"
+    local function read_disk()
+      if vim.fn.filereadable(path) == 0 then
+        return nil
+      end
+      return table.concat(vim.fn.readfile(path), "\n")
+    end
+
+    local disk_snapshot = read_disk()
+
+    local function save_marks()
+      local ok, err = pcall(function()
+        if read_disk() ~= disk_snapshot then
+          error("Marks changed on disk; restart or reload before saving")
+        end
+
+        local encoded = vim.json.encode(_G.HakuMarks)
+        if vim.fn.writefile({ encoded }, path) ~= 0 then
+          error("Could not write " .. path)
+        end
+        disk_snapshot = encoded
+      end)
+
+      if not ok then
+        vim.notify(tostring(err), vim.log.levels.ERROR)
+        return false
+      end
+
+      vim.notify("Marks saved to " .. path)
+      return true
+    end
     -- load once per session (guard so :source doesn't re-read the file over live state)
 
     -- forward-declared so the Telescope picker closures below capture it as an
@@ -421,9 +451,13 @@ return {
 
     vim.keymap.set("n", "<leader>gg", toggle, { desc = "Toggle line mark" })
     vim.keymap.set("n", "<leader>gc", clear, { desc = "Clear line mark" })
-    vim.keymap.set("n", "<leader>gs", function()
-      vim.fn.writefile({ vim.json.encode(_G.HakuMarks) }, path)
-    end, { desc = "save line mark" })
+    -- vim.keymap.set("n", "<leader>gs", function()
+    --   vim.fn.writefile({ vim.json.encode(_G.HakuMarks) }, path)
+    -- end, { desc = "save line mark" })
+
+    vim.keymap.set("n", "<leader>gs", save_marks, {
+      desc = "Save line marks",
+    })
 
     -- optional, if you also want bracket motions:
     vim.keymap.set("n", "]g", function()
