@@ -7,11 +7,25 @@ if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
 
+-- basic system/tab/pane settings
+-- <<<fold-start
 -- system setting
 config.default_workspace = "apple"
 -- force X11 instead of Wayland
 config.enable_wayland = true
--- set for wsl if windows, using <C-S-l> check info{{{
+-- tab settting
+config.enable_tab_bar = true
+config.use_fancy_tab_bar = false
+config.tab_bar_at_bottom = true
+config.audible_bell = "Disabled"
+config.hide_tab_bar_if_only_one_tab = false
+-- pane setting
+config.unzoom_on_switch_pane = false
+-- set for wsl if windows, using <C-S-l> check info
+-- <<<fold-end
+
+-- font, background settings
+-- <<<fold-start
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	config.default_prog = { "wsl.exe", "~", "-e", "zsh" }
 	wezterm.log_info("OS: Windows, Prog: wsl")
@@ -58,11 +72,193 @@ elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
 	-- font setting
 	config.font = wezterm.font("JetBrains Mono NL", { weight = "Regular", stretch = "Normal", style = "Normal" })
 	-- config.font = wezterm.font("MesloLGS NF", { weight = "Medium", stretch = "Normal", style = "Normal" })
-end -- }}}
+end
 -- config.font = wezterm.font("MesloLGS NF")
+--
+-- window setting
+-- to make windows resized also can exclude the top bar
+config.window_decorations = "NONE"
+-- config.window_decorations = "RESIZE"
+-- config.window_close_confirmation = "NeverPrompt"
+config.window_padding = {
+	left = 0,
+	right = 0,
+	top = 0,
+	bottom = 0,
+}
+-- <<<fold-end
+
+-- workspace setting from start
+-- <<<fold-start
+if wezterm.target_triple ~= "x86_64-pc-windows-msvc" then
+	wezterm.on("gui-startup", function(cmd)
+		local mux = wezterm.mux
+		local workspace_name = "banana"
+		-- First, spawn the default "apple" workspace window
+		local tab, pane, window = mux.spawn_window(cmd or {})
+		-- Then create "banana" workspace in the background with 2 tabs
+		local _, _, banana_window = mux.spawn_window({
+			workspace = workspace_name,
+			-- add dotfiles in banana workspace
+			cwd = wezterm.home_dir .. "/dotfiles",
+		})
+		banana_window:spawn_tab({
+			cwd = wezterm.home_dir .. "/Haku_Posts",
+		})
+		mux.set_active_workspace(config.default_workspace)
+		if wezterm.target_triple ~= "x86_64-unknown-linux-gnu" then
+			window:gui_window():toggle_fullscreen()
+		end
+	end)
+else
+	wezterm.on("gui-startup", function(cmd)
+		local mux = wezterm.mux
+		local workspace_name = "melon"
+		-- First, spawn the default "apple" workspace window
+		local _, _, _ = mux.spawn_window(cmd or {})
+
+		-- Then create "melon" workspace in the background with 2 tabs
+		local tab, pane, melon_window = mux.spawn_window({
+			workspace = workspace_name,
+			cwd = wezterm.home_dir,
+		})
+
+		-- Open the pwshh.exe in the new tab of the "melon" workspace
+		-- melon_window:spawn_tab({
+		-- 	cwd = wezterm.home_dir,
+		-- 	args = { "C:\\Users\\hakukt\\AppData\\Local\\Microsoft\\WindowsApps\\pwsh.exe" },
+		-- })
+	end)
+end
+-- <<<fold-end
+
+-- color scheme setting
+-- windows one half black, mac and linux one black
+-- <<<fold-start
+config.color_scheme = "Dracula (Official)"
+config.color_scheme_dirs = { "~/.config/color/schemes" }
+-- Josean coolnight colorscheme:
+if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+	config.colors = {
+		foreground = "#CBE0F0",
+		--one half black
+		background = "#282c34",
+		cursor_fg = "#282c34",
+		-- background = "#011423",
+		-- cursor_fg = "#011423",
+		cursor_bg = "#47FF9C",
+		cursor_border = "#47FF9C",
+		selection_bg = "#033259",
+		selection_fg = "#CBE0F0",
+		ansi = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#0FC5ED", "#a277ff", "#24EAF7", "#24EAF7" },
+		brights = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#A277FF", "#a277ff", "#24EAF7", "#24EAF7" },
+	}
+	-- config.ime_preedit_rendering = "System"
+else
+	config.colors = {
+		foreground = "#CBE0F0",
+		--one half black
+		-- background = "#282c34",
+		-- cursor_fg = "#282c34",
+		background = "#011423",
+		-- background = "#000000",
+		cursor_fg = "#011423",
+		cursor_bg = "#47FF9C",
+		cursor_border = "#47FF9C",
+		selection_bg = "#033259",
+		selection_fg = "#CBE0F0",
+		ansi = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#0FC5ED", "#a277ff", "#24EAF7", "#24EAF7" },
+		brights = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#A277FF", "#a277ff", "#24EAF7", "#24EAF7" },
+	}
+end
+-- <<<fold-end
+
+-- functions and register events
+--<<<fold-start
+-- Pane roles use stable IDs, so rearranging splits does not change the main pane.
+local function main_pane(tab)
+	local roles = wezterm.GLOBAL.main_panes or {}
+	local id = tostring(tab:tab_id())
+	local panes = tab:panes()
+	local oldest
+	for _, pane in ipairs(panes) do
+		if pane:pane_id() == roles[id] then
+			return pane
+		end
+		if not oldest or pane:pane_id() < oldest:pane_id() then
+			oldest = pane
+		end
+	end
+	-- Also initializes existing tabs on reload; promote the oldest survivor on close.
+	if oldest then
+		roles[id] = oldest:pane_id()
+		wezterm.GLOBAL.main_panes = roles
+	end
+	return oldest
+end
+
+local function focus_zoomed(tab, pane)
+	if not pane then
+		return
+	end
+	if tab:active_pane():pane_id() ~= pane:pane_id() then
+		-- Required by WezTerm before activating a different zoomed pane.
+		tab:set_zoomed(false)
+		pane:activate()
+	end
+	tab:set_zoomed(true)
+end
+
+local function show_main_pane(tab)
+	focus_zoomed(tab, main_pane(tab))
+end
+
+local function activate_main_tab(window, tab)
+	local current = window:active_tab()
+	if current and current:tab_id() ~= tab:tab_id() then
+		local previous = wezterm.GLOBAL.previous_tabs or {}
+		previous[tostring(window:window_id())] = current:tab_id()
+		wezterm.GLOBAL.previous_tabs = previous
+	end
+	show_main_pane(tab)
+	tab:activate()
+end
+
+local function switch_workspace(window, pane, name)
+	if not name then
+		return
+	end
+	-- Prepare destination windows before they become visible.
+	for _, mux_window in ipairs(wezterm.mux.all_windows()) do
+		if mux_window:get_workspace() == name then
+			local tab = mux_window:active_tab()
+			if tab then
+				show_main_pane(tab)
+			end
+		end
+	end
+	local current = window:active_workspace()
+	if current ~= name then
+		wezterm.GLOBAL.previous_workspace = current
+	end
+	window:perform_action(wezterm.action.SwitchToWorkspace({ name = name }), pane)
+end
+
+local function relative_workspace(offset)
+	return wezterm.action_callback(function(window, pane)
+		local names = wezterm.mux.get_workspace_names()
+		table.sort(names)
+		for i, name in ipairs(names) do
+			if name == window:active_workspace() then
+				switch_workspace(window, pane, names[(i - 1 + offset) % #names + 1])
+				return
+			end
+		end
+	end)
+end
 
 -- workspace setting
--- create workspace{{{
+-- create workspace
 wezterm.on("create-workspace", function(window, pane)
 	-- window:set_right_status("hahah")
 	window:perform_action(
@@ -77,7 +273,9 @@ wezterm.on("create-workspace", function(window, pane)
 				-- An empty string if they just hit enter
 				-- Or the actual line of text they wrote
 				if line then
-					window_i:perform_action(wezterm.action.SwitchToWorkspace({ name = line }), pane_i)
+					if line ~= "" then
+						switch_workspace(window_i, pane_i, line)
+					end
 				end
 			end),
 		}),
@@ -120,7 +318,7 @@ wezterm.on("select-workspace", function(window, pane)
 				else
 					-- wezterm.log_info("you selected ", id, label)
 					-- pane_i:send_text(id)
-					window_i:perform_action(wezterm.action.SwitchToWorkspace({ name = id }), pane_i)
+					switch_workspace(window_i, pane_i, id)
 				end
 			end),
 		}),
@@ -137,18 +335,9 @@ wezterm.on("swap-workspace", function(window, pane)
 		return
 	end
 
-	wezterm.GLOBAL.previous_workspace = current
-	window:perform_action(wezterm.action.SwitchToWorkspace({ name = previous }), pane)
+	switch_workspace(window, pane, previous)
 end)
--- }}}
 
--- tab settting
-config.enable_tab_bar = true
---{{{
-config.use_fancy_tab_bar = false
-config.tab_bar_at_bottom = true
-config.audible_bell = "Disabled"
-config.hide_tab_bar_if_only_one_tab = false
 -- set toggle tab bar
 wezterm.on("toggle-tab-bar", function(window, _)
 	local overrides = window:get_config_overrides() or {}
@@ -177,82 +366,31 @@ wezterm.on("update-status", function(window, _)
 		},
 	}))
 end)
--- tab swap
-local function active_tab_index(window)
-	for _, t in ipairs(window:mux_window():tabs_with_info()) do
-		if t.is_active then
-			return t.index
+-- Previous tab is tracked by stable ID, separately for each window.
+wezterm.on("swap-tab", function(window, _)
+	local previous = (wezterm.GLOBAL.previous_tabs or {})[tostring(window:window_id())]
+	for _, tab in ipairs(window:mux_window():tabs()) do
+		if tab:tab_id() == previous then
+			activate_main_tab(window, tab)
+			return
 		end
 	end
-end
-wezterm.on("swap-tab", function(window, pane)
-	local current_tab = active_tab_index(window)
-	if _G.tab_pre == nil then
-		_G.tab_pre = current_tab
-		-- window:set_right_status("tab_pre set: " .. tostring(_G.tab_pre))
-		return
-	end
-
-	local previous_tab = _G.tab_pre
-	_G.tab_pre = current_tab
-	-- window:set_right_status("tab_pre: " .. tostring(previous_tab))
-
-	window:perform_action(wezterm.action.ActivateTab(previous_tab), pane)
+	show_main_pane(window:active_tab())
 end)
--- }}}
 
--- window setting
--- to make windows resized also can exclude the top bar
-config.window_decorations = "NONE" -- {{{
--- config.window_decorations = "RESIZE"
--- config.window_close_confirmation = "NeverPrompt"
-config.window_padding = {
-	left = 0,
-	right = 0,
-	top = 0,
-	bottom = 0,
-}
--- full screen from start
-if wezterm.target_triple ~= "x86_64-pc-windows-msvc" then
-	wezterm.on("gui-startup", function(cmd)
-		local mux = wezterm.mux
-		local workspace_name = "banana"
-		-- First, spawn the default "apple" workspace window
-		local tab, pane, window = mux.spawn_window(cmd or {})
-		-- Then create "banana" workspace in the background with 2 tabs
-		local _, _, banana_window = mux.spawn_window({
-			workspace = workspace_name,
-			-- add dotfiles in banana workspace
-			cwd = wezterm.home_dir .. "/dotfiles",
-		})
-		banana_window:spawn_tab({
-			cwd = wezterm.home_dir .. "/Haku_Posts",
-		})
-		mux.set_active_workspace(config.default_workspace)
-		if wezterm.target_triple ~= "x86_64-unknown-linux-gnu" then
-			window:gui_window():toggle_fullscreen()
+wezterm.on("format-tab-title", function(tab)
+	local roles = wezterm.GLOBAL.main_panes or {}
+	local main_id = roles[tostring(tab.tab_id)]
+	if not main_id then
+		for _, pane in ipairs(tab.panes) do
+			if not main_id or pane.pane_id < main_id then
+				main_id = pane.pane_id
+			end
 		end
-	end)
-else
-	wezterm.on("gui-startup", function(cmd)
-		local mux = wezterm.mux
-		local workspace_name = "melon"
-		-- First, spawn the default "apple" workspace window
-		local _, _, _ = mux.spawn_window(cmd or {})
-
-		-- Then create "melon" workspace in the background with 2 tabs
-		local tab, pane, melon_window = mux.spawn_window({
-			workspace = workspace_name,
-			cwd = wezterm.home_dir,
-		})
-
-		-- Open the pwshh.exe in the new tab of the "melon" workspace
-		-- melon_window:spawn_tab({
-		-- 	cwd = wezterm.home_dir,
-		-- 	args = { "C:\\Users\\hakukt\\AppData\\Local\\Microsoft\\WindowsApps\\pwsh.exe" },
-		-- })
-	end)
-end
+	end
+	local role = tab.active_pane.pane_id == main_id and "main_pane" or "sub_pane"
+	return " " .. tostring(tab.tab_index + 1) .. ": " .. role .. " "
+end)
 
 -- opacity change / toggle background image
 wezterm.on("toggle-background-image", function(window, _)
@@ -290,139 +428,82 @@ wezterm.on("up-opacity", function(window, _)
 	local current_opacity = tag or config.window_background_opacity
 	overrides.window_background_opacity = tag and tag >= 1.0 and 1.0 or current_opacity + 0.05
 	window:set_config_overrides(overrides)
-end) -- }}}
+end) --
 
--- pane setting
-config.unzoom_on_switch_pane = false
--- wezterm.GLOBAL.pane_pindex = {}
--- alt+e,store pane to _G.pane_pindex, switch them
--- old swap pane haku{{{
-wezterm.on("swap-pane", function(window, pane)
-	_G.pane_pindex = _G.pane_pindex or {}
-	local tab = window:active_tab()
-	local itab = tab:tab_id()
-	local index_p
-
-	-- window:set_right_status("pindex pure: " .. tostring(G.pane_pindex))
-	-- window:set_right_status("tab id: " .. tostring(tab:tab_id()) .. " pane id: " .. tostring(_G.pane_pindex[itab]))
-	-- if nil, give current index and toggle maximum return
-	if _G.pane_pindex[itab] ~= nil then
-		index_p = _G.pane_pindex[itab]
-		-- window:set_right_status("pindex not nil:" .. tostring(index_p))
-		for _, p in ipairs(tab:panes_with_info()) do
-			if p.is_active and p.is_zoomed and p.index ~= index_p then
-				_G.pane_pindex[itab] = p.index
-				window:perform_action(wezterm.action.SetPaneZoomState(false), pane)
-				window:perform_action(wezterm.action.ActivatePaneByIndex(index_p), pane)
-				window:perform_action(wezterm.action.SetPaneZoomState(true), pane)
-				-- window:set_right_status("Pane asId:" .. tostring(id))
-				-- window:set_right_status("Pane_list:" .. table.concat(_G.pane_list, "|"))
-			end
-		end
-	else
-		for _, p in ipairs(tab:panes_with_info()) do
-			if p.is_active and p.is_zoomed then
-				window:set_right_status("pindex in active:" .. tostring(_G.pane_pindex))
-				_G.pane_pindex[itab] = p.index
-				window:perform_action(wezterm.action.SetPaneZoomState(false), pane)
-				return
-			end
-		end
-	end
-end) -- }}}
-
--- alt+e, change to other
--- new swap pane haku{{{
+-- Alt-e toggles main/sub; additional panes cycle in creation order.
 wezterm.on("swap-pane-new", function(window, pane)
 	local tab = window:active_tab()
-	local n_panes = #tab:panes()
-	local pane_id = pane:pane_id()
-
-	-- if 1, create new pane, full current
-	if n_panes == 1 then
-		local new_pane = pane:split({ Direction = "Down" })
-		window:perform_action(wezterm.action.SetPaneZoomState(true), new_pane)
-	else
-		for _, new_pane in ipairs(tab:panes()) do
-			local new_pane_id = new_pane:pane_id()
-			window:set_right_status("current pane id:" .. pane_id)
-			if pane_id ~= new_pane_id then
-				window:perform_action(wezterm.action.SetPaneZoomState(false), pane)
-				new_pane:activate()
-				window:perform_action(wezterm.action.SetPaneZoomState(true), new_pane)
-				return
-			end
+	main_pane(tab) -- Register the original pane before the first split.
+	local panes = tab:panes()
+	if #panes == 1 then
+		local sub = pane:split({ direction = "Bottom" })
+		focus_zoomed(tab, sub)
+		return
+	end
+	table.sort(panes, function(a, b)
+		return a:pane_id() < b:pane_id()
+	end)
+	for i, candidate in ipairs(panes) do
+		if candidate:pane_id() == pane:pane_id() then
+			focus_zoomed(tab, panes[i % #panes + 1])
+			return
 		end
 	end
 end)
--- jump to specific pane
+
 local function jump_to_tab(n)
-	return wezterm.action_callback(function(window, pane)
-		local tabs = window:mux_window():tabs_with_info()
-		table.sort(tabs, function(a, b)
-			return a.tab:tab_id() < b.tab:tab_id()
-		end)
-		local current_index = nil
-		for i, t in ipairs(tabs) do
-			if t.is_active then
-				current_index = i - 1
+	return wezterm.action_callback(function(window, _)
+		for _, entry in ipairs(window:mux_window():tabs_with_info()) do
+			if entry.index == n - 1 then
+				activate_main_tab(window, entry.tab)
+				return
 			end
-		end
-		local entry = tabs[n]
-		if entry then
-			if n - 1 ~= current_index then
-				_G.tab_pre = current_index
-			end
-			entry.tab:activate()
 		end
 	end)
 end
--- }}}
+-- haku test use <A-r>
+wezterm.on("show_status", function(window, pane)
+	local tab = window:active_tab()
+	-- local panes = pane.split(dir)
+	local new_pane = pane:split({ Direction = "Right" })
+	-- pane:split({ Direction = "Right", top_level = true })
+	window:perform_action(wezterm.action.SetPaneZoomState(true), new_pane)
+	-- new_pane:activate()
+	-- window:set_right_status("This is test for <A-r> show status")
+	-- window:set_right_status("number of panes in current tab:" .. #tab:panes())
+	-- window:set_right_status(Background and "BG:ON" or "BG:OFF")
+	-- use C-S-L to show the debug info
+	local overrides = window:get_config_overrides() or {}
+	wezterm.log_info(wezterm.json_encode(overrides.background[1].source))
+	-- wezterm.log_info(wezterm.json_encode(overrides.backgorund))
+end)
 
--- color scheme setting
-config.color_scheme = "Dracula (Official)"
-config.color_scheme_dirs = { "~/.config/color/schemes" } -- {{{
--- Josean coolnight colorscheme:
-if wezterm.target_triple == "x86_64-pc-windows-msvc" then
-	config.colors = {
-		foreground = "#CBE0F0",
-		--one half black
-		background = "#282c34",
-		cursor_fg = "#282c34",
-		-- background = "#011423",
-		-- cursor_fg = "#011423",
-		cursor_bg = "#47FF9C",
-		cursor_border = "#47FF9C",
-		selection_bg = "#033259",
-		selection_fg = "#CBE0F0",
-		ansi = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#0FC5ED", "#a277ff", "#24EAF7", "#24EAF7" },
-		brights = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#A277FF", "#a277ff", "#24EAF7", "#24EAF7" },
-	}
-	-- config.ime_preedit_rendering = "System"
-else
-	config.colors = {
-		foreground = "#CBE0F0",
-		--one half black
-		-- background = "#282c34",
-		-- cursor_fg = "#282c34",
-		background = "#011423",
-		-- background = "#000000",
-		cursor_fg = "#011423",
-		cursor_bg = "#47FF9C",
-		cursor_border = "#47FF9C",
-		selection_bg = "#033259",
-		selection_fg = "#CBE0F0",
-		ansi = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#0FC5ED", "#a277ff", "#24EAF7", "#24EAF7" },
-		brights = { "#214969", "#E52E2E", "#44FFB1", "#FFE073", "#A277FF", "#a277ff", "#24EAF7", "#24EAF7" },
-	}
-end
-
--- }}}
-
+-- Define a "launcher" window class for floating prompts
+-- wezterm.on("config-reload", function()
+-- 	wezterm.window.set_window_class("launcher", {
+-- 		-- Dimensions in cells (width x height)
+-- 		width = 80,
+-- 		height = 10,
+--
+-- 		-- Remove window decorations for a minimal look
+-- 		window_decorations = "NONE",
+--
+-- 		-- Position it in the center of the screen
+-- 		position = {
+-- 			x = "50%",
+-- 			y = "45%", -- A little above center looks nice
+-- 		},
+--
+-- 		-- Make it a floating window that stays on top
+-- 		is_floating = true,
+-- 	})
+-- end)
+--<<<fold-end
+--
 -- shortcut setting
+-- <<<fold-start
 local act = wezterm.action
-config.keys = { -- {{{
-
+config.keys = {
 	-- Disable L,d,u
 	-- { key = "L", mods = "CTRL|SHIFT", action = "DisableDefaultAssignment" }, -- disables the debug overlay
 	{ key = "Enter", mods = "CTRL", action = act.Nop },
@@ -485,24 +566,11 @@ config.keys = { -- {{{
 	-- workspace
 	-- { key = ",", mods = "ALT", action = act.SwitchWorkspaceRelative(-1) },
 	-- { key = ".", mods = "ALT", action = act.SwitchWorkspaceRelative(1) },
-	{
-		key = ",",
-		mods = "ALT",
-		action = wezterm.action_callback(function(window, pane)
-			wezterm.GLOBAL.previous_workspace = window:active_workspace()
-			window:perform_action(act.SwitchWorkspaceRelative(-1), pane)
-		end),
-	},
-	{
-		key = ".",
-		mods = "ALT",
-		action = wezterm.action_callback(function(window, pane)
-			wezterm.GLOBAL.previous_workspace = window:active_workspace()
-			window:perform_action(act.SwitchWorkspaceRelative(1), pane)
-		end),
-	},
+	{ key = ",", mods = "ALT", action = relative_workspace(-1) },
+	{ key = ".", mods = "ALT", action = relative_workspace(1) },
 	{ key = "/", mods = "ALT", action = act.EmitEvent("select-workspace") },
 	{ key = "n", mods = "ALT|SHIFT", action = act.EmitEvent("create-workspace") },
+	{ key = "n", mods = "ALT", action = act.EmitEvent("swap-workspace") },
 	-- new tab as powershell
 	-- Ctrl+Shift+P will open a new tab running PowerShell
 	{
@@ -574,51 +642,12 @@ config.keys = { -- {{{
 	{ key = "¥", mods = "", action = wezterm.action.SendString("\\") },
 	{ key = "1", mods = "ALT", action = wezterm.action.ActivatePaneByIndex(0) },
 	{ key = "p", mods = "SHIFT", action = wezterm.action.PasteFrom "Clipboard",}, ]]
-	-- Alt(Opt)+Shift+Fでフルスクリーン切り替え}}}
+	-- Alt(Opt)+Shift+Fでフルスクリーン切り替え
+	-- if in linux, using tab alt to change workspace
+	-- if string.find(wezterm.target_triple, "linux") or string.find(wezterm.target_triple, "apple") then
+	-- 	-- table.insert(config.keys, { key = "Tab", mods = "ALT", action = act.EmitEvent("swap-workspace") })
+	-- end
 }
-
--- if in linux, using tab alt to change workspace
--- if string.find(wezterm.target_triple, "linux") or string.find(wezterm.target_triple, "apple") then
--- 	-- table.insert(config.keys, { key = "Tab", mods = "ALT", action = act.EmitEvent("swap-workspace") })
--- end
-table.insert(config.keys, { key = "n", mods = "ALT", action = act.EmitEvent("swap-workspace") })
-
--- haku test use <A-r>
-wezterm.on("show_status", function(window, pane)
-	local tab = window:active_tab()
-	-- local panes = pane.split(dir)
-	local new_pane = pane:split({ Direction = "Right" })
-	-- pane:split({ Direction = "Right", top_level = true })
-	window:perform_action(wezterm.action.SetPaneZoomState(true), new_pane)
-	-- new_pane:activate()
-	-- window:set_right_status("This is test for <A-r> show status")
-	-- window:set_right_status("number of panes in current tab:" .. #tab:panes())
-	-- window:set_right_status(Background and "BG:ON" or "BG:OFF")
-	-- use C-S-L to show the debug info
-	local overrides = window:get_config_overrides() or {}
-	wezterm.log_info(wezterm.json_encode(overrides.background[1].source))
-	-- wezterm.log_info(wezterm.json_encode(overrides.backgorund))
-end)
-
--- Define a "launcher" window class for floating prompts
--- wezterm.on("config-reload", function()
--- 	wezterm.window.set_window_class("launcher", {
--- 		-- Dimensions in cells (width x height)
--- 		width = 80,
--- 		height = 10,
---
--- 		-- Remove window decorations for a minimal look
--- 		window_decorations = "NONE",
---
--- 		-- Position it in the center of the screen
--- 		position = {
--- 			x = "50%",
--- 			y = "45%", -- A little above center looks nice
--- 		},
---
--- 		-- Make it a floating window that stays on top
--- 		is_floating = true,
--- 	})
--- end)
+-- <<<fold-end
 
 return config

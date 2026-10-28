@@ -4,6 +4,7 @@
 
 /nvim/lazy-lock.json
 .nvimlog
+nvim.log
 
 # --- any old folders
 old/

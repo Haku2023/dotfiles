@@ -188,6 +188,31 @@ class FString(gdb.Function):
         return value.cast(array.pointer()).dereference()
 
 FString()
+import gdb.printing
+
+class CppStringPrinter:
+    def __init__(self, value):
+        self.value = value
+
+    def to_string(self):
+        data = self.value["_M_dataplus"]["_M_p"]
+        length = int(self.value["_M_string_length"])
+        return data.lazy_string(length=length)
+
+    def display_hint(self):
+        return "string"
+
+cpp_printers = gdb.printing.RegexpCollectionPrettyPrinter(
+    "haku_cpp_strings"
+)
+cpp_printers.add_printer(
+    "std::string",
+    r"^std::(__cxx11::)?basic_string<char,.*>$",
+    CppStringPrinter,
+)
+gdb.printing.register_pretty_printer(
+    None, cpp_printers, replace=True
+)
 ]]
     dap.adapters.gdb = {
       type = "executable",
@@ -277,7 +302,11 @@ FString()
     dap.configurations.cpp = {
       {
         name = "Build and debug project C++ file",
-        type = "codelldb",
+        -- type = "codelldb",
+        type = "gdb",
+        -- MIMode = "gdb",
+        -- miDebuggerPath = "/home/linuxbrew/.linuxbrew/bin/gdb",
+        ---
         request = "launch",
         terminal = "console", -- Add this for console output
         cwd = "${workspaceFolder}",
@@ -289,6 +318,7 @@ FString()
         end,
       },
     }
+
     -- python comment,since use mason default config
     --/Users/bai.haodong/.local/share/nvim/lazy/mason-nvim-dap.nvim/lua/mason-nvim-dap/mappings/configurations.lua
     --

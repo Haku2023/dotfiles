@@ -169,7 +169,7 @@ cdn() {
 	new_file=$(eza -snew -D --icons=never | tail -n${n} | head -n1)
 	cd ${new_file}
 }
-rp() {
+rpn() {
 	local n=${1:-10}
 	if (($# == 2)) || { (($# == 1)) && [[ $1 != <-> ]]; }; then
 		local folder=$1
