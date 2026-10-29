@@ -65,6 +65,18 @@ return {
             -- ["<C-k>"] = actions.move_selection_previous,
             -- ["<C-j>"] = actions.move_selection_next,
             -- ["<C-g>"] = actions.send_selected_to_qflist + custom_actions.open_trouble_qflist,
+            -- ["<C-u>"] = actions.results_scrolling_up,
+            -- ["<C-d>"] = actions.results_scrolling_down,
+            ["<C-u>"] = function(prompt_bufnr)
+              local picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
+              local step = math.max(1, math.floor(vim.api.nvim_win_get_height(picker.results_win) / 2))
+              picker:move_selection(-step)
+            end,
+            ["<C-d>"] = function(prompt_bufnr)
+              local picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
+              local step = math.max(1, math.floor(vim.api.nvim_win_get_height(picker.results_win) / 2))
+              picker:move_selection(step)
+            end,
             ["u"] = actions.preview_scrolling_up,
             ["d"] = actions.preview_scrolling_down,
             ["l"] = actions.preview_scrolling_right,
