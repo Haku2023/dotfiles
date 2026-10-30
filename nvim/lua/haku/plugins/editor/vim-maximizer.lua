@@ -32,6 +32,14 @@ local function refresh(panel_sizes)
     clear_covers()
     return
   end
+  -- End zoom if the maximized window was closed.
+  if not api.nvim_win_is_valid(s.focus) then
+    states[api.nvim_get_current_tabpage()] = nil
+    vim.t.maximizer_sizes = nil
+    clear_covers()
+    vim.cmd("wincmd =")
+    return
+  end
 
   local original = {}
   for _, saved in ipairs(s.original) do
