@@ -25,6 +25,13 @@ return {
         vim.bo.commentstring = "; %s"
       end,
     })
+    -- Set commentstring for foam files
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = { "foam" },
+      callback = function()
+        vim.bo.commentstring = "// %s"
+      end,
+    })
 
     -- Set commentstring for shader files
     -- vim.api.nvim_create_autocmd("FileType", {
@@ -78,7 +85,7 @@ return {
           return nil
         end
 
-        if ft == "namelist" or ft == "ROMSin" or ft == "autohotkey" or ft == "ahk" then
+        if ft == "namelist" or ft == "ROMSin" or ft == "autohotkey" or ft == "ahk" or ft == "foam" then
           return vim.bo.commentstring
         end
 

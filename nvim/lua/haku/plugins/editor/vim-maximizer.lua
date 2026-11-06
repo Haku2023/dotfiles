@@ -346,6 +346,14 @@ local function navigate(command)
     error(err)
   end
 end
+local function reset()
+  states[api.nvim_get_current_tabpage()] = nil
+  vim.t.maximizer_sizes = nil
+  clear_covers()
+
+  vim.cmd("wincmd =")
+  vim.cmd("redraw!")
+end
 
 return {
   "szw/vim-maximizer",
@@ -410,5 +418,6 @@ return {
       end,
       desc = "Navigate right, keeping maximization",
     },
+    { "<leader>sR", reset, desc = "Reset stuck maximizer layout" },
   },
 }
