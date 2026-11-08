@@ -27,6 +27,7 @@ alias zrc="nvim ~/.zshrc"
 alias sou="exec zsh"
 alias nlua="nvim ~/.config/nvim/lua/haku/core/options.lua"
 alias pl="pdflatex"
+alias rp="realpath"
 # mac
 alias wlua="nvim ~/.config/wezterm/wezterm.lua"
 alias vi="nvim"

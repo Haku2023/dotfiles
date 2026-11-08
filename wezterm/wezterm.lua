@@ -158,11 +158,11 @@ else
 	config.colors = {
 		foreground = "#CBE0F0",
 		--one half black
-		-- background = "#282c34",
-		-- cursor_fg = "#282c34",
-		background = "#011423",
+		background = "#282c34",
+		cursor_fg = "#282c34",
+		-- background = "#011423",
 		-- background = "#000000",
-		cursor_fg = "#011423",
+		-- cursor_fg = "#011423",
 		cursor_bg = "#47FF9C",
 		cursor_border = "#47FF9C",
 		selection_bg = "#033259",

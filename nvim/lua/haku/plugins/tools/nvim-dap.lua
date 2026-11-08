@@ -31,7 +31,7 @@ return {
     dap_virtual_text.setup()
 
     mason_dap.setup({
-      ensure_installed = { "cppdbg", "codelldb", "python", "fortran" },
+      ensure_installed = { "cppdbg", "codelldb", "python", "fortran", "js" },
       automatic_installation = true,
       handlers = {
         function(config)
@@ -350,6 +350,34 @@ gdb.printing.register_pretty_printer(
         end,
       },
     }
+
+    -- typescript/js
+    dap.adapters["pwa-node"] = {
+      type = "server",
+      host = "127.0.0.1",
+      port = "${port}",
+      executable = {
+        command = vim.fn.stdpath("data") .. "/mason/bin/js-debug-adapter",
+        -- args = { "${port}" },
+        args = { "${port}", "127.0.0.1" },
+      },
+    }
+
+    for _, ft in ipairs({ "typescript", "typescriptreact", "javascript", "javascriptreact" }) do
+      dap.configurations[ft] = {
+        {
+          name = "Node: Attach on port 9229",
+          type = "pwa-node",
+          request = "attach",
+          address = "127.0.0.1",
+          port = 9229,
+          cwd = "${workspaceFolder}",
+          sourceMaps = true,
+          skipFiles = { "<node_internals>/**" },
+          outFiles = { "${workspaceFolder}/dist/**/*.js" },
+        },
+      }
+    end
 
     -- Dap UI
 
