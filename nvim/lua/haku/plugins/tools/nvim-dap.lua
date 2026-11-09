@@ -75,7 +75,8 @@ return {
   },
   fortran = {
     ["main.F90"] = {
-      build = "gfortran -g -o main main.F90",
+      -- build = "gfortran -g -o main main.F90",
+			build = "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug && cmake --build build",
       program = "main",
       args = { "arg1", "arg2" },
     },

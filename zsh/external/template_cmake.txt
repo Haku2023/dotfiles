@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.23)
 
+# set(CMAKE_CXX_COMPILER "/home/haku/.local/bin/g++")
+
 project(
 Practice
 VERSION 0.0.1
@@ -9,6 +11,11 @@ LANGUAGES lang
 
 # Generate compile_commands.json for clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 
 add_executable(template)
