@@ -122,7 +122,7 @@ return {
         saved_layout = nil
 
         vim.schedule(function()
-          if vim.api.nvim_get_current_tabpage() == layout.tab then
+          if vim.api.nvim_get_current_tabpage() == layout.tab and layout.layout == vim.inspect(vim.fn.winlayout()) then
             vim.cmd(layout.restore)
           end
         end)
@@ -147,6 +147,7 @@ return {
       -- Save the original pane sizes before opening.
       if not terminal_is_open() then
         horizontal_layout = {
+          layout = vim.inspect(vim.fn.winlayout()),
           tab = vim.api.nvim_get_current_tabpage(),
           restore = vim.fn.winrestcmd(),
         }
@@ -160,7 +161,7 @@ return {
         horizontal_layout = nil
 
         vim.schedule(function()
-          if vim.api.nvim_get_current_tabpage() == layout.tab then
+          if vim.api.nvim_get_current_tabpage() == layout.tab and layout.layout == vim.inspect(vim.fn.winlayout()) then
             vim.cmd(layout.restore)
           end
         end)
@@ -185,6 +186,7 @@ return {
       local height = math.max(1, math.floor((vim.api.nvim_win_get_height(target) - 1) / 2))
 
       saved_layout = {
+        layout = vim.inspect(vim.fn.winlayout()),
         tab = vim.api.nvim_get_current_tabpage(),
         restore = vim.fn.winrestcmd(),
       }

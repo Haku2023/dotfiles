@@ -181,11 +181,10 @@ local function restore()
   -- if s.restore_cmd then
   --   vim.cmd(s.restore_cmd)
   -- end
-  if s.restore_cmd then
+  if s.restore_cmd and s.layout == vim.inspect(vim.fn.winlayout()) then
     vim.cmd(s.restore_cmd)
-    if vim.fn.winrestcmd() ~= s.restore_cmd then
-      vim.cmd("wincmd =")
-    end
+  else
+    vim.cmd("wincmd =")
   end
   if api.nvim_win_is_valid(s.focus) then
     api.nvim_set_current_win(s.focus)
@@ -236,6 +235,7 @@ local function maximize()
     hidden = {},
     focus = current,
     restore_cmd = vim.fn.winrestcmd(),
+    layout = vim.inspect(vim.fn.winlayout()),
   }
   for _, win in ipairs(wins) do
     s.original[#s.original + 1] = {
@@ -350,7 +350,7 @@ local function reset()
   states[api.nvim_get_current_tabpage()] = nil
   vim.t.maximizer_sizes = nil
   clear_covers()
-
+  vim.o.cmdheight = 0 -- stray resizes can grow the command line
   vim.cmd("wincmd =")
   vim.cmd("redraw!")
 end
