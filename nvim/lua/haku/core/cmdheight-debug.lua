@@ -29,7 +29,7 @@ local function watch(name, fn)
   return function(...)
     local before = vim.o.cmdheight
     local results = vim.F.pack_len(fn(...))
-    if vim.o.cmdheight ~= before then
+    if before == 0 and vim.o.cmdheight ~= 0 then
       report(
         ("cmdheight %d -> %d in %s(%s)%s"):format(
           before,
@@ -51,8 +51,12 @@ mt.__call = watch("vim.cmd", mt.__call)
 -- Catches Vimscript callers too, but without a Lua traceback.
 api.nvim_create_autocmd("SafeState", {
   callback = function()
-    if vim.o.cmdheight ~= last then
-      report(("cmdheight %d -> %d (noticed after the command finished)"):format(last, vim.o.cmdheight))
+    local current = vim.o.cmdheight
+    local previous = last
+    last = current
+
+    if previous == 0 and current ~= 0 then
+      report(("cmdheight %d -> %d (noticed after the command finished)"):format(previous, current))
     end
   end,
 })
