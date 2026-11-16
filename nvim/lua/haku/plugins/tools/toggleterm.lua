@@ -113,6 +113,31 @@ return {
     local pane_terminal
     local saved_layout
     local horizontal_layout
+    local function restore_layout(layout)
+      vim.schedule(function()
+        if
+          vim.api.nvim_get_current_tabpage() ~= layout.tab
+          or vim.inspect(vim.fn.winlayout()) ~= layout.layout
+          or vim.o.lines ~= layout.lines
+          or vim.o.columns ~= layout.columns
+          or vim.o.cmdheight ~= layout.cmdheight
+        then
+          return
+        end
+
+        local equalalways = vim.o.equalalways
+        vim.o.equalalways = false
+
+        local ok, err = pcall(vim.cmd, layout.restore)
+
+        vim.o.cmdheight = layout.cmdheight
+        vim.o.equalalways = equalalways
+
+        if not ok then
+          vim.notify(tostring(err), vim.log.levels.ERROR)
+        end
+      end)
+    end
 
     local function close_pane_terminal()
       pane_terminal:close()
@@ -121,11 +146,7 @@ return {
         local layout = saved_layout
         saved_layout = nil
 
-        vim.schedule(function()
-          if vim.api.nvim_get_current_tabpage() == layout.tab and layout.layout == vim.inspect(vim.fn.winlayout()) then
-            vim.cmd(layout.restore)
-          end
-        end)
+        restore_layout(layout)
       end
     end
 
@@ -150,6 +171,9 @@ return {
           layout = vim.inspect(vim.fn.winlayout()),
           tab = vim.api.nvim_get_current_tabpage(),
           restore = vim.fn.winrestcmd(),
+          lines = vim.o.lines,
+          columns = vim.o.columns,
+          cmdheight = vim.o.cmdheight,
         }
       end
 
@@ -160,11 +184,7 @@ return {
         local layout = horizontal_layout
         horizontal_layout = nil
 
-        vim.schedule(function()
-          if vim.api.nvim_get_current_tabpage() == layout.tab and layout.layout == vim.inspect(vim.fn.winlayout()) then
-            vim.cmd(layout.restore)
-          end
-        end)
+        restore_layout(layout)
       end
     end, { desc = "Toggle horizontal terminal" })
 
@@ -189,8 +209,10 @@ return {
         layout = vim.inspect(vim.fn.winlayout()),
         tab = vim.api.nvim_get_current_tabpage(),
         restore = vim.fn.winrestcmd(),
+        lines = vim.o.lines,
+        columns = vim.o.columns,
+        cmdheight = vim.o.cmdheight,
       }
-
       -- Avoid automatically equalizing other panes during the move.
       local equalalways = vim.o.equalalways
       vim.o.equalalways = false

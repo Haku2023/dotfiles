@@ -436,7 +436,7 @@ wezterm.on("swap-pane-new", function(window, pane)
 	main_pane(tab) -- Register the original pane before the first split.
 	local panes = tab:panes()
 	if #panes == 1 then
-		local sub = pane:split({ direction = "Bottom" })
+		local sub = pane:split({ direction = "Right" })
 		focus_zoomed(tab, sub)
 		return
 	end

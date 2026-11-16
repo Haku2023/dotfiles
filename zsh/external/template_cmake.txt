@@ -24,6 +24,10 @@ target_sources(template
 PRIVATE
 ./src/main.lang_ext)
 
+#set_target_properties(main PROPERTIES
+#    OUTPUT_NAME "multiply_string"
+#    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/execute"
+#)
 
 #target_include_directories(tinyfd_ext PUBLIC
 #      ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyfd)
