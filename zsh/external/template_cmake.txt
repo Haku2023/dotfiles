@@ -13,9 +13,11 @@ LANGUAGES lang
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 
+# --- cpp setup
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+# ---
 
 
 add_executable(template)
@@ -23,6 +25,11 @@ add_executable(template)
 target_sources(template
 PRIVATE
 ./src/main.lang_ext)
+
+# --- fortran properties
+# - then f90 and F90 both preprocessed
+# set_target_properties(main_for PROPERTIES Fortran_PREPROCESS ON)
+# ---
 
 #set_target_properties(main PROPERTIES
 #    OUTPUT_NAME "multiply_string"

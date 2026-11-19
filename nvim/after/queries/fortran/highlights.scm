@@ -23,6 +23,8 @@
 (call_expression
   (identifier) @function
   (#any-of? @function
+    ; System functions
+    "command_argument_count" "get_command" "get_command_argument" "get_environment_variable"
     ; Math functions
     "abs" "acos" "asin" "atan" "atan2" "ceiling" "cos" "cosh" "exp" "floor"
     "log" "log10" "max" "min" "mod" "modulo" "sign" "sin" "sinh" "sqrt" "tan" "tanh"
@@ -38,7 +40,7 @@
     ; Bit functions
     "iand" "ior" "ieor" "not" "ishft" "ishftc" "btest" "ibset" "ibclr" "storage_size"
     ; Miscellaneous
-    "present" "null" "transfer" "huge" "tiny" "epsilon"
+    "present" "null" "transfer" "huge" "tiny" "epsilon" 
     ))
 
 [

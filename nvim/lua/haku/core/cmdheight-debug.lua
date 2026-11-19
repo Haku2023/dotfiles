@@ -29,17 +29,25 @@ local function watch(name, fn)
   return function(...)
     local before = vim.o.cmdheight
     local results = vim.F.pack_len(fn(...))
-    if before == 0 and vim.o.cmdheight ~= 0 then
-      report(
-        ("cmdheight %d -> %d in %s(%s)%s"):format(
-          before,
-          vim.o.cmdheight,
-          name,
-          vim.inspect(select(-1, ...)),
-          debug.traceback("", 2)
-        )
+    local after = vim.o.cmdheight
+
+    if before == 0 and after ~= 0 then
+      -- Capture the call site now; check the value after the caller finishes.
+      local msg = ("cmdheight %d -> %d in %s(%s)%s"):format(
+        before,
+        after,
+        name,
+        vim.inspect(select(-1, ...)),
+        debug.traceback("", 2)
       )
+
+      vim.schedule(function()
+        if vim.o.cmdheight ~= 0 then
+          report(msg .. ("\ncmdheight after scheduling: %d"):format(vim.o.cmdheight))
+        end
+      end)
     end
+
     return vim.F.unpack_len(results)
   end
 end

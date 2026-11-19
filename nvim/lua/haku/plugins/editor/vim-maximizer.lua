@@ -181,11 +181,20 @@ local function restore()
   -- if s.restore_cmd then
   --   vim.cmd(s.restore_cmd)
   -- end
+  -- if s.restore_cmd and s.layout == vim.inspect(vim.fn.winlayout()) then
+  --   vim.cmd(s.restore_cmd)
+  -- else
+  --   vim.cmd("wincmd =")
+  -- end
+  local cmdheight = vim.o.cmdheight
+
   if s.restore_cmd and s.layout == vim.inspect(vim.fn.winlayout()) then
     vim.cmd(s.restore_cmd)
   else
     vim.cmd("wincmd =")
   end
+
+  vim.o.cmdheight = cmdheight
   if api.nvim_win_is_valid(s.focus) then
     api.nvim_set_current_win(s.focus)
   end
