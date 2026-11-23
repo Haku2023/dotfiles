@@ -28,7 +28,7 @@
     ; Math functions
     "abs" "acos" "asin" "atan" "atan2" "ceiling" "cos" "cosh" "exp" "floor"
     "log" "log10" "max" "min" "mod" "modulo" "sign" "sin" "sinh" "sqrt" "tan" "tanh"
-    "real" "int" "nint" "aint" "anint" "dble" "cmplx"
+    "real" "int" "nint" "aint" "anint" "dble" "cmplx" "erf" 
     ; Array functions
     "size" "shape" "lbound" "ubound" "allocated" "associated"
     "matmul" "dot_product" "sum" "product" "maxval" "minval" "maxloc" "minloc" "count"

@@ -31,7 +31,7 @@ return {
     dap_virtual_text.setup()
 
     mason_dap.setup({
-      ensure_installed = { "cppdbg", "codelldb", "python", "fortran", "js" },
+      ensure_installed = { "cppdbg", "codelldb", "python", "js" },
       automatic_installation = true,
       handlers = {
         function(config)

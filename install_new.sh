@@ -1,14 +1,14 @@
 #!/bin/zsh
 
-set -euo pipefail  # Exit on error, undefined vars, pipe failures
+set -euo pipefail # Exit on error, undefined vars, pipe failures
 
 DOTFILES_DIR="${HOME}/dotfiles"
 CONFIG_DIR="${HOME}/.config"
 
 # Verify dotfiles directory exists
 if [[ ! -d "$DOTFILES_DIR" ]]; then
-    echo "x $DOTFILES_DIR not found" >&2
-    exit 1
+	echo "x $DOTFILES_DIR not found" >&2
+	exit 1
 fi
 
 echo "Creating directories..."
@@ -18,26 +18,26 @@ mkdir -p "${CONFIG_DIR}/zsh"
 
 # Function to create symlink safely
 link_file() {
-    local src="$1"
-    local dest="$2"
-    
-    if [[ ! -e "$src" ]]; then
-        echo "△ Source $src doesn't exist, skipping" >&2
-        return 1
-    fi
-    
-    if [[ -L "$dest" && "$(readlink "$dest")" == "$src" ]]; then
-        echo "✓ $dest already linked correctly"
-        return 0
-    fi
-    
-    if [[ -e "$dest" || -L "$dest" ]]; then
-        echo "Backing up existing $dest to ${dest}.backup"
-        mv "$dest" "${dest}.backup"
-    fi
-    
-    ln -sfn "$src" "$dest"
-    echo "✓ Linked $dest -> $src"
+	local src="$1"
+	local dest="$2"
+
+	if [[ ! -e "$src" ]]; then
+		echo "△ Source $src doesn't exist, skipping" >&2
+		return 1
+	fi
+
+	if [[ -L "$dest" && "$(readlink "$dest")" == "$src" ]]; then
+		echo "✓ $dest already linked correctly"
+		return 0
+	fi
+
+	if [[ -e "$dest" || -L "$dest" ]]; then
+		echo "Backing up existing $dest to ${dest}.backup"
+		mv "$dest" "${dest}.backup"
+	fi
+
+	ln -sfn "$src" "$dest"
+	echo "✓ Linked $dest -> $src"
 }
 
 # Create symlinks
@@ -48,6 +48,7 @@ print "⇒ create zsh symbols"
 link_file "${DOTFILES_DIR}/zsh/zshenv" "${HOME}/.zshenv"
 link_file "${DOTFILES_DIR}/zsh/zshrc" "${CONFIG_DIR}/zsh/.zshrc"
 link_file "${DOTFILES_DIR}/zsh/external" "${CONFIG_DIR}/zsh/external"
+link_file "${DOTFILES_DIR}/zsh/hkscripts" "${CONFIG_DIR}/zsh/hkscripts"
 link_file "${DOTFILES_DIR}/zsh/zshrc.d" "${CONFIG_DIR}/zsh/zshrc.d"
 
 print "⇒ create nvim symbols"
@@ -57,30 +58,30 @@ link_file "${DOTFILES_DIR}/nvim" "${CONFIG_DIR}/nvim"
 print "⇒ create wezterm symbols"
 
 if [[ "$(uname)" == "Linux" ]]; then
-if [[ -n "${WSL_DISTRO_NAME:-}"  ]] ;then
-  print "△ in windows WSL, wezterm config is stored in /mnt/c/Users/username/.wezterm.lua, skipping, Link manually"
-else
-  link_file "${DOTFILES_DIR}/wezterm/wezterm.lua" "${HOME}/.wezterm.lua"
-fi
+	if [[ -n "${WSL_DISTRO_NAME:-}" ]]; then
+		print "△ in windows WSL, wezterm config is stored in /mnt/c/Users/username/.wezterm.lua, skipping, Link manually"
+	else
+		link_file "${DOTFILES_DIR}/wezterm/wezterm.lua" "${HOME}/.wezterm.lua"
+	fi
 elif [[ "$(uname)" == "Darwin" ]]; then
-  link_file "${DOTFILES_DIR}/wezterm" "${CONFIG_DIR}/wezterm"
+	link_file "${DOTFILES_DIR}/wezterm" "${CONFIG_DIR}/wezterm"
 fi
 
 print "⇒ create qutebrowser symbols"
 if [[ "$(uname)" == "Linux" ]]; then
-  link_file "${DOTFILES_DIR}/qutebrowser" "${CONFIG_DIR}/qutebrowser"
+	link_file "${DOTFILES_DIR}/qutebrowser" "${CONFIG_DIR}/qutebrowser"
 elif [[ "$(uname)" == "Darwin" ]]; then
-  link_file "${DOTFILES_DIR}/qutebrowser" "$HOME/.qutebrowser"
+	link_file "${DOTFILES_DIR}/qutebrowser" "$HOME/.qutebrowser"
 fi
 
 if [[ "$(uname)" == "Linux" ]]; then
-  print "⇒ create hyprland symbols"
-  link_file "${DOTFILES_DIR}/hypr" "${CONFIG_DIR}/hypr"
+	print "⇒ create hyprland symbols"
+	link_file "${DOTFILES_DIR}/hypr" "${CONFIG_DIR}/hypr"
 elif [[ "$(uname)" == "Darwin" ]]; then
-  print "⇒ create aerospace,yabai,skhd symbols"
-  link_file "${DOTFILES_DIR}/aerospace" "${CONFIG_DIR}/aerospace"
-  link_file "${DOTFILES_DIR}/yabai" "${CONFIG_DIR}/yabai"
-  link_file "${DOTFILES_DIR}/skhd" "${CONFIG_DIR}/skhd"
+	print "⇒ create aerospace,yabai,skhd symbols"
+	link_file "${DOTFILES_DIR}/aerospace" "${CONFIG_DIR}/aerospace"
+	link_file "${DOTFILES_DIR}/yabai" "${CONFIG_DIR}/yabai"
+	link_file "${DOTFILES_DIR}/skhd" "${CONFIG_DIR}/skhd"
 fi
 
 echo "Installation complete!"

@@ -1,3 +1,4 @@
+#
 # refer oh-my-zsh
 alias lsa='ls -lah'
 alias l='ls -lah'

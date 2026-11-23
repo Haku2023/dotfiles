@@ -116,8 +116,11 @@ zln() {
 #fold-end
 
 # haku useful functions
-# hkcmake cdn mcd lsn
+# hkcsv hkcmake cdn mcd lsn
 # >>>>>>>>>>>>>>>>fold-start
+hkcsv() {
+	"$ZDOTDIR/hkscripts/csv_data/csv_data.zsh" "$@"
+}
 hkcmake() {
 	if (($# != 2)); then
 		print -u2 "ERROR: need 2 args (eg. cpp exe_name)"

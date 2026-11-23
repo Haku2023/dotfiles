@@ -282,3 +282,12 @@ vim.keymap.set("n", "<C-n>", "<C-^>", { desc = "Switch to previous file" })
 -- remap folding
 keymap.set("n", "zc", "zm", { desc = "close all fold" })
 keymap.set("n", "zo", "zr", { desc = "open all fold" })
+
+-- reload queries files such as
+-- /Users/baihaodong/dotfiles/nvim/after/queries/fortran/highlights.scm
+vim.keymap.set("n", "<leader>rq", function()
+  vim.treesitter.query.get:clear()
+  vim.treesitter.stop()
+  vim.treesitter.start()
+  vim.notify("Reloaded Treesitter queries", vim.log.levels.INFO, { title = "Neovim" })
+end, { desc = "Reload Treesitter queries" })

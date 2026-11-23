@@ -154,3 +154,19 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
   -- command = "echo 'enter the markdown file'",
 })
+
+-- -- Reload treesitter queries when editing .scm query files
+-- -- don't work for different tabs in wezterm
+-- vim.api.nvim_create_autocmd("BufWritePost", {
+--   pattern = "*/queries/*.scm",
+--   callback = function()
+--     vim.treesitter.query.get:clear()
+--     -- every buffer with a running highlighter, including hidden ones
+--     for buf in pairs(vim.treesitter.highlighter.active) do
+--       vim.api.nvim_buf_call(buf, function()
+--         vim.treesitter.stop()
+--         vim.treesitter.start()
+--       end)
+--     end
+--   end,
+-- })

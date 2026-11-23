@@ -32,6 +32,13 @@ return {
         vim.bo.commentstring = "// %s"
       end,
     })
+    -- Set commentstring for awk files
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = { "awk" },
+      callback = function()
+        vim.bo.commentstring = "# %s"
+      end,
+    })
 
     -- Set commentstring for shader files
     -- vim.api.nvim_create_autocmd("FileType", {
@@ -85,7 +92,7 @@ return {
           return nil
         end
 
-        if ft == "namelist" or ft == "ROMSin" or ft == "autohotkey" or ft == "ahk" or ft == "foam" then
+        if ft == "namelist" or ft == "ROMSin" or ft == "autohotkey" or ft == "ahk" or ft == "foam" or ft == "awk" then
           return vim.bo.commentstring
         end
 
