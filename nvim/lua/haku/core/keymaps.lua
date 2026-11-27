@@ -32,7 +32,11 @@ local function hide_panels_and_quit(save)
 
   -- Write editing buffers only; tool panes such as quickfix are not files.
   -- If writing fails, leave the layout intact.
-  if save and vim.bo[current_buf].buftype == "" then
+  -- if save and vim.bo[current_buf].buftype == "" then
+  --   vim.cmd("write")
+  -- end
+  local buftype = vim.bo[current_buf].buftype
+  if save and (buftype == "" or buftype == "acwrite") then
     vim.cmd("write")
   end
 

@@ -31,6 +31,15 @@ return {
     wk.add({
       { "<leader>d", group = "Dap" },
     })
+    wk.add({
+      { "<leader>o", group = "Quicker" },
+      { "<leader>y", group = "Yank", mode = { "n", "x" } },
+    })
+    wk.add({
+      { "<leader>o", group = "Quicker" },
+      { "<leader>yl", group = "Yank Lang Slots", mode = { "n", "x" } },
+      { "<leader>pl", group = "Paste Lang Slots", mode = { "n", "x" } },
+    })
 
     -- which-key uses WhichKeyNormal (links to NormalFloat by default)
     -- opacity setting transparent

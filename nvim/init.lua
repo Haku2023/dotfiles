@@ -4,5 +4,6 @@ if vim.g.vscode then
   require("haku.vscode")
 else
   require("haku.core")
+  require("haku.custom")
 end
 require("haku.config.lazy")

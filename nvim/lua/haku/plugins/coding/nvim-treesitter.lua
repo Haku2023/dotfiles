@@ -333,15 +333,16 @@ return {
         [".fortls"] = "json",
       },
       -- openfoam files added(notice there is default foam filetype detection)
-      -- pattern = {
-      --   [".*/0%.org/.*"] = "foam",
-      --   [".*/0%.orig/.*"] = "foam",
-      --   [".*/0/.*"] = "foam",
-      --   [".*/constant/.*"] = "foam",
-      --   [".*/system/.*"] = "foam",
-      --   [".*[Dd]ict.*"] = "foam", -- waveDict_curr_forw etc.
-      --   [".*[Pp]roperties.*"] = "foam",
-      -- },
+      pattern = {
+        [".*Work"] = "foam",
+        --   [".*/0%.org/.*"] = "foam",
+        --   [".*/0%.orig/.*"] = "foam",
+        --   [".*/0/.*"] = "foam",
+        --   [".*/constant/.*"] = "foam",
+        --   [".*/system/.*"] = "foam",
+        --   [".*[Dd]ict.*"] = "foam", -- waveDict_curr_forw etc.
+        --   [".*[Pp]roperties.*"] = "foam",
+      },
       extension = {
         ejs = "html",
         fypp = "fortran",

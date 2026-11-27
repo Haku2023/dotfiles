@@ -84,7 +84,7 @@ return {
           return require("codecompanion.adapters").extend("codex", {
             defaults = {
               auth_method = "chat-gpt",
-              model = "6.1 Sol",
+              model = "6.2 Sol",
             },
             env = {},
           })

@@ -24,7 +24,7 @@ return {
 
       -- Fix register type after put (char/line/block)
       vim.keymap.set({ "n", "x" }, "<leader>pc", "<Plug>(miniyank-tochar)")
-      vim.keymap.set({ "n", "x" }, "<leader>pl", "<Plug>(miniyank-toline)")
+      vim.keymap.set({ "n", "x" }, "<leader>pp", "<Plug>(miniyank-toline)")
       vim.keymap.set({ "n", "x" }, "<leader>pb", "<Plug>(miniyank-toblock)")
 
       -- Numbered "slots" backed by named registers (slot 1 = "a, slot 2 = "b, ...).
@@ -41,7 +41,7 @@ return {
 
       -- Telescope picker listing ONLY the yank slots above, labeled 1..N (not the
       -- register letters, and not every other register). Empty slots are skipped.
-      vim.keymap.set("n", "<leader>yl", function()
+      vim.keymap.set("n", "<leader>fy", function()
         local pickers = require("telescope.pickers")
         local finders = require("telescope.finders")
         local conf = require("telescope.config").values

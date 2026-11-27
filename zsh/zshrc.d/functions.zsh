@@ -242,11 +242,18 @@ if [[ "$(uname)" == "Darwin" ]]; then
 		zle end-of-line
 		zvm_enter_insert_mode
 	}
+	copy-pwd() {
+		print -rn "$PWD" | pbcopy
+	}
 elif [[ "$(uname)" == "Linux" ]]; then
 	paste-from-clipboard() {
 		RBUFFER=$(wl-paste --no-newline 2>/dev/null || xsel -b -o)${RBUFFER:0}
 		zle end-of-line
 		zvm_enter_insert_mode
+	}
+	copy-pwd() {
+		print -rn -- "$PWD" | wl-copy 2>/dev/null ||
+			print -rn -- "$PWD" | xsel -b -i
 	}
 fi
 # Prepend 'sudo' to the current command line with Ctrl+S
@@ -315,6 +322,7 @@ zle -N open-nvim
 zle -N paste-from-clipboard
 zle -N v2iv
 zle -N prepend-sudo
+zle -N copy-pwd
 
 # function zvm_before_init_commands=()
 zvm_after_init_commands+=(
@@ -339,6 +347,9 @@ zvm_after_init_commands+=(
 	"bindkey -M vicmd '^R' mcfly-history-widget"
 	# C-r for fzf history in normal mode (vi command mode) - fuzzy search
 	"bindkey -M viins '^R' fzf-history-widget"
+	"bindkey -M viins '^Y' copy-pwd"
+	"bindkey -M vicmd '^Y' copy-pwd"
+
 )
 function zvm_before_lazy_keybindings() {
 }

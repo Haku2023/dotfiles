@@ -53,31 +53,32 @@ return {
     -- to fill in. Never overwrites an existing file.
     local dap_config_template = [[return {
   cpp = {
-    ["src/app.cpp"] = {
+    ["**/*.cpp"] = {
       build = "cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug && cmake --build build -j",
-      program = "build/app",
+      program = "execute/main_cpp",
       args = { "--config", "debug", "--input", "data/input.txt" },
     },
   },
 
   c = {
-    ["src/app.c"] = {
+    ["**/*.c"] = {
       build = "make debug",
-      program = "build/app",
+      program = "build/main_c",
       args = { "arg1", "arg2" },
     },
   },
 
   python = {
-    ["train.py"] = {
+    pythonPath = "/home/haku/Tools/miniconda3/envs/openfoam/bin/pvpython",
+    ["**/*.py"] = {
       args = { "--epochs", "3", "--debug" },
     },
   },
   fortran = {
-    ["main.F90"] = {
+    ["**/*.F90"] = {
       -- build = "gfortran -g -o main main.F90",
 			build = "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug && cmake --build build",
-      program = "main",
+      program = "build/main_f",
       args = { "arg1", "arg2" },
     },
   },
@@ -332,9 +333,19 @@ gdb.printing.register_pretty_printer(
         name = "Python: Launch file",
         program = "${file}", -- This configuration will launch the current file if used.
         -- venv on Windows uses Scripts instead of bin
-        pythonPath = venv_path
-            and ((vim.fn.has("win32") == 1 and venv_path .. "/Scripts/python") or venv_path .. "/bin/python")
-          or nil,
+        -- pythonPath = venv_path
+        --     and ((vim.fn.has("win32") == 1 and venv_path .. "/Scripts/python") or venv_path .. "/bin/python")
+        --   or nil,
+
+        pythonPath = function()
+          local cfg = project_config_for("python")
+          return cfg.pythonPath
+            or (
+              venv_path
+              and (vim.fn.has("win32") == 1 and venv_path .. "/Scripts/python" or venv_path .. "/bin/python")
+            )
+        end,
+
         console = "integratedTerminal",
         redirectOutput = true, -- add this for console output
         args = function()
@@ -1107,11 +1118,15 @@ gdb.printing.register_pretty_printer(
       open_dapui()
       dap_virtual_text.enable()
     end
-    dap.listeners.before.event_terminated.dapui_config = function()
-      ui.close()
+    dap.listeners.before.event_terminated.dapui_config = function(session)
+      if session.config.type ~= "python" then
+        ui.close()
+      end
     end
-    dap.listeners.before.event_exited.dapui_config = function()
-      ui.close()
+    dap.listeners.before.event_exited.dapui_config = function(session)
+      if session.config.type ~= "python" then
+        ui.close()
+      end
     end
 
     -- Keymaps
