@@ -160,7 +160,7 @@ keymap.set("c", "<C-v>", "<C-R>+")
 keymap.set("c", "<C-k>", "<C-\\>e(strpart(getcmdline(), 0, getcmdpos()-1))<CR>")
 
 -- system settings
-keymap.set("n", "<leader>sf", "<Cmd>luafile %<CR>", { desc = "Source current lua file" })
+-- keymap.set("n", "<leader>sf", "<Cmd>luafile %<CR>", { desc = "Source current lua file" })
 keymap.set("n", "<leader>sr", function()
   for module, _ in pairs(package.loaded) do
     if module == "haku" or module:match("^haku%.") then
@@ -205,11 +205,10 @@ keymap.set("i", "<C-v>", "<C-o>p", { desc = "Paste in insert mode" })
 --From dycw/dotfiles
 
 -- inspect
-keymap.set("n", "<leader>i", "<Cmd>Inspect<CR>", { desc = "Inspect" })
+keymap.set("n", "<leader>ii", "<Cmd>Inspect<CR>", { desc = "Inspect" })
+keymap.set("n", "<leader>it", "<Cmd>InspectTree<CR>", { desc = "Inspect in Treesitter" })
 -- marks
 keymap.set("n", "<leader>cm", "<Cmd>delmarks a-z A-Z 0-9<CR>", { desc = "Clear All Marks a-z A-Z 0-9" })
---inspect
-keymap.set("n", "<leader>i", "<Cmd>Inspect<CR>", { desc = "Inspect in Treesitter" })
 -- show full path
 -- keymap.set("n", "<C-g>", "<Cmd>echo expand('%:p')<CR>", { desc = "show full path" })
 keymap.set("n", "<C-g>", function()
@@ -296,6 +295,11 @@ vim.keymap.set("n", "<leader>rq", function()
   vim.notify("Reloaded Treesitter queries", vim.log.levels.INFO, { title = "Neovim" })
 end, { desc = "Reload Treesitter queries" })
 
+-- map reload
 vim.keymap.set("n", "<leader><CR>", "<Cmd>restart<CR>", {
   desc = "Restart Neovim and reload configuration",
+})
+-- remap C-e
+vim.keymap.set("n", "<C-S-y>", "<C-e>", {
+  desc = "Scroll down one line",
 })

@@ -8,12 +8,20 @@ return {
     -- set keymaps
     local keymap = vim.keymap -- for conciseness
 
-    keymap.set("n", "]t", function()
-      todo_comments.jump_next()
+    local repeat_move = require("nvim-treesitter-textobjects.repeatable_move")
+    local jump_todo = repeat_move.make_repeatable_move(function(opts)
+      if opts.forward then
+        todo_comments.jump_next()
+      else
+        todo_comments.jump_prev()
+      end
+    end)
+    keymap.set("n", "]T", function()
+      jump_todo({ forward = true })
     end, { desc = "Next todo comment" })
 
-    keymap.set("n", "[t", function()
-      todo_comments.jump_prev()
+    keymap.set("n", "[T", function()
+      jump_todo({ forward = false })
     end, { desc = "Previous todo comment" })
 
     -- Open a new line above (like `O`) with a filetype-aware TEST comment,
