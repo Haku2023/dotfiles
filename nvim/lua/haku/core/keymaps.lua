@@ -295,3 +295,7 @@ vim.keymap.set("n", "<leader>rq", function()
   vim.treesitter.start()
   vim.notify("Reloaded Treesitter queries", vim.log.levels.INFO, { title = "Neovim" })
 end, { desc = "Reload Treesitter queries" })
+
+vim.keymap.set("n", "<leader><CR>", "<Cmd>restart<CR>", {
+  desc = "Restart Neovim and reload configuration",
+})
