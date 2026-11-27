@@ -1,1 +1,1 @@
-require("haku.custom.lang_slots")
+require("haku.custom.lang-slots")

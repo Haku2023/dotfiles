@@ -45,7 +45,7 @@ return {
 
     -- Detect OS for debugger selection
     local is_mac = vim.fn.has("mac") == 1 or vim.fn.has("macunix") == 1
-    local debugger_mode = is_mac and "lldb" or "gdb"
+    local debugger_mode = is_mac and "codelldb" or "gdb"
     local debugger_path = is_mac and "/usr/bin/lldb" or "/usr/bin/gdb"
 
     -- Scaffold a starter .nvim/dap.lua in the cwd the first time you start a
@@ -232,8 +232,11 @@ gdb.printing.register_pretty_printer(
     dap.configurations.fortran = {
       {
         name = "Debug Fortran with gdb",
-        type = "gdb",
+        -- type = "gdb",
+        -- type = "codelldb",
+        type = debugger_mode,
         request = "launch",
+        terminal = "console", -- add this line
         program = function()
           return build_then_get_program("fortran")
         end,
@@ -305,7 +308,7 @@ gdb.printing.register_pretty_printer(
       {
         name = "Build and debug project C++ file",
         -- type = "codelldb",
-        type = "gdb",
+        type = debugger_mode,
         -- MIMode = "gdb",
         -- miDebuggerPath = "/home/linuxbrew/.linuxbrew/bin/gdb",
         ---

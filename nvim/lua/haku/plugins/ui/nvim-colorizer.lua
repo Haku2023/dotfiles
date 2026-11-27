@@ -1,5 +1,7 @@
 return {
-  "norcalli/nvim-colorizer.lua",
+  -- "norcalli/nvim-colorizer.lua",
+  "Haku2023/nvim-colorizer.lua",
+  branch = "remote-flatten-fix",
   config = function()
     require("colorizer").setup(
       -- filetypes: "*" = attach to every buffer (so .lua, .toml, etc. all preview)

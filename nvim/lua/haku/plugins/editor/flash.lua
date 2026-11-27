@@ -1,12 +1,19 @@
 return {
-  "folke/flash.nvim",
+  -- "folke/flash.nvim",
+  "Haku2023/flash.nvim",
+  branch = "remote-cursor-fix",
   event = "VeryLazy",
   -- -@type Flash.Config
   opts = {
+    search = {
+      forward = true,
+      wrap = true,
+      mode = "exact",
+    },
     label = {
       after = true,
       style = "overlay",
-      rainbow = { enabled = true },
+      rainbow = { enabled = true, shade = 5 },
     },
     modes = {
       search = {
@@ -14,7 +21,7 @@ return {
       },
       char = {
         -- enable/disable the flash in f/t mode
-        enabled = true,
+        enabled = false,
         jump_labels = true,
         config = function(opts)
           -- disable jump labels when not enabled, when using a count,
@@ -30,7 +37,7 @@ return {
   },
   -- stylua: ignore
   keys = {
-    -- { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+    { "f", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
     { "S", mode = { "n", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
     { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
     { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },

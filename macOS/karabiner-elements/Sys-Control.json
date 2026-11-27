@@ -12,6 +12,10 @@
             "^com.microsoft.rdc.macos$"
           ],
           "type": "frontmost_application_unless"
+        },
+        {
+          "file_paths": ["/H-Fresh_Viewer$"],
+          "type": "frontmost_application_unless"
         }
       ],
       "from": {

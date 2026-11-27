@@ -52,7 +52,9 @@
 ] @operator.pointer (#set! "priority" 200)
 
 ; Fortran
-(block_label) @label.fortran
+; (block_label) @label.fortran
+((block_label) @label.fortran
+  (#not-has-parent? @label.fortran ERROR))
 (block_label_start_expression) @label.fortran
 (deallocate_statement ) @keyword
 (name) @label.fortran
